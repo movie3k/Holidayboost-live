@@ -34,7 +34,11 @@
       "Bash(git remote add:*)",
       "Bash(git remote remove:*)",
       "Bash(git commit:*)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(git fetch:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git pull:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []
