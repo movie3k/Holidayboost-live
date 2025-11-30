@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Urlaubsplaner</title>
+</head>
+<body>
+    <div style="padding: 20px;">
+        <h1>Test der JavaScript-Funktionalität</h1>
+        <div id="test-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Test basic functionality
+        try {
+            console.log("Testing holiday detection...");
+            const testDate = new Date(2025, 0, 1); // 1. Januar 2025
+            const holidayName = getHolidayName(testDate);
+            console.log("Holiday name for 1.1.2025:", holidayName);
+
+            console.log("Testing state management...");
+            console.log("Initial state:", State);
+
+            console.log("Testing always free day check...");
+            const isFree = checkIfDayIsAlwaysFree(testDate);
+            console.log("Is 1.1.2025 always free?", isFree);
+
+            document.getElementById('test-results').innerHTML = `
+                <p>✅ JavaScript loaded successfully</p>
+                <p>Holiday for 1.1.2025: ${holidayName || 'None'}</p>
+                <p>Is always free: ${isFree}</p>
+                <p>Current year: ${State.selectedYear}</p>
+                <p>Selected state: ${State.selectedStateId}</p>
+            `;
+        } catch (error) {
+            document.getElementById('test-results').innerHTML = `
+                <p>❌ Error: ${error.message}</p>
+            `;
+            console.error("Test error:", error);
+        }
+    </script>
+</body>
+</html>

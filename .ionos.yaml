@@ -1,0 +1,40 @@
+# IONOS Deploy Now Framework-Konfiguration
+# HolidayBoost - Statische Website
+
+distFolder: ./
+excludes:
+  - server.js
+  - package.json
+  - package-lock.json
+  - node_modules
+  - admin.html
+  - admin-login.html
+  - admin.js
+  - test.html
+  - test-admin.html
+  - debug.html
+  - .git
+  - .github
+  - .deploy-now
+  - .claude
+  - ionos
+  - WORKFLOW.md
+  - uploads
+  - "1.png"
+  - "2.png"
+  - "3.png"
+  - "4.png"
+  - "5.png"
+  - "Donnerstag.png"
+  - "Karfreitag.png"
+  - "design.png"
+  - "footer.png"
+  - "header.png"
+  - "kontakt.png"
+  - "platz.png"
+  - "rand.png"
+  - "tage.png"
+  - "tage2.png"
+  - "tooltip.png"
+  - "vorgabe.png"
+  - "affiliate.png"

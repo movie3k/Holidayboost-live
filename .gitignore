@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Server (enthält Passwörter - nur lokal nutzen)
+server.js
+
+# Environment
+.env
+.env.local
+
+# Uploads (user generated)
+uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build
+dist/
+build/

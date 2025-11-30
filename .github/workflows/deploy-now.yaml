@@ -1,0 +1,23 @@
+name: Deploy to IONOS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to IONOS
+        uses: ionos-deploy-now/deploy-to-ionos@v1
+        with:
+          project: ${{ secrets.IONOS_PROJECT_ID }}
+          branch-id: ${{ secrets.IONOS_BRANCH_ID }}
+          service-host: api-eu.ionos.space
+          api-key: ${{ secrets.IONOS_API_KEY }}
+          dist-folder: ./

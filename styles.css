@@ -1,0 +1,6152 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    min-height: 100%;
+    background: #0f1d32; /* Gleicher Hintergrund wie body */
+    overflow-x: hidden;
+    /* Scrollbar verstecken aber Scrollen erlauben */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+html, body {
+    min-height: 100%;
+}
+
+/* Hinweis: Body-Styles sind weiter unten nach :root definiert */
+
+/* HolidayBoost.de Design Variables - Nachtblau Theme mit Logo-Farben */
+:root {
+    /* Main brand colors - abgeleitet vom Logo (Türkis + Orange) */
+    --brand-primary: #26d0ce;      /* Türkis vom Logo */
+    --brand-secondary: #1da8a6;    /* Dunkleres Türkis */
+    --brand-accent: #e8a54b;       /* Orange vom Logo */
+    --brand-accent-light: #f0b865;
+
+    /* Background colors - Sattes Nachtblau Theme */
+    --bg-primary: #0a1628;         /* Tiefes Nachtblau */
+    --bg-secondary: #0f1d32;       /* Haupthintergrund - sattes Nachtblau */
+    --bg-tertiary: #162544;        /* Helleres Nachtblau für Elemente */
+    --bg-header-footer: rgba(10, 22, 40, 0.95); /* Header/Footer Hintergrund */
+
+    /* Calendar colors - Night Blue Theme */
+    --calendar-bg: #0f1d32;
+    --calendar-border: #1a3050;
+    --calendar-day-bg: #162544;
+    --calendar-day-border: #234060;
+    --month-header-start: #1a3050;  /* Dunkles Nachtblau */
+    --month-header-end: #234060;    /* Helleres Nachtblau */
+
+    /* Holiday type colors - Differentiated by scope */
+    --holiday-bundesfeiertag: #ef4444;  /* Rot für Bundesfeiertage */
+    --holiday-landesfeiertag: #e8a54b;  /* Orange (Logo) für Landesfeiertage */
+    --holiday-stadtfeiertag: #a855f7;   /* Lila für Stadtfeiertage */
+    --weekend: #3d5a80;
+    --selected: #26d0ce;                /* Türkis (Logo) für Auswahl */
+    --ausgewaehlt: #26d0ce;
+
+    /* Text colors - Night Optimized */
+    --text-primary: #f0f4f8;
+    --text-secondary: #a0aec0;
+    --text-light: #718096;
+    --text-white: #ffffff;
+
+    /* Effects - Enhanced for Dark Mode */
+    --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 30px rgba(38, 208, 206, 0.15);
+    --border-glass: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 80px; /* Platz für fixed Header */
+    padding-bottom: 20px; /* Minimal, footer-links direkt am Content */
+    overflow: visible;
+}
+
+/* Clean Professional Header - No Container Boxes */
+.new-header {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    position: relative;
+    overflow: visible;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0 20px;
+    margin: 0;
+    background: transparent;
+    border: none;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    transition: none;
+}
+
+.brand-text h1 {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-shadow: none;
+    position: relative;
+}
+
+.brand-text p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin: 2px 0 0 0;
+    font-weight: 400;
+    text-shadow: none;
+}
+
+.calendar-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    backdrop-filter: none;
+    box-shadow: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.calendar-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: none;
+}
+
+.hero-section {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+    position: relative;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-section h2 {
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    text-shadow: none;
+    position: relative;
+}
+
+.hero-section p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: 400;
+    text-shadow: none;
+}
+
+.calendar-controls {
+    text-align: center;
+    background: transparent;
+    padding: 40px 30px;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.calendar-controls h3 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    text-shadow: none;
+    position: relative;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.controls-row select {
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: none;
+    color: #ffffff;
+    min-width: 180px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.controls-row select option {
+    background: #1e293b;
+    color: #ffffff;
+    border: none;
+}
+
+.controls-row select:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.controls-row select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+}
+
+/* Premium glow effect */
+.app-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    opacity: 0.6;
+}
+
+.app-header::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple), var(--accent-blue));
+    border-radius: 26px;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+.app-header h1 {
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff, var(--accent-purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    position: relative;
+}
+
+.app-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 1px;
+}
+
+.controls {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dropdown-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dropdown-group label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.dropdown-group select {
+    padding: 12px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    font-size: 14px;
+    min-width: 160px;
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.dropdown-group select option {
+    background: var(--primary-deep);
+    color: var(--text-primary);
+    border: none;
+    padding: 10px;
+}
+
+.dropdown-group select:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 30px rgba(38, 208, 206, 0.4),
+                0 4px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: none;
+    position: relative;
+    overflow: visible;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+
+/* Clean Section Dividers */
+.section-divider {
+    height: 1px;
+    margin: 40px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+}
+
+
+/* Calendar Legend - MODULE 4 */
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: none;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid var(--calendar-border);
+}
+
+/* Calendar grid styles - MODULE 4 - LARGER & USER-FRIENDLY */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    transform: translate3d(0,0,0);
+    will-change: transform;
+    gap: 16px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    overflow: visible;
+}
+
+/* Ensure months flow horizontally across rows - MODULE 4 */
+.month-view:nth-child(1) { grid-column: 1; grid-row: 1; } /* Januar */
+.month-view:nth-child(2) { grid-column: 2; grid-row: 1; } /* Februar */
+.month-view:nth-child(3) { grid-column: 3; grid-row: 1; } /* März */
+.month-view:nth-child(4) { grid-column: 4; grid-row: 1; } /* April */
+.month-view:nth-child(5) { grid-column: 1; grid-row: 2; } /* Mai */
+.month-view:nth-child(6) { grid-column: 2; grid-row: 2; } /* Juni */
+.month-view:nth-child(7) { grid-column: 3; grid-row: 2; } /* Juli */
+.month-view:nth-child(8) { grid-column: 4; grid-row: 2; } /* August */
+.month-view:nth-child(9) { grid-column: 1; grid-row: 3; } /* September */
+.month-view:nth-child(10) { grid-column: 2; grid-row: 3; } /* Oktober */
+.month-view:nth-child(11) { grid-column: 3; grid-row: 3; } /* November */
+.month-view:nth-child(12) { grid-column: 4; grid-row: 3; } /* Dezember */
+
+/* Responsive Design - MODULE 4 */
+@media (max-width: 1400px) {
+    .calendar-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1300px; /* Increased for better tooltip space */
+        gap: 28px; /* Increased gap */
+        padding: 35px; /* Maintain padding for tooltips */
+    }
+}
+
+@media (max-width: 1000px) {
+    .calendar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px; /* Increased for tooltip space */
+        gap: 24px; /* Increased gap */
+        padding: 30px; /* Maintain padding */
+    }
+
+    .month-view {
+        min-height: 340px; /* Increased height for better tooltip space */
+    }
+}
+
+@media (max-width: 650px) {
+    .calendar-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px; /* Increased for better mobile experience */
+        gap: 20px; /* Increased gap */
+        padding: 25px; /* Maintain padding for tooltips */
+    }
+
+    .month-view {
+        min-height: 360px; /* Increased for tooltip space */
+    }
+
+    .day {
+        font-size: 16px;
+        min-height: 40px; /* Increased for better touch targets */
+    }
+
+    /* Adjust tooltip size for mobile */
+    .day[data-holiday]:after {
+        font-size: 11px;
+        padding: 8px 12px;
+        min-width: 100px;
+    }
+}
+
+/* Month view styles - MODULE 4 - WIDER CONTAINERS */
+.month-view {
+    background: var(--calendar-bg);
+    border: var(--border-glass);
+    border-radius: 16px;
+    overflow: visible;
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.2s ease;
+    backdrop-filter: none;
+    min-height: 320px;
+    position: relative;
+    z-index: 1;
+    padding: 0;
+}
+
+.month-view::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+                rgba(26, 41, 128, 0.1) 0%,
+                rgba(38, 208, 206, 0.05) 100%);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.month-view:hover {
+    /* Removed scale effect */
+    box-shadow: var(--shadow-glow),
+                var(--shadow-premium),
+                0 25px 80px rgba(0,0,0,0.5);
+}
+
+.month-view:hover::before {
+    opacity: 1;
+}
+
+.month-header {
+    background: linear-gradient(135deg,
+                var(--month-header-start) 0%,
+                var(--month-header-end) 100%);
+    color: var(--text-white);
+    padding: 18px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.month-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+                transparent,
+                var(--accent-purple),
+                transparent);
+    opacity: 0.8;
+}
+
+.year-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-primary);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+}
+
+.year-nav:hover {
+    background: var(--accent-purple);
+    border-color: var(--accent-purple);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.4);
+}
+
+.year-nav.prev {
+    left: 10px;
+}
+
+.year-nav.next {
+    right: 10px;
+}
+
+.year-nav.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+.year-nav.active:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Extra Month Styling */
+.extra-month {
+    opacity: 0.85;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Tooltip auf dem Monats-Header */
+.extra-month .month-header {
+    position: relative;
+}
+
+/* Badge direkt im Header neben dem Monatsnamen */
+.extra-month .month-header::after {
+    content: 'Zusatzmonat';
+    font-size: 10px;
+    font-weight: 500;
+    color: #ffffff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.extra-month-prev .month-header::after {
+    content: 'Vorjahr';
+}
+
+.extra-month-next .month-header::after {
+    content: 'Folgejahr';
+}
+
+/* Popup Navigation Styles */
+.nav-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(26, 35, 126, 0.95);
+    backdrop-filter: none;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: transform 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: none;
+}
+
+.nav-popup.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.nav-popup-content {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.nav-popup-month {
+    padding: 10px 15px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-weight: 500;
+}
+
+.nav-popup-month:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.nav-popup-year {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.month-header-clickable {
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.month-header-clickable:hover {
+    background: linear-gradient(135deg, #283593, #3949ab);
+}
+
+@media (max-width: 600px) {
+    .nav-popup-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .nav-popup-month {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--calendar-border);
+}
+
+.weekday {
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    padding: 6px;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid var(--calendar-day-border);
+    background: var(--calendar-day-bg);
+    color: var(--text-primary);
+    transition: transform 0.2s ease;
+    min-height: 44px;
+    padding: 4px;
+    position: relative;
+    border-radius: 6px;
+}
+
+.day:hover {
+    background: var(--bg-tertiary);
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.day.other-month {
+    color: var(--text-light);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+.day.other-month.selected {
+    background: var(--selected);
+    color: var(--text-white);
+    opacity: 0.6;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+}
+
+.day.other-month:hover {
+    transform: scale(1.02);
+    background: var(--bg-tertiary);
+    border-color: rgba(255, 255, 255, 0.2);
+    opacity: 0.6;
+}
+
+.day.weekend {
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--weekend);
+    border: 1px dashed rgba(100, 116, 139, 0.4);
+}
+
+/* Base holiday styling */
+.day.holiday {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+/* Specific holiday type colors */
+.day.holiday-bundesfeiertag {
+    background: var(--holiday-bundesfeiertag);
+}
+
+.day.holiday-landesfeiertag {
+    background: var(--holiday-landesfeiertag);
+}
+
+.day.holiday-stadtfeiertag {
+    background: var(--holiday-stadtfeiertag);
+}
+
+.day.holiday::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 4px;
+    height: 4px;
+    background: #ff5252;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 82, 82, 0.6);
+}
+
+.day.selected {
+    background: var(--selected);
+    color: var(--text-white);
+    font-weight: 600;
+    box-shadow: 0 0 0 2px var(--selected);
+}
+
+.day.selected::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, var(--accent-purple), var(--accent-blue));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.3;
+    filter: none;
+}
+
+.day.holiday.selected {
+    background: linear-gradient(135deg,
+                var(--accent-purple) 0%,
+                #ff5252 50%,
+                var(--accent-blue) 100%);
+    box-shadow: 0 0 30px rgba(255, 82, 82, 0.4),
+                0 0 25px rgba(38, 208, 206, 0.4);
+}
+
+/* Premium Holiday tooltip - ENHANCED FOR VISIBILITY */
+.day[data-holiday]:after {
+    content: attr(data-holiday);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    color: var(--text-primary);
+    padding: 10px 14px; /* Increased padding */
+    border-radius: 10px; /* Slightly larger radius */
+    border: 1px solid var(--glass-border);
+    font-size: 12px; /* Increased font size for readability */
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99999; /* Extremely high z-index to always stay on top */
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3); /* Enhanced shadow */
+    margin-bottom: 10px; /* Increased margin */
+    min-width: 120px; /* Minimum width for better appearance */
+    text-align: center;
+}
+
+.day[data-holiday]:hover:after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px); /* Slightly more offset */
+}
+
+/* Recommendations section */
+.recommendations-section {
+    margin-bottom: 25px;
+}
+
+.recommendations-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.recommendations-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+}
+
+.recommendations-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.recommendation-card {
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    border-radius: 20px;
+    box-shadow: var(--shadow-premium),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+    padding: 25px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.recommendation-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+                rgba(38, 208, 206, 0.05) 0%,
+                rgba(26, 41, 128, 0.1) 100%);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-glow),
+                var(--shadow-premium),
+                0 25px 80px rgba(0,0,0,0.5);
+}
+
+.recommendation-card:hover::before {
+    opacity: 1;
+}
+
+.recommendation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.recommendation-period {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.recommendation-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--accent-purple);
+    text-shadow: 0 0 20px rgba(38, 208, 206, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,
+                var(--accent-purple) 0%,
+                var(--accent-blue) 100%);
+    color: var(--text-primary);
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(38, 208, 206, 0.4);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+                var(--accent-blue) 0%,
+                var(--accent-purple) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-glow),
+                0 15px 40px rgba(38, 208, 206, 0.6);
+}
+
+/* Premium Sticky footer */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    color: var(--text-primary);
+    padding: 25px 20px;
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+    z-index: 1000;
+    border-top: 1px solid var(--glass-border);
+}
+
+.sticky-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+                transparent,
+                var(--accent-purple),
+                transparent);
+    opacity: 0.6;
+}
+
+.summary {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label {
+    font-weight: 500;
+}
+
+.value {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--accent-purple);
+    text-shadow: 0 0 20px rgba(38, 208, 206, 0.6);
+    position: relative;
+}
+
+.value::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    opacity: 0.5;
+}
+
+/* Enhanced Mobile Responsiveness for Header */
+@media (max-width: 768px) {
+    .new-header {
+        padding: 30px 20px;
+        border-radius: 0 0 24px 24px;
+    }
+
+    .header-top {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .logo-section {
+        gap: 15px;
+    }
+
+    .logo {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+
+    .brand-text h1 {
+        font-size: 24px;
+    }
+
+    .brand-text p {
+        font-size: 14px;
+    }
+
+    .calendar-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .hero-section {
+        margin: 30px auto;
+        padding: 30px 15px;
+        border-radius: 20px;
+    }
+
+    .hero-section h2 {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .hero-section p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .calendar-controls {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+
+    .calendar-controls h3 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .controls-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .section-divider {
+        height: 40px;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .summary {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .container {
+        padding: 15px;
+        padding-bottom: 140px;
+    }
+
+    .new-header {
+        padding: 25px 15px;
+        margin-bottom: 0;
+    }
+
+    .header-top {
+        margin-bottom: 20px;
+    }
+
+    .logo-section {
+        gap: 12px;
+    }
+
+    .brand-text h1 {
+        font-size: 22px;
+    }
+
+    .hero-section {
+        margin: 20px auto;
+        padding: 25px 15px;
+    }
+
+    .hero-section h2 {
+        font-size: 24px;
+    }
+
+    .hero-section p {
+        font-size: 14px;
+    }
+
+    .calendar-controls {
+        padding: 20px 15px;
+    }
+
+    .calendar-controls h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .dropdown-group {
+        align-items: stretch;
+    }
+
+    .app-header {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .app-header h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .month-view:hover {
+        /* No scaling on tablet/desktop */
+    }
+
+    .day {
+        font-size: 12px;
+    }
+
+    .sticky-footer {
+        padding: 20px 15px;
+    }
+
+    .value {
+        font-size: 24px;
+    }
+
+    .recommendations-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .recommendation-card {
+        padding: 20px;
+    }
+
+    .section-divider {
+        height: 30px;
+    }
+}
+
+/* Tablet styles */
+@media (max-width: 900px) {
+    .month-view {
+        border-radius: 16px;
+    }
+
+    .month-header {
+        padding: 16px;
+    }
+}
+
+/* Holiday tooltip styles - ENHANCED VERSION */
+.day[data-holiday] {
+    position: relative;
+    cursor: help;
+    z-index: 10; /* Ensure day element has proper stacking */
+}
+
+/* Alternative approach: Boost day element z-index on hover */
+.day[data-holiday]:hover {
+    z-index: 1000;
+    position: relative;
+}
+
+/* Enable holiday tooltips */
+.day[data-holiday]:hover::after {
+    content: attr(data-holiday);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--calendar-bg);
+    backdrop-filter: none;
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 99999; /* Extremely high z-index to always stay on top */
+    border: 1px solid var(--calendar-border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    pointer-events: none;
+    opacity: 1;
+}
+
+/* Enhanced tooltip positioning for edge cases */
+.day[data-holiday]:nth-child(1):after,
+.day[data-holiday]:nth-child(2):after,
+.day[data-holiday]:nth-child(3):after {
+    left: 0;
+    transform: none;
+}
+
+.day[data-holiday]:nth-child(n+5):nth-child(-n+7):after {
+    right: 0;
+    left: auto;
+    transform: none;
+}
+
+/* Tooltip arrow pointing up */
+.day[data-holiday]:hover:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--glass-bg);
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.day[data-holiday]:hover:after {
+    opacity: 1;
+}
+
+.day[data-holiday]:hover:before {
+    opacity: 1;
+}
+
+/* Performance optimized animations */
+* {
+    will-change: auto;
+}
+
+.calendar-day:hover,
+.btn:hover,
+.dropdown select:hover {
+    will-change: transform;
+}
+
+/* Loading animations and premium effects */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(38, 208, 206, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(38, 208, 206, 0.6);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .month-view:hover {
+        transform: none;
+    }
+
+    .day:hover {
+        /* No scaling on mobile */
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --glass-bg: rgba(0, 0, 0, 0.9);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+    }
+}
+
+/* Focus states for accessibility */
+.dropdown-group select:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
+.year-nav:focus,
+.day:focus {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
+}
+
+/* Premium scroll styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-deep);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+}
+
+/* MODULE 6: URLAUBSEMPFEHLUNGS-KARTEN */
+
+/* Trigger Section */
+.recommendations-trigger-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.recommendations-trigger-section h2 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.recommendations-trigger-section p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.open-recommendations-btn {
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 20px rgba(38, 208, 206, 0.3);
+}
+
+.open-recommendations-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(38, 208, 206, 0.5);
+}
+
+/* Modal Styles */
+.recommendations-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.recommendations-modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: none;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 1400px;
+    width: 100%;
+    max-height: 90vh;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 30px 40px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.modal-header h2 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.modal-header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin: 0;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-filters {
+    padding: 20px 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.selection-summary {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.summary-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.summary-stats .stat {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.summary-stats strong {
+    color: #26d0ce;
+    font-weight: 600;
+}
+
+.clear-selection-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.clear-selection-btn.active {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+}
+
+.clear-selection-btn.active:hover {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: #ef4444;
+}
+
+.clear-selection-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.apply-selection-btn {
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.apply-selection-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+}
+
+.apply-selection-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.4);
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px 40px;
+}
+
+.modal-recommendation-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.recommendations-filters {
+    margin-bottom: 30px;
+}
+
+.recommendations-filters select {
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 14px;
+    min-width: 250px;
+    transition: all 0.2s ease;
+}
+
+.recommendations-filters select:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.recommendations-filters select option {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.recommendation-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.recommendation-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: left;
+    transition: transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.recommendation-card.selected {
+    background: rgba(38, 208, 206, 0.1);
+    border-color: #26d0ce;
+    box-shadow: 0 0 0 2px rgba(38, 208, 206, 0.3);
+}
+
+.recommendation-card.conflicted {
+    background: rgba(244, 67, 54, 0.1);
+    border-color: #f44336;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.recommendation-card.conflicted::after {
+    content: '⚠️ Konflikt';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #f44336;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.recommendation-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--holiday-bundesfeiertag), var(--holiday-landesfeiertag));
+}
+
+.recommendation-card.efficiency-high::before {
+    background: linear-gradient(90deg, #26d0ce, #00bcd4);
+}
+
+.recommendation-card.efficiency-mega::before {
+    background: linear-gradient(90deg, #9c27b0, #e91e63);
+}
+
+.recommendation-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.efficiency-badge {
+    background: rgba(38, 208, 206, 0.2);
+    color: #26d0ce;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.efficiency-badge.high {
+    background: rgba(38, 208, 206, 0.2);
+    color: #26d0ce;
+}
+
+.efficiency-badge.medium {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ff9800;
+}
+
+.efficiency-badge.mega {
+    background: rgba(156, 39, 176, 0.2);
+    color: #9c27b0;
+}
+
+.card-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 300;
+    color: #26d0ce;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+}
+
+.card-period {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+.card-holidays {
+    margin-bottom: 20px;
+}
+
+.card-holidays h4 {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+}
+
+.holiday-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.holiday-tag {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.add-to-calendar-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-to-calendar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.4);
+}
+
+.preview-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preview-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.selection-indicator {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #26d0ce;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .recommendation-cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendations-cards-section {
+        padding: 30px 15px;
+    }
+}
+
+/* ============================================
+   MODULE: KOMPAKTES LAYOUT (Compact Layout)
+   - Reduziert Scroll-Aufwand
+   - Kalender sofort sichtbar
+   - Sticky Footer mit Countern
+   ============================================ */
+
+/* Header Fade-In Animation */
+@keyframes headerFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 1. KOMPAKTER HEADER - Volle Breite am oberen Rand */
+.compact-header {
+    /* === HEADER HERO IMAGE === */
+    animation: headerFadeIn 0.3s ease-out forwards;
+    background-color: #1a2a3a; /* Fallback während Bild lädt */
+    background-image:
+        linear-gradient(
+            135deg,
+            rgba(10, 22, 40, 0.7) 0%,
+            rgba(20, 40, 70, 0.6) 50%,
+            rgba(10, 22, 40, 0.7) 100%
+        ),
+        url('urlaub2.jpg');
+    background-position: center 35%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* === END HERO IMAGE === */
+    padding: 16px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Linke Seite */
+.logo-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    text-decoration: none;
+    order: 1;
+}
+
+/* Mitte - Dropdowns zentriert */
+.controls-compact {
+    order: 2;
+}
+
+/* Rechte Seite - Reisetipps Button */
+.header-row .travel-tips-btn {
+    order: 3;
+}
+
+.header-spacer {
+    flex: 1;
+    order: 4;
+}
+
+/* Logo als Link - kein Unterstrich */
+a.logo-compact,
+a.logo-compact:hover,
+a.logo-compact:visited {
+    text-decoration: none;
+}
+
+/* Zurück-Navigation für Unterseiten - Modern Minimal */
+.back-nav {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.back-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 0;
+    background: transparent;
+    transition: all 0.25s ease;
+}
+
+.back-nav-link:hover {
+    color: #26d0ce;
+    text-decoration: none;
+}
+
+.back-nav-link:hover .arrow {
+    transform: translateX(-4px);
+}
+
+.back-nav-link .arrow {
+    font-size: 16px;
+    transition: transform 0.25s ease;
+    opacity: 0.7;
+}
+
+.back-nav-link:hover .arrow {
+    opacity: 1;
+}
+
+.logo-img {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.text-holiday {
+    color: #26d0ce;
+}
+
+.text-boost {
+    color: #e8a54b;
+}
+
+.controls-compact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 2;
+    justify-content: center;
+}
+
+.controls-compact select {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--bg-tertiary);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Dropdown-Optionen Styling */
+.controls-compact select option {
+    background: var(--bg-primary);
+    color: #ffffff;
+    padding: 10px;
+}
+
+.controls-compact select:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--brand-primary);
+}
+
+.controls-compact select:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.2);
+}
+
+.btn-clear {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-clear:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #f87171;
+}
+
+/* Settings Button */
+.btn-settings {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(38, 208, 206, 0.1);
+    color: var(--brand-primary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-settings:hover {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: var(--brand-primary);
+}
+
+.settings-icon {
+    font-size: 18px;
+}
+
+/* ============================================
+   MODULE 9: ARBEITSWOCHE-KONFIGURATION
+   - Flexible Arbeitswoche für alle Arbeitsmodelle
+   - Presets für gängige Arbeitszeiten
+   ============================================ */
+
+/* Workweek Popup */
+.workweek-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.workweek-popup.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.workweek-popup-content {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.workweek-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.workweek-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.close-popup-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-popup-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+.workweek-description {
+    margin: 0 0 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Day Checkboxes */
+.workweek-days {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.day-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.day-checkbox input {
+    display: none;
+}
+
+.day-label {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.day-checkbox input:checked + .day-label {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.day-checkbox:hover .day-label {
+    border-color: var(--brand-primary);
+}
+
+/* Presets */
+.workweek-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.presets-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.preset-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+    background: rgba(38, 208, 206, 0.15);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.preset-btn.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #0d1117;
+}
+
+/* Info Box */
+.workweek-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(232, 165, 75, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid var(--brand-accent);
+}
+
+.workweek-info .info-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.workweek-info span:last-child {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Confirm Button */
+.workweek-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.confirm-workweek-btn {
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.confirm-workweek-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.4);
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 480px) {
+    .workweek-popup-content {
+        padding: 20px;
+    }
+
+    .workweek-days {
+        gap: 6px;
+    }
+
+    .day-label {
+        width: 38px;
+        height: 38px;
+        font-size: 11px;
+    }
+
+    .preset-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+
+/* 2. KOMPAKTE LEGENDE */
+.legend-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 4px 0;
+}
+
+.legend-compact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 24px;
+    background: rgba(10, 22, 40, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.legend-compact .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.legend-compact .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.legend-compact .dot.selected {
+    background: var(--ausgewaehlt);
+}
+
+.legend-compact .dot.bundesfeiertag {
+    background: var(--holiday-bundesfeiertag);
+}
+
+.legend-compact .dot.landesfeiertag {
+    background: var(--holiday-landesfeiertag);
+}
+
+.legend-compact .dot.stadtfeiertag {
+    background: var(--holiday-stadtfeiertag);
+}
+
+.legend-compact .dot.weekend {
+    background: rgba(100, 116, 139, 0.5);
+    border: 1px dashed rgba(100, 116, 139, 0.8);
+}
+
+/* 3. KALENDER MAIN BEREICH */
+.calendar-main {
+    padding: 0 20px 100px 20px; /* Oben direkt an Legende, unten Platz für Sticky Footer */
+}
+
+/* 4. NEUER STICKY FOOTER - Gleiches Design wie Header */
+.sticky-footer-new {
+    animation: headerFadeIn 0.3s ease-out forwards;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    /* === FOOTER HERO IMAGE === */
+    background:
+        linear-gradient(
+            135deg,
+            rgba(10, 22, 40, 0.7) 0%,
+            rgba(20, 40, 70, 0.6) 50%,
+            rgba(10, 22, 40, 0.7) 100%
+        ),
+        url('urlaub2.jpg') center 45% / cover no-repeat,
+        #1a2a3a !important; /* Fallback-Farbe */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* === END HERO IMAGE === */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 20px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    z-index: 99999;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.footer-stats {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    min-width: 90px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stat-box.highlight {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: rgba(38, 208, 206, 0.4);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.2);
+}
+
+.stat-box.highlight .stat-number {
+    color: #26d0ce;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #f1f5f9;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+/* Modern Tooltip */
+.has-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.has-tooltip .tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #f1f5f9;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: nowrap;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.has-tooltip .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: #0f172a;
+}
+
+.has-tooltip:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Perioden-Tooltip (mehrzeilig) */
+.tooltip-periods {
+    white-space: normal;
+    min-width: 180px;
+    max-width: 280px;
+    text-align: left;
+}
+
+.tooltip-periods .period-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-periods .period-item:last-child {
+    border-bottom: none;
+}
+
+.tooltip-periods .period-date {
+    color: #26d0ce;
+    font-weight: 500;
+}
+
+.tooltip-periods .period-days {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.tooltip-periods .no-periods {
+    color: #94a3b8;
+    font-style: italic;
+    text-align: center;
+}
+
+.recommendations-btn {
+    background: linear-gradient(135deg, #1a5a58 0%, #147a78 100%);
+    color: white;
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.recommendations-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.25);
+    background: linear-gradient(135deg, #1d6664 0%, #1a8a88 100%);
+    border-color: rgba(38, 208, 206, 0.5);
+}
+
+.recommendations-btn:active {
+    transform: translateY(0);
+}
+
+/* 6. FOOTER-LINKS (vor dem Sticky Footer) */
+.footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    margin-top: 0;
+    margin-bottom: 75px; /* Platz für sticky-footer (ca. 70px hoch) */
+    border-top: none;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--brand-primary);
+}
+
+.footer-links .divider {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* ============================================
+   MODULE 7: SUBPAGES (About, Impressum, Datenschutz)
+   - Einheitliches Design für Textseiten
+   - Responsive Layout
+   ============================================ */
+
+/* 7.1. ABOUT CONTENT */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.about-article {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-article h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 7.2. ABOUT SECTIONS */
+.about-section {
+    margin-bottom: 30px;
+}
+
+.about-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 12px;
+}
+
+.about-section p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.about-section strong {
+    color: var(--text-primary);
+}
+
+/* 7.3. FEATURE LIST */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.feature-list li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.feature-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary);
+    font-weight: bold;
+}
+
+.feature-list li strong {
+    color: var(--text-primary);
+}
+
+/* 7.4. BACK LINK */
+.back-link {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-back {
+    display: inline-block;
+    color: var(--brand-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: 1px solid var(--brand-primary);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+    background: var(--brand-primary);
+    color: var(--bg-primary);
+}
+
+/* 7.5. RESPONSIVE SUBPAGES */
+@media (max-width: 768px) {
+    .about-content {
+        padding: 20px 15px;
+    }
+
+    .about-article {
+        padding: 25px 20px;
+    }
+
+    .about-article h1 {
+        font-size: 24px;
+    }
+
+    .about-section h2 {
+        font-size: 18px;
+    }
+}
+
+/* 5. RESPONSIVE ANPASSUNGEN FÜR KOMPAKTES LAYOUT */
+@media (max-width: 768px) {
+    .header-row {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo-compact {
+        order: 1;
+    }
+
+    .admin-link {
+        order: 2;
+    }
+
+    .controls-compact {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+    }
+
+    .controls-compact select {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .legend-compact {
+        gap: 12px;
+        padding: 8px 12px;
+    }
+
+    .legend-compact .legend-item {
+        font-size: 10px;
+    }
+
+    .legend-compact .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .sticky-footer-new {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px 15px;
+    }
+
+    .footer-stats {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .stat-box {
+        padding: 6px 12px;
+        min-width: 70px;
+    }
+
+    .stat-number {
+        font-size: 20px;
+    }
+
+    .stat-label {
+        font-size: 9px;
+    }
+
+    .recommendations-btn {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .calendar-main {
+        padding: 10px;
+        padding-bottom: 150px; /* Mehr Platz für Mobile Footer */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 16px;
+    }
+
+    .controls-compact {
+        flex-wrap: wrap;
+    }
+
+    .controls-compact select {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+/* 7.5. KONTAKT PAGE */
+.contact-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.contact-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+/* Linke Spalte: Kontaktinfos */
+.contact-info h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 15px;
+}
+
+.contact-intro {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.contact-email-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.contact-email-box .email-icon {
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+.contact-email-box a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.contact-email-box a:hover {
+    color: var(--brand-primary);
+}
+
+.contact-topics {
+    margin-bottom: 30px;
+}
+
+.contact-topics h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.contact-topics ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-topics li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.contact-topics li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary);
+}
+
+.contact-branding {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.contact-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.contact-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-brand-text .brand-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.contact-brand-text .brand-tagline {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Rechte Spalte: Kontaktformular */
+.contact-form-container h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 20px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.contact-form label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: var(--text-light);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.1);
+}
+
+.contact-form select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 35px;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(229, 62, 62, 0.4);
+}
+
+.contact-submit-btn .btn-icon {
+    font-size: 16px;
+}
+
+.form-hint {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+/* Formular Statusmeldungen */
+.form-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: opacity 0.3s ease;
+}
+
+.form-message-success {
+    background: linear-gradient(135deg, rgba(72, 187, 120, 0.15), rgba(56, 161, 105, 0.1));
+    border: 1px solid rgba(72, 187, 120, 0.4);
+    color: #276749;
+}
+
+.form-message-error {
+    background: linear-gradient(135deg, rgba(245, 101, 101, 0.15), rgba(229, 62, 62, 0.1));
+    border: 1px solid rgba(245, 101, 101, 0.4);
+    color: #c53030;
+}
+
+.form-message .message-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.form-message-success .message-icon {
+    color: #48bb78;
+}
+
+.form-message-error .message-icon {
+    color: #f56565;
+}
+
+.contact-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Zurück Button */
+.contact-back-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(38, 208, 206, 0.4);
+}
+
+/* 7.6. KONTAKT RESPONSIVE */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .contact-title {
+        font-size: 26px;
+    }
+
+    .contact-branding {
+        margin-top: 20px;
+    }
+}
+
+/* ============================================
+   MODULE 8: REISETIPPS (Travel Tips)
+   - Automatische Reiseziel-Empfehlungen
+   - Affiliate-Links Integration
+   - Pulsierender Button im Header
+   ============================================ */
+
+/* 8.1. REISETIPPS BUTTON IM HEADER */
+.travel-tips-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+/* Button versteckt aber behält Platz (verhindert Layout-Verschiebung) */
+.travel-tips-btn.hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    display: flex !important; /* Überschreibt globale .hidden Regel */
+}
+
+.travel-tips-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.4);
+}
+
+.travel-tips-btn.pulse {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(38, 208, 206, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(38, 208, 206, 0.8), 0 0 30px rgba(232, 165, 75, 0.6);
+    }
+}
+
+.travel-tips-icon {
+    font-size: 18px;
+}
+
+.travel-tips-text {
+    white-space: nowrap;
+}
+
+.travel-tips-btn:not(.hidden) {
+    display: flex !important;
+}
+
+/* 8.2. REISETIPPS MODAL */
+.travel-tips-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.travel-tips-modal.hidden {
+    display: none;
+}
+
+.travel-tips-modal .modal-content {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* 8.3. TRAVEL INFO BOX */
+.travel-tips-info {
+    padding: 15px 25px;
+    background: var(--bg-tertiary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.travel-info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.travel-info-box .info-icon {
+    font-size: 18px;
+}
+
+#insurance-hint {
+    background: rgba(232, 165, 75, 0.15);
+    border: 1px solid rgba(232, 165, 75, 0.3);
+    color: var(--brand-accent);
+}
+
+/* 8.4. TRAVEL DESTINATIONS */
+.travel-destinations {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
+.destination-card {
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.destination-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--brand-primary);
+    box-shadow: 0 8px 25px rgba(38, 208, 206, 0.2);
+}
+
+.destination-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.destination-emoji {
+    font-size: 32px;
+}
+
+.destination-info h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.destination-info .country {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.destination-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.meta-tag.climate-warm {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}
+
+.meta-tag.climate-mild {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+}
+
+.meta-tag.climate-kalt {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+.meta-tag.climate-tropisch {
+    background: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
+}
+
+.destination-tip {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(232, 165, 75, 0.1);
+    border-left: 3px solid var(--brand-accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--brand-accent);
+}
+
+/* 8.5. AFFILIATE SECTION */
+.affiliate-section {
+    padding: 20px 25px;
+    background: var(--bg-tertiary);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.affiliate-section h3 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.affiliate-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.affiliate-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.affiliate-link:hover {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    transform: translateY(-2px);
+}
+
+.affiliate-link .icon {
+    font-size: 18px;
+}
+
+/* 8.6. TRAVEL TIPS FOOTER */
+.travel-tips-footer {
+    padding: 15px 25px;
+    background: var(--bg-primary);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+}
+
+.all-tips-link {
+    color: var(--brand-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.all-tips-link:hover {
+    color: var(--brand-accent);
+}
+
+/* 8.7. REISETIPPS SEITE */
+.travel-tips-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px 40px;
+}
+
+.travel-tips-page .page-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.travel-tips-page .page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.travel-tips-page .page-header p {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+/* Personalisierte Empfehlungen (wenn von Planer kommend) */
+.personalized-section {
+    margin-bottom: 40px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.08), rgba(232, 165, 75, 0.05));
+    border-radius: 16px;
+    border: 1px solid rgba(38, 208, 206, 0.2);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.insurance-hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 15px 20px;
+    background: rgba(232, 165, 75, 0.15);
+    border-radius: 10px;
+    border-left: 4px solid var(--brand-accent);
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.insurance-hint .hint-icon {
+    font-size: 24px;
+}
+
+.no-destinations {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+}
+
+.no-destinations p {
+    margin: 5px 0;
+}
+
+/* Monats-Filter */
+.month-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+}
+
+.month-btn {
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #94a3b8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.month-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.month-btn.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+}
+
+/* 8.7.2. ERWEITERTE FILTER-LEISTE */
+.filter-bar {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filter-group {
+    margin-bottom: 16px;
+}
+
+.filter-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+/* Gemeinsame Filter-Button Styles */
+.climate-filter,
+.region-filter,
+.duration-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.climate-btn,
+.region-btn,
+.duration-btn {
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #94a3b8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.climate-btn:hover,
+.region-btn:hover,
+.duration-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.climate-btn.active,
+.region-btn.active,
+.duration-btn.active,
+.price-btn.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+}
+
+/* Preis-Filter */
+.price-filter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.price-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.price-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+/* Aktive Filter Tags */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.active-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(38, 208, 206, 0.15);
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--brand-primary);
+}
+
+.remove-filter {
+    background: none;
+    border: none;
+    color: var(--brand-primary);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.7;
+}
+
+.remove-filter:hover {
+    opacity: 1;
+}
+
+.clear-all-filters {
+    padding: 6px 12px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    color: #ef4444;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clear-all-filters:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+/* 8.7.3. AFFILIATE HERO SECTION - EYE CATCHING */
+.affiliate-hero {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(38, 208, 206, 0.2);
+    overflow: hidden;
+}
+
+.affiliate-hero-glow {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(38, 208, 206, 0.3) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.affiliate-hero-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.affiliate-hero-text {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.affiliate-hero-badge {
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.affiliate-hero-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.affiliate-hero-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.affiliate-hero-buttons .affiliate-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.affiliate-hero-buttons .affiliate-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* 8.7.4. MODERNE FILTER-LEISTE */
+.browse-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.browse-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0;
+}
+
+.browse-count {
+    font-size: 12px;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.filter-modern {
+    margin-bottom: 15px;
+}
+
+/* Monats-Pills Scroll */
+.filter-months-scroll {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.filter-months-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.month-pill {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.month-pill:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.month-pill.active {
+    background: linear-gradient(135deg, var(--brand-primary), #1a9997);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.3);
+}
+
+/* Filter Dropdowns */
+.filter-selects {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    padding: 8px 32px 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.filter-select:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+}
+
+.filter-select option {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+/* Aktive Filter Modern */
+.active-filters-modern {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.active-filters-modern:empty {
+    display: none;
+}
+
+/* Ergebnis-Zähler */
+.results-count {
+    text-align: center;
+    padding: 12px;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.results-count span {
+    color: var(--brand-primary);
+    font-weight: 600;
+}
+
+/* No Results mit Button */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.no-results p {
+    margin: 5px 0;
+    color: #94a3b8;
+}
+
+.btn-clear-filters {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: var(--brand-primary);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-clear-filters:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.4);
+}
+
+/* Destinations Grid */
+/* 8.8. REISETIPPS SEITEN-ELEMENTE */
+/* 8.8.1. Period Sections für mehrere Urlaubszeiträume */
+.period-section {
+    margin-bottom: 30px;
+}
+
+.period-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(38, 208, 206, 0.1);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--brand-primary);
+}
+
+.period-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.period-days {
+    font-size: 14px;
+    color: var(--brand-primary);
+    font-weight: 500;
+    padding: 4px 10px;
+    background: rgba(38, 208, 206, 0.15);
+    border-radius: 12px;
+}
+
+.period-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    margin: 30px 0;
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.destination-card-large {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.destination-card-large:hover {
+    transform: translateY(-5px);
+    border-color: var(--brand-primary);
+    box-shadow: 0 10px 30px rgba(38, 208, 206, 0.2);
+}
+
+.destination-card-large .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.destination-card-large .card-emoji {
+    font-size: 42px;
+    flex-shrink: 0;
+}
+
+.destination-card-large .card-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.destination-card-large .card-title h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination-card-large .card-country {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* 8.6.2. PREIS-INDIKATOR */
+.destination-card-large .card-price {
+    flex-shrink: 0;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.destination-card-large .card-price.price-1 {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.destination-card-large .card-price.price-2 {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.destination-card-large .card-price.price-3 {
+    background: rgba(249, 115, 22, 0.15);
+    color: #fb923c;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.destination-card-large .card-description {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.destination-card-large .card-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.destination-card-large .card-months {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.destination-card-large .months-label {
+    color: #64748b;
+}
+
+.destination-card-large .months-value {
+    color: var(--brand-primary);
+    font-weight: 500;
+}
+
+/* 8.8.2. BOOKING BUTTONS (Affiliate-Links pro Destination) */
+.booking-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+}
+
+.booking-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.booking-btn.flight-btn {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #ffffff;
+}
+
+.booking-btn.flight-btn:hover {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+
+.booking-btn.hotel-btn {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #ffffff;
+}
+
+.booking-btn.hotel-btn:hover {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.booking-btn.activity-btn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #ffffff;
+}
+
+.booking-btn.activity-btn:hover {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* Responsive für Booking Buttons */
+@media (max-width: 480px) {
+    .booking-buttons {
+        flex-direction: column;
+    }
+
+    .booking-btn {
+        justify-content: center;
+        padding: 10px 14px;
+    }
+}
+
+/* Affiliate CTA Section */
+.affiliate-cta {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-primary));
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.affiliate-cta h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.affiliate-cta p {
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.affiliate-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.affiliate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.affiliate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.affiliate-btn.flights:hover {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.affiliate-btn.hotels:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.affiliate-btn.activities:hover {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+.affiliate-btn.insurance:hover {
+    background: var(--brand-accent);
+    border-color: var(--brand-accent);
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #94a3b8;
+    padding: 40px;
+}
+
+/* 8.9. RESPONSIVE FÜR REISETIPPS */
+@media (max-width: 768px) {
+    .travel-tips-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .travel-tips-btn .travel-tips-text {
+        display: none;
+    }
+
+    .travel-tips-icon {
+        font-size: 20px;
+    }
+
+    .travel-destinations {
+        grid-template-columns: 1fr;
+        max-height: 35vh;
+    }
+
+    .affiliate-links {
+        flex-direction: column;
+    }
+
+    .affiliate-link {
+        justify-content: center;
+    }
+
+    .travel-tips-page {
+        padding: 90px 15px 30px;
+    }
+
+    .travel-tips-page .page-header h1 {
+        font-size: 24px;
+    }
+
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .month-filter {
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .month-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .affiliate-buttons {
+        flex-direction: column;
+    }
+
+    .affiliate-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .period-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .period-header h4 {
+        font-size: 14px;
+    }
+}
+
+/* ========================================
+   MODULE 9: TEILEN & EXPORT STYLES
+   ======================================== */
+
+/* Teilen-Button im Footer */
+.share-footer-btn {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    margin-left: 10px;
+}
+
+.share-footer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.share-footer-btn:active {
+    transform: translateY(0);
+}
+
+.share-btn-icon {
+    font-size: 16px;
+}
+
+/* Teilen-Modal */
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.share-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.share-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.share-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.share-modal.visible .share-modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.share-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.share-modal-header h2 {
+    color: var(--text-primary);
+    font-size: 20px;
+    margin: 0;
+}
+
+.share-close-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-close-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.share-modal-body {
+    padding: 25px;
+}
+
+.share-info {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.share-info strong {
+    color: var(--brand-primary);
+}
+
+.share-link-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.share-link-container input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: monospace;
+}
+
+.btn-copy {
+    background: var(--brand-primary);
+    border: none;
+    color: var(--bg-primary);
+    width: 50px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-copy:hover {
+    background: var(--brand-secondary);
+    transform: scale(1.05);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    flex: 1;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 15px 10px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+}
+
+.share-btn.whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+}
+
+.share-btn.native {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+.share-icon {
+    font-size: 24px;
+}
+
+.share-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 25px 0;
+}
+
+.share-modal-body h3 {
+    color: var(--text-primary);
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.export-info {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.btn-ical {
+    width: 100%;
+    background: linear-gradient(135deg, var(--brand-accent), #d97706);
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-ical:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 165, 75, 0.4);
+}
+
+/* Benachrichtigung */
+.share-notification {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    z-index: 10001;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.share-notification.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 600px) {
+    .share-footer-btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .share-btn-text {
+        display: none;
+    }
+
+    .share-modal-content {
+        max-height: 85vh;
+        margin: 10px;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
+    .share-btn {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .share-icon {
+        font-size: 20px;
+    }
+}
+
+/* ============================================
+   MODULE 10: SOCIAL MEDIA LINKS
+   - Moderne Icon-Leiste im Footer
+   - Elegante Glow-Effekte
+   ============================================ */
+
+/* 10.1. SOCIAL LINKS CONTAINER */
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 10.2. EINZELNE SOCIAL LINKS */
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-light);
+    position: relative;
+    transition: color 0.4s ease, transform 0.3s ease;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.social-link svg {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease, filter 0.4s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.social-link:hover::before {
+    opacity: 1;
+}
+
+.social-link:hover svg {
+    transform: scale(1.05);
+}
+
+/* 10.3. PLATTFORM-SPEZIFISCHE STYLES */
+
+/* Instagram */
+.social-instagram::before {
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
+}
+
+.social-instagram:hover {
+    color: #fff;
+}
+
+/* TikTok */
+.social-tiktok::before {
+    background: #000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5),
+                -2px 0 10px rgba(37, 244, 238, 0.3),
+                2px 0 10px rgba(254, 44, 85, 0.3);
+}
+
+.social-tiktok:hover {
+    color: #fff;
+}
+
+/* Pinterest */
+.social-pinterest::before {
+    background: #e60023;
+    box-shadow: 0 4px 15px rgba(230, 0, 35, 0.4);
+}
+
+.social-pinterest:hover {
+    color: #fff;
+}
+
+/* YouTube */
+.social-youtube::before {
+    background: #ff0000;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+}
+
+.social-youtube:hover {
+    color: #fff;
+}
+
+/* 10.4. RESPONSIVE ANPASSUNGEN */
+@media (max-width: 768px) {
+    .social-links {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        padding-left: 0;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 10px;
+    }
+
+    .social-link {
+        width: 42px;
+        height: 42px;
+    }
+
+    .social-link svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ========================================
+   MODUL: MOBILE RESPONSIVE (iPhone SE 375px)
+   Breakpoint: 430px für kleine Smartphones
+   ======================================== */
+
+/* Mobile Navigation - standardmäßig versteckt */
+.mobile-calendar-nav {
+    display: none;
+}
+
+/* Teilen-Button im Header - standardmäßig versteckt (nur auf Mobile sichtbar) */
+.share-header-btn {
+    display: none;
+}
+
+@media (max-width: 430px) {
+    /* Container - EDGE TO EDGE - MAXIMALE BREITE */
+    .container {
+        padding: 0 !important;
+        padding-top: 120px !important; /* Header hat 2 Zeilen: Logo + Dropdowns */
+        padding-bottom: 0 !important;
+    }
+
+    /* Header - ULTRA MINIMAL */
+    .compact-header {
+        padding: 2px 6px !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .header-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px;
+        width: 100%;
+        padding: 0 !important;
+    }
+
+    /* Logo oben links - SEHR GROSS */
+    .logo-compact {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        order: 1;
+    }
+
+    .logo-img {
+        width: 62px;
+        height: 62px;
+    }
+
+    .logo-text {
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    /* Header Spacer - füllt Platz zwischen Logo und Buttons */
+    .header-spacer {
+        display: block;
+        flex: 1 1 auto;
+        order: 2;
+    }
+
+    /* Reisetipps-Button RECHTS (vor Teilen) */
+    .travel-tips-btn {
+        padding: 6px 8px;
+        font-size: 11px;
+        height: 32px;
+        border-radius: 8px;
+        order: 3;
+        flex-shrink: 0;
+    }
+
+    .travel-tips-btn .travel-tips-text {
+        display: inline !important;
+        font-size: 11px;
+        text-decoration: none !important;
+    }
+
+    .travel-tips-btn .travel-tips-icon {
+        font-size: 14px;
+    }
+
+    /* ========================================
+       REISETIPPS-SEITE MOBILE OPTIMIERUNG
+       ======================================== */
+
+    /* Container auf ALLEN Unterseiten (haben .back-nav): KEIN padding-top */
+    .container:has(.back-nav) {
+        padding-top: 0 !important;
+    }
+
+    /* Zurück-Navigation DIREKT unter Header */
+    .back-nav {
+        padding: 4px 10px !important;
+        margin-top: 70px !important; /* Header-Höhe auf Reisetipps-Seite (Logo 62px + Padding) */
+        margin-bottom: 0 !important;
+        position: relative;
+        top: 0;
+    }
+
+    .back-nav-link {
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    /* Hauptbereich - KEIN extra Padding oben */
+    .travel-tips-page {
+        padding: 0 10px 20px !important;
+        margin-top: 0 !important;
+    }
+
+    /* Page Header kompakter */
+    .travel-tips-page .page-header {
+        margin-bottom: 8px;
+        padding-top: 0 !important;
+        text-align: center;
+    }
+
+    .travel-tips-page .page-header h1 {
+        font-size: 18px !important;
+        margin: 0 0 2px 0 !important;
+    }
+
+    .travel-tips-page .page-header p {
+        font-size: 11px;
+        line-height: 1.3;
+        margin: 0;
+    }
+
+    /* Affiliate Hero kompakter */
+    .affiliate-hero {
+        padding: 10px !important;
+        margin-bottom: 10px !important;
+        margin-top: 0 !important;
+        border-radius: 10px;
+    }
+
+    .affiliate-hero-content {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .affiliate-hero-text {
+        text-align: center;
+    }
+
+    .affiliate-hero-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+
+    .affiliate-hero-title {
+        font-size: 14px !important;
+        margin-top: 2px !important;
+    }
+
+    .affiliate-hero-buttons {
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .affiliate-hero-buttons .affiliate-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+        flex: 1 1 45%;
+        min-width: 0;
+    }
+
+    /* Personalisierte Sektion kompakter */
+    .personalized-section {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .period-card {
+        padding: 10px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .period-header {
+        margin-bottom: 6px !important;
+    }
+
+    .period-header h3 {
+        font-size: 14px !important;
+    }
+
+    /* Reiseziel-Karten kompakter */
+    .destinations-grid {
+        gap: 8px !important;
+    }
+
+    .destination-card {
+        padding: 10px !important;
+        border-radius: 10px !important;
+    }
+
+    .destination-card .destination-header {
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    .destination-card .destination-icon {
+        font-size: 24px;
+    }
+
+    .destination-card .destination-name {
+        font-size: 14px !important;
+    }
+
+    .destination-card .destination-country {
+        font-size: 11px;
+    }
+
+    .destination-card .destination-desc {
+        font-size: 11px;
+        line-height: 1.3;
+        margin-bottom: 6px;
+    }
+
+    .destination-card .destination-tags {
+        gap: 4px;
+    }
+
+    .destination-card .tag {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+
+    .destination-card .price-indicator {
+        font-size: 12px;
+    }
+
+    /* Große Reiseziel-Karten (in period-cards) kompakter */
+    .destination-card-large {
+        padding: 12px !important;
+        border-radius: 10px !important;
+    }
+
+    .destination-card-large .card-header {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .destination-card-large .destination-icon-large {
+        font-size: 28px;
+    }
+
+    .destination-card-large .destination-name-large {
+        font-size: 15px !important;
+    }
+
+    .destination-card-large .destination-country-large {
+        font-size: 11px;
+    }
+
+    .destination-card-large .card-description {
+        font-size: 11px;
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+
+    .destination-card-large .card-footer {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .destination-card-large .tag {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+
+    /* Browse Section kompakter */
+    .browse-header {
+        margin-bottom: 6px;
+        padding: 0 4px;
+    }
+
+    .browse-title {
+        font-size: 14px;
+    }
+
+    /* Filter Pills - ZWEI-ZEILEN GRID */
+    .filter-months-scroll {
+        display: grid !important;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        padding: 6px 0;
+        overflow-x: visible !important;
+    }
+
+    .month-pill {
+        padding: 6px 4px;
+        font-size: 10px;
+        text-align: center;
+        white-space: nowrap;
+        min-width: 0;
+    }
+
+    /* "Alle" Button etwas breiter */
+    .month-pill[data-month="all"] {
+        font-weight: 600;
+    }
+
+    /* ========================================
+       SHARE MODAL - KOMPAKT FÜR MOBILE
+       ======================================== */
+    .share-modal {
+        padding: 10px;
+    }
+
+    .share-modal-content {
+        border-radius: 16px;
+    }
+
+    .share-modal-header {
+        padding: 12px 15px;
+    }
+
+    .share-modal-header h2 {
+        font-size: 16px;
+    }
+
+    .share-close-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .share-modal-body {
+        padding: 12px 15px;
+    }
+
+    .share-info {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .share-link-container {
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .share-link-container input {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .btn-copy {
+        width: 40px;
+        font-size: 14px;
+    }
+
+    .share-buttons {
+        gap: 6px;
+    }
+
+    .share-btn {
+        padding: 10px 8px;
+        font-size: 11px;
+        border-radius: 10px;
+        min-width: 80px;
+    }
+
+    .share-icon {
+        font-size: 18px;
+    }
+
+    .share-divider {
+        margin: 12px 0;
+    }
+
+    .share-modal-body h3 {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .export-info {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+
+    .btn-ical {
+        padding: 10px 15px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    /* Compact Header maximal kompakt */
+    .compact-header {
+        padding: 4px 8px !important;
+        min-height: auto !important;
+        height: auto !important;
+    }
+
+    /* Teilen-Button im Header - LILANES DESIGN wie Footer */
+    .share-header-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
+        color: white !important;
+        cursor: pointer;
+        order: 4;
+        flex-shrink: 0;
+        margin-left: 4px;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+    }
+
+    .share-header-btn:active {
+        transform: scale(0.95);
+    }
+
+    .share-header-btn .share-icon {
+        font-size: 18px;
+    }
+
+    /* Footer Share-Button auf Mobile AUSBLENDEN */
+    .share-footer-btn {
+        display: none !important;
+    }
+
+    /* Dropdowns Styling */
+    .controls-compact select {
+        font-size: 14px;
+        padding: 8px 10px;
+        min-height: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--calendar-border);
+        color: var(--text-primary);
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        padding-right: 28px;
+        text-overflow: ellipsis;
+        order: 10;
+    }
+
+    .controls-compact select:focus {
+        outline: none;
+        border-color: var(--brand-primary);
+        box-shadow: 0 0 0 2px rgba(38, 208, 206, 0.2);
+    }
+
+    /* Controls-Compact: Flex-Container für Dropdowns */
+    .controls-compact {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 6px;
+        align-items: center;
+        flex: 0 0 100%;
+        order: 10;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Jahr-Select - fixe Breite für 4-stellige Jahreszahl */
+    #year-select {
+        flex: 0 0 72px;
+        min-width: 72px;
+        padding-right: 22px !important; /* Weniger Platz für Pfeil */
+        order: 1;
+    }
+
+    /* Bundesland-Select - flexibel */
+    #state-select {
+        flex: 1 1 auto;
+        min-width: 60px;
+        order: 2;
+    }
+
+    /* Stadt - versteckt wenn nicht nötig */
+    #city-select.hidden {
+        display: none !important;
+    }
+
+    /* Stadt sichtbar - rechts neben Bundesland */
+    #city-select:not(.hidden) {
+        flex: 1 1 auto;
+        min-width: 60px;
+        order: 3;
+    }
+
+    /* Buttons am Ende der Dropdown-Zeile */
+    .controls-compact .btn-clear,
+    .controls-compact .btn-settings {
+        flex-shrink: 0;
+        min-width: 34px;
+        width: 34px;
+        height: 34px;
+        min-height: 34px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+
+    .controls-compact .btn-clear {
+        order: 4;
+    }
+
+    .controls-compact .btn-settings {
+        order: 5;
+    }
+
+    /* Legende ULTRA kompakt */
+    .legend-wrapper {
+        margin: 0 !important;
+        padding: 2px 4px !important;
+    }
+
+    .legend-compact {
+        flex-wrap: wrap;
+        gap: 3px 6px;
+        font-size: 8px;
+        padding: 2px 4px;
+        background: var(--bg-tertiary);
+        border-radius: 0;
+    }
+
+    .legend-item {
+        gap: 2px;
+    }
+
+    .legend-item .dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    /* Separate Navigation verstecken (Pfeile sind jetzt im month-header) */
+    .mobile-calendar-nav {
+        display: none !important;
+    }
+
+    /* Kalender - volle Breite */
+    .calendar-main {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .month-view {
+        border-radius: 4px !important;
+    }
+
+    /* Monats-Header mit Pfeilen: [←]     November 2026     [→] */
+    .month-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0 !important;
+        padding: 6px 4px !important;
+        position: relative !important;
+    }
+
+    /* Mobile Navigations-Pfeile AUSSEN links/rechts */
+    .month-header .mobile-nav-arrow.year-nav {
+        position: static !important;
+        transform: none !important;
+        padding: 8px 12px;
+        font-size: 20px;
+        font-weight: 600;
+        flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+        min-width: 44px;
+        text-align: center;
+    }
+
+    .month-header .mobile-nav-arrow.year-nav:active {
+        transform: scale(0.9) !important;
+        background: var(--accent-purple);
+    }
+
+    /* Disabled Labels (Vorjahr/Folgejahr) - gleiche Größe wie Pfeile */
+    .month-header .mobile-nav-arrow.year-nav.disabled-label {
+        font-size: 14px !important;
+        opacity: 0.6;
+        cursor: default;
+        padding: 8px 8px;
+    }
+
+    .month-header .mobile-nav-arrow.year-nav.disabled-label:active {
+        transform: none !important;
+        background: transparent;
+    }
+
+    /* Monatstitel in der Mitte */
+    .month-header > span {
+        flex: 1;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    /* Desktop year-nav im Mobile verstecken (wir nutzen mobile-nav-arrow) */
+    .month-header > .year-nav:not(.mobile-nav-arrow) {
+        display: none !important;
+    }
+
+    /* Extra-Monat Badge (Vorjahr/Folgejahr) auf Mobile verstecken - wird durch JS Buttons ersetzt */
+    .extra-month .month-header::after {
+        display: none !important;
+    }
+
+    /* Kalender Grid - Einzelmonat-Ansicht */
+    .calendar-grid {
+        display: block;
+        gap: 0;
+    }
+
+    /* Alle Monate standardmäßig verstecken */
+    .month-view {
+        display: none !important;
+    }
+
+    /* Nur aktiver Monat sichtbar */
+    .month-view.active-mobile {
+        display: block !important;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    /* Monats-Header kompakter */
+    .month-header {
+        padding: 6px 8px;
+        font-size: 15px;
+    }
+
+    /* Wochentage-Header */
+    .weekdays {
+        font-size: 12px;
+        padding: 0 2px;
+    }
+
+    .weekday {
+        padding: 4px 0;
+        font-weight: 600;
+    }
+
+    /* Tage GROSS für Touch - volle Breite */
+    .days-grid {
+        gap: 2px;
+        padding: 2px;
+    }
+
+    .day {
+        min-height: 48px;
+        font-size: 15px;
+        padding: 3px;
+        border-radius: 6px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .day:active:not(.other-month):not(.empty) {
+        transform: scale(0.95);
+    }
+
+    /* Feiertag-Label anpassen */
+    .holiday-label {
+        font-size: 7px;
+        padding: 1px 2px;
+        max-width: 100%;
+        line-height: 1.1;
+    }
+
+    /* Month-View volle Breite */
+    .month-view {
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Sticky Footer - KOMPAKT einzeilig */
+    .sticky-footer-new {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        padding: 6px 8px !important;
+        gap: 6px !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .footer-stats {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 4px !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+    }
+
+    .stat-box {
+        flex: 1 1 0 !important;
+        text-align: center;
+        padding: 4px 2px !important;
+        min-width: 0 !important;
+        background: rgba(255,255,255,0.05);
+        border-radius: 6px;
+    }
+
+    .stat-box.highlight {
+        background: rgba(38, 208, 206, 0.1);
+        cursor: pointer;
+        position: relative;
+    }
+
+    /* Mobile Tooltip bei Touch anzeigen */
+    .stat-box.tooltip-active .tooltip {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 10px;
+        z-index: 9999;
+    }
+
+    /* Tooltip Styling für Mobile */
+    .stat-box .tooltip-periods {
+        min-width: 200px;
+        max-width: 260px;
+        font-size: 12px;
+        background: #0f172a;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(38, 208, 206, 0.3);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .stat-number {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--text-white);
+    }
+
+    .stat-box.highlight .stat-number {
+        color: var(--brand-primary);
+    }
+
+    .stat-label {
+        font-size: 7px;
+        opacity: 0.85;
+        text-transform: uppercase;
+        letter-spacing: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+    }
+
+    /* Tooltip auf Mobile ausblenden */
+    .stat-box .tooltip {
+        display: none;
+    }
+
+    /* Empfehlungen-Button mit Jahr */
+    .recommendations-btn {
+        flex: 0 1 auto !important;
+        width: auto !important;
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        min-height: 32px !important;
+        height: 32px !important;
+        white-space: nowrap !important;
+    }
+
+    /* Jahr im Button ANZEIGEN */
+    #trigger-year {
+        display: inline !important;
+    }
+
+    /* Footer Links kompakter */
+    .footer-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        text-align: center;
+        padding: 10px 8px;
+        margin-bottom: 70px; /* Weniger Platz für kompakten Footer */
+        justify-content: center;
+    }
+
+    .footer-links .divider {
+        display: none;
+    }
+
+    .footer-links a {
+        padding: 6px 8px;
+        min-height: auto;
+        font-size: 12px;
+    }
+
+    .footer-links .social-links {
+        width: 100%;
+        margin-top: 6px;
+        padding-top: 8px;
+    }
+
+    /* ========================================
+       EMPFEHLUNGEN MODAL - MOBILE OPTIMIERT
+       ======================================== */
+
+    /* Modal Vollbild */
+    .recommendations-modal {
+        padding: 0 !important;
+    }
+
+    .recommendations-modal .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    /* Header kompakt */
+    .modal-header {
+        padding: 12px 15px;
+        padding-right: 50px; /* Platz für Close-Button */
+    }
+
+    .modal-header h2 {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    .modal-header p {
+        font-size: 12px;
+        display: none; /* Beschreibung auf Mobile ausblenden */
+    }
+
+    /* Schließen-Button ROT */
+    .close-modal-btn {
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        background: rgba(244, 67, 54, 0.9) !important;
+        border: none !important;
+        color: white !important;
+    }
+
+    .close-modal-btn:hover,
+    .close-modal-btn:active {
+        background: #f44336 !important;
+    }
+
+    /* Filter ULTRA KOMPAKT */
+    .modal-filters {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 8px 10px;
+    }
+
+    .modal-filters select {
+        flex: 1;
+        min-width: 45%;
+        max-width: 48%;
+        min-height: 34px;
+        height: 34px;
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .recommendations-filters {
+        margin-bottom: 10px;
+    }
+
+    .recommendations-filters select {
+        min-width: 45%;
+        width: auto;
+        flex: 1;
+        font-size: 12px;
+        padding: 6px 8px;
+        height: 34px;
+    }
+
+    /* Filter Dropdowns - IDENTISCH wie Jahr-Dropdown */
+    #modal-category-filter,
+    #modal-sort-filter {
+        width: auto !important;
+        min-width: 45% !important;
+        max-width: 48% !important;
+        flex: 1;
+        font-size: 12px;
+        padding: 6px 10px;
+        padding-right: 26px;
+        height: 34px;
+        border-radius: 10px;
+        background: var(--bg-tertiary) !important;
+        border: 1px solid var(--calendar-border) !important;
+        color: var(--text-primary);
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 8px center !important;
+        text-overflow: ellipsis;
+    }
+
+    #modal-category-filter:focus,
+    #modal-sort-filter:focus {
+        outline: none;
+        border-color: var(--brand-primary) !important;
+        box-shadow: 0 0 0 2px rgba(38, 208, 206, 0.2);
+    }
+
+    /* Auswahl-Zusammenfassung - Buttons NEBENEINANDER */
+    .selection-summary {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 6px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .summary-stats {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        gap: 8px;
+        flex-wrap: nowrap;
+        margin-bottom: 4px;
+    }
+
+    .summary-stats .stat {
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .summary-stats .stat strong {
+        font-size: 13px;
+        display: block;
+    }
+
+    /* Buttons nebeneinander */
+    .selection-summary .clear-selection-btn,
+    .selection-summary #modal-clear-selection {
+        flex: 1 !important;
+        min-height: 34px;
+        height: 34px;
+        font-size: 11px;
+        padding: 6px 8px;
+        white-space: nowrap;
+        order: 1;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        border-radius: 6px;
+    }
+
+    /* Nur rot wenn Karten ausgewählt sind (.active Klasse) */
+    .selection-summary .clear-selection-btn.active,
+    .selection-summary #modal-clear-selection.active {
+        background: #ef4444 !important;
+        border: none !important;
+        color: white !important;
+    }
+
+    .selection-summary .clear-selection-btn.active:active,
+    .selection-summary #modal-clear-selection.active:active {
+        background: #dc2626 !important;
+    }
+
+    .selection-summary .apply-selection-btn,
+    .selection-summary #apply-selection {
+        flex: 1 !important;
+        min-height: 34px;
+        height: 34px;
+        font-size: 11px;
+        padding: 6px 8px;
+        white-space: nowrap;
+        order: 2;
+    }
+
+    /* Modal Body scrollbar */
+    .modal-body {
+        padding: 12px;
+        padding-bottom: 80px; /* Platz für Footer-Buttons */
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Karten-Container - EINE SPALTE auf Mobile */
+    .recommendation-cards-container,
+    .modal-recommendation-cards,
+    #modal-recommendation-cards {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        margin-top: 6px;
+        padding: 0 !important;
+    }
+
+    /* Einzelne Karten - MINI KOMPAKT */
+    .modal-body .recommendation-card,
+    .recommendation-cards-container .recommendation-card,
+    #modal-recommendation-cards .recommendation-card {
+        padding: 8px 10px !important;
+        border-radius: 6px;
+        margin: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Karten-Header */
+    .recommendation-card h3,
+    .recommendation-card .card-title {
+        font-size: 14px !important;
+        margin-bottom: 2px !important;
+        line-height: 1.2;
+        font-weight: 600;
+    }
+
+    /* Karten-Inhalt */
+    .recommendation-card p,
+    .recommendation-card .card-description {
+        font-size: 12px;
+        line-height: 1.3;
+        margin: 0;
+    }
+
+    /* Effizienz-Badge */
+    .recommendation-card .efficiency-badge,
+    .recommendation-card .card-badge {
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+    }
+
+    /* Datumsbereich in Karten */
+    .recommendation-card .date-range,
+    .recommendation-card .card-dates {
+        font-size: 11px;
+    }
+
+    /* Statistik in Karten - KOMPAKT Horizontal */
+    .recommendation-card .card-stats {
+        display: flex;
+        justify-content: space-around;
+        gap: 2px;
+        padding: 5px 0 !important;
+        margin: 5px 0 !important;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .recommendation-card .card-stats .stat-item {
+        text-align: center;
+        flex: 1;
+    }
+
+    .recommendation-card .card-stats .stat-value {
+        display: block;
+        font-size: 15px !important;
+        font-weight: 700;
+        color: var(--brand-primary, #26d0ce);
+    }
+
+    .recommendation-card .card-stats .stat-label {
+        display: block;
+        font-size: 9px !important;
+        color: rgba(255,255,255,0.6);
+        margin-top: 1px;
+    }
+
+    /* Karten-Header mit Badge */
+    .recommendation-card .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4px;
+        flex-wrap: nowrap;
+        margin-bottom: 0;
+    }
+
+    /* Zeitraum */
+    .recommendation-card .card-period {
+        font-size: 11px !important;
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 2px !important;
+    }
+
+    /* Feiertage - KOMPAKT */
+    .recommendation-card .card-holidays {
+        margin-top: 5px !important;
+    }
+
+    .recommendation-card .card-holidays h4 {
+        font-size: 10px !important;
+        margin-bottom: 3px !important;
+        color: rgba(255,255,255,0.6);
+    }
+
+    .recommendation-card .holiday-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+
+    .recommendation-card .holiday-tag {
+        font-size: 9px !important;
+        padding: 2px 5px !important;
+        background: rgba(255,255,255,0.08);
+        border-radius: 3px;
+        white-space: nowrap;
+    }
+
+    /* Auswahl-Indikator */
+    .recommendation-card .selection-indicator {
+        margin-top: 5px !important;
+        padding: 4px 8px !important;
+        background: rgba(38, 208, 206, 0.15);
+        border-radius: 4px;
+        font-size: 11px !important;
+        text-align: center;
+        color: #26d0ce;
+        font-weight: 600;
+    }
+
+    /* Modal Footer - Buttons NEBENEINANDER */
+    .modal-footer {
+        display: flex !important;
+        flex-direction: row !important;
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .modal-footer button {
+        flex: 1;
+        min-height: 36px;
+        height: 36px;
+        font-size: 12px;
+        padding: 6px 10px;
+        white-space: nowrap;
+    }
+
+    /* Auswahl löschen Button */
+    #modal-clear-selection {
+        flex: 0.8;
+        background: rgba(255,255,255,0.1) !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+    }
+
+    /* Übernehmen Button */
+    #apply-selection {
+        flex: 1.2;
+    }
+
+    /* Workweek Popup */
+    .workweek-popup-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+    }
+
+    .workweek-days {
+        gap: 5px;
+    }
+
+    .day-checkbox .day-label {
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 12px;
+    }
+
+    .workweek-presets {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .preset-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+/* Extra kleine Geräte (iPhone SE, kleine Android) */
+@media (max-width: 375px) {
+    .container {
+        padding: 0 !important;
+        padding-top: 115px !important; /* Header hat 2 Zeilen */
+    }
+
+    /* Header - ULTRA MINIMAL */
+    .compact-header {
+        padding: 2px 4px !important;
+        min-height: 0 !important;
+    }
+
+    .header-row {
+        padding: 0 !important;
+        gap: 3px !important;
+    }
+
+    /* Legende ULTRA kompakt für 375px */
+    .legend-wrapper {
+        margin: 0 !important;
+        padding: 1px 2px !important;
+    }
+
+    .legend-compact {
+        font-size: 7px;
+        padding: 2px 3px;
+        gap: 2px 4px;
+    }
+
+    /* Monats-Header für 375px - Pfeile außen */
+    .month-header {
+        padding: 4px 2px !important;
+    }
+
+    /* Pfeile kleiner für 375px */
+    .month-header .mobile-nav-arrow.year-nav {
+        padding: 6px 10px;
+        font-size: 18px;
+        min-width: 40px;
+    }
+
+    /* Monatstitel kleiner für 375px */
+    .month-header > span {
+        font-size: 14px;
+    }
+
+    /* Tage größer für 375px */
+    .day {
+        min-height: 42px;
+        font-size: 14px;
+    }
+
+    .days-grid {
+        gap: 1px;
+        padding: 1px;
+    }
+
+    /* Logo groß aber Header klein */
+    .logo-img {
+        width: 56px;
+        height: 56px;
+    }
+
+    .logo-text {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    /* Controls kompakter */
+    .controls-compact select {
+        font-size: 12px;
+        padding: 5px 6px;
+        min-height: 32px;
+        height: 32px;
+        padding-right: 22px;
+    }
+
+    #year-select {
+        flex: 0 0 60px;
+        min-width: 60px;
+    }
+
+    /* Controls-Compact für kleine Geräte */
+    .controls-compact {
+        gap: 4px;
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+
+    .controls-compact .btn-clear,
+    .controls-compact .btn-settings {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        min-height: 30px;
+        font-size: 12px;
+    }
+
+    .travel-tips-btn {
+        height: 28px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .share-header-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .share-header-btn .share-icon {
+        font-size: 16px;
+    }
+
+    /* Footer Share-Button auch auf 375px ausblenden */
+    .share-footer-btn {
+        display: none !important;
+    }
+
+    /* Footer noch kompakter */
+    .sticky-footer-new {
+        padding: 6px 8px;
+        gap: 4px;
+    }
+
+    .stat-number {
+        font-size: 16px;
+    }
+
+    .stat-label {
+        font-size: 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .recommendations-btn {
+        padding: 5px 8px !important;
+        font-size: 10px !important;
+        height: 28px !important;
+        min-height: 28px !important;
+    }
+
+    .stat-box {
+        padding: 3px 2px !important;
+    }
+
+    .footer-links {
+        margin-bottom: 60px;
+    }
+
+    /* Footer - Stats bleiben gut lesbar */
+    .sticky-footer-new {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .stat-box {
+        padding: 6px 4px;
+    }
+
+    .stat-number {
+        font-size: 18px;
+    }
+
+    .stat-label {
+        font-size: 8px;
+    }
+
+    .recommendations-btn {
+        padding: 8px 10px;
+        font-size: 13px;
+        height: 36px;
+        min-height: 36px;
+    }
+
+    .footer-links {
+        margin-bottom: 80px;
+    }
+}

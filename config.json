@@ -1,0 +1,41 @@
+{
+  "socialMedia": {
+    "instagram": {
+      "url": "https://instagram.com/holidayboost",
+      "active": true
+    },
+    "tiktok": {
+      "url": "https://tiktok.com/@holidayboost",
+      "active": true
+    },
+    "pinterest": {
+      "url": "https://pinterest.com/holidayboost",
+      "active": false
+    },
+    "youtube": {
+      "url": "youtube.comholiay",
+      "active": true
+    }
+  },
+  "seo": {
+    "title": "HolidayBoost - Urlaubsplaner Deutschland",
+    "description": "Plane deine Urlaubstage optimal. Finde die besten Brückentage für Deutschland und maximiere deine freien Tage.",
+    "keywords": "Urlaubsplaner, Brückentage, Feiertage Deutschland, Urlaub planen, Urlaubstage optimieren"
+  },
+  "contact": {
+    "company": "HolidayBoost",
+    "email": "info@holidayboost.de",
+    "address": "Rheinstr. 116",
+    "phone": ""
+  },
+  "heroImage": {
+    "filename": "urlaub2.jpg",
+    "headerPosition": 35,
+    "footerPosition": 45,
+    "overlayOpacity": 70
+  },
+  "meta": {
+    "lastModified": "2025-11-30T13:16:57.658Z",
+    "version": "2.0.0"
+  }
+}

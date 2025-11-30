@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-11-27T20:42:03.266Z",
+    "totalRecommendations": 1,
+    "version": "2.0.0",
+    "generatedBy": "HolidayBoost Admin Panel"
+  },
+  "recommendations": [
+    {
+      "id": 1764276123266,
+      "year": 2028,
+      "title": "Ich leb in augsburg und hab 2 wochen frei",
+      "description": "2 Wochen GEIL",
+      "type": "optimal",
+      "vacationDates": [
+        "2028-08-07",
+        "2028-08-09",
+        "2028-08-10",
+        "2028-08-11",
+        "2028-08-14",
+        "2028-08-16",
+        "2028-08-17",
+        "2028-08-18"
+      ],
+      "holidays": [
+        "Augsburger Friedensfest"
+      ],
+      "regions": [
+        "BY"
+      ],
+      "cities": [
+        "augsburg"
+      ],
+      "efficiency": 1.25,
+      "createdAt": "2025-11-27T20:42:03.266Z"
+    }
+  ]
+}

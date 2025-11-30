@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Admin</title>
+</head>
+<body>
+    <h1>Debug Admin Panel</h1>
+
+    <!-- Bundesländer Test -->
+    <div id="states-checkboxes"></div>
+    <button onclick="testSelectByHolidayType()">Test Bundesländer Auswahl</button>
+
+    <!-- Kalender Test -->
+    <div id="vacation-calendar-main" style="border: 1px solid red; height: 200px; width: 300px;">
+        <p>Main Calendar Container</p>
+    </div>
+    <div id="vacation-calendar-secondary" style="border: 1px solid blue; height: 200px; width: 300px;">
+        <p>Secondary Calendar Container</p>
+    </div>
+    <div id="current-period-text">Period Text</div>
+
+    <button onclick="testCalendar()">Test Kalender</button>
+
+    <script src="admin.js"></script>
+
+    <script>
+        function testSelectByHolidayType() {
+            console.log('🧪 Testing selectByHolidayType...');
+            if (window.selectByHolidayType) {
+                window.selectByHolidayType('all');
+                console.log('✅ selectByHolidayType exists and was called');
+            } else {
+                console.error('❌ selectByHolidayType not found');
+            }
+        }
+
+        function testCalendar() {
+            console.log('🧪 Testing calendar...');
+            const main = document.getElementById('vacation-calendar-main');
+            const secondary = document.getElementById('vacation-calendar-secondary');
+            const period = document.getElementById('current-period-text');
+
+            console.log('Container check:');
+            console.log('- main:', !!main);
+            console.log('- secondary:', !!secondary);
+            console.log('- period:', !!period);
+
+            if (window.renderDualCalendar) {
+                window.renderDualCalendar();
+                console.log('✅ renderDualCalendar exists and was called');
+            } else {
+                console.error('❌ renderDualCalendar not found');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Urlaubsempfehlungen verwalten</title>
+    <!-- styles.css entfernt für bessere Scroll-Performance -->
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: auto !important;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: scroll !important;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 75%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e2e8f0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Performance: Alle Transitions global deaktivieren */
+        * {
+            transition: none !important;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 20px 60px 20px;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .year-selector {
+            background: rgba(26, 32, 44, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .year-tabs {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .year-tab {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            color: #cbd5e0;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .year-tab:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .year-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        .holiday-calendar {
+            background: rgba(26, 32, 44, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .calendar-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .full-year-calendar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .month-calendar {
+            background: rgba(45, 55, 72, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .month-calendar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .month-header {
+            text-align: center;
+            color: #f8fafc;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-weight: bold;
+            color: #94a3b8;
+            font-size: 11px;
+            padding: 5px 0;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            background: rgba(30, 41, 59, 0.6);
+            color: #cbd5e0;
+            position: relative;
+        }
+
+        .calendar-day:hover:not(.other-month) {
+            background: rgba(59, 130, 246, 0.2);
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .calendar-day.weekend {
+            background: rgba(30, 30, 30, 0.8);
+            color: #718096;
+        }
+
+        .calendar-day.holiday {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            color: #1a1a2e;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 165, 0, 0.4);
+            cursor: pointer;
+        }
+
+        .calendar-day.holiday:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.6);
+            z-index: 20;
+        }
+
+        .calendar-day.bridge-day {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .holiday-info-panel {
+            background: rgba(45, 55, 72, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: static;
+            max-height: none;
+            overflow-y: visible;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .holiday-info-header {
+            color: #f8fafc;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .holiday-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .holiday-date {
+            color: #3b82f6;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .holiday-name {
+            color: #f8fafc;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .holiday-regions {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .region-label {
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .region-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .region-badge {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .card-generator {
+            background: rgba(26, 32, 44, 0.9);
+            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .card-generator-header {
+            color: #f8fafc;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .quick-card-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quick-card-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quick-card-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .quick-card-btn .efficiency {
+            font-size: 11px;
+            opacity: 0.9;
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .card-form {
+            background: rgba(45, 55, 72, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #cbd5e0;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .vacation-day-selector {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .vacation-day-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 5px;
+        }
+
+        .vacation-day-option {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 5px 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .vacation-day-option:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .vacation-day-option.selected {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-create-card {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            width: 100%;
+        }
+
+        .btn-create-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        .holiday-statistics {
+            background: rgba(45, 55, 72, 0.6);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            color: #f8fafc;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .holiday-tooltip {
+            position: absolute;
+            background: rgba(30, 41, 59, 0.95);
+            color: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .holiday-tooltip.visible {
+            opacity: 1;
+        }
+
+        /* Filter und Ordner Styles */
+        .folder-container {
+            margin-bottom: 20px;
+        }
+
+        .folder-header {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .folder-header:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            transform: translateX(5px);
+        }
+
+        .folder-header.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+            border-color: #3b82f6;
+        }
+
+        .folder-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #f8fafc;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .folder-count {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .folder-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .folder-content.expanded {
+            max-height: 2000px;
+            padding: 10px 20px;
+        }
+
+        .filter-tabs-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: rgba(45, 55, 72, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-tab:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #f8fafc;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: transparent;
+            color: white;
+        }
+
+        .recommendation-item {
+            background: rgba(45, 55, 72, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-item:hover {
+            transform: translateX(5px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 1024px) {
+            .calendar-container {
+                grid-template-columns: 1fr;
+            }
+
+            .holiday-info-panel {
+                position: static;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .full-year-calendar {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Aufklappbare Sektionen */
+        .collapsible-section {
+            background: rgba(26, 32, 44, 0.95);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            list-style: none;
+        }
+
+        .collapsible-header::-webkit-details-marker {
+            display: none;
+        }
+
+        .collapsible-header:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        .collapsible-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .collapsible-icon {
+            font-size: 24px;
+        }
+
+        .collapsible-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .collapsible-arrow {
+            color: #94a3b8;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-section[open] .collapsible-arrow {
+            transform: rotate(90deg);
+        }
+
+        .collapsible-section[open] .collapsible-header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .collapsible-content {
+            padding: 25px;
+        }
+
+        /* Innere holiday-calendar in collapsible-content sollen keinen Extra-Hintergrund haben */
+        .collapsible-content .holiday-calendar {
+            background: transparent;
+            box-shadow: none;
+            border: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .collapsible-content .holiday-calendar:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Affiliate-Links Verwaltung */
+        .affiliate-category {
+            background: rgba(45, 55, 72, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .affiliate-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            min-height: 50px;
+        }
+
+        .affiliate-link-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .affiliate-link-item .affiliate-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            width: 100%;
+        }
+
+        .affiliate-link-item input {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .affiliate-link-item input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .affiliate-link-item .icon-input {
+            width: 50px;
+            flex: 0 0 50px;
+            text-align: center;
+        }
+
+        .affiliate-link-item .name-input {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .affiliate-link-item .template-input {
+            width: 100%;
+            font-family: monospace;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .affiliate-link-item .template-input::placeholder {
+            color: #64748b;
+        }
+
+        .affiliate-link-item .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .affiliate-link-item .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+        }
+
+        .add-affiliate-btn {
+            width: 100%;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px dashed rgba(59, 130, 246, 0.5);
+            color: #60a5fa;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .add-affiliate-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 style="margin: 0;">⚙️ HolidayBoost Admin</h1>
+                    <p style="margin: 5px 0 0 0;">Website-Einstellungen verwalten</p>
+                </div>
+                <button id="logout-btn" onclick="adminLogout()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); color: #f87171; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                    🚪 Ausloggen
+                </button>
+            </div>
+        </div>
+
+        <!-- Affiliate-Links Verwaltung -->
+        <details class="collapsible-section" id="affiliate-section">
+            <summary class="collapsible-header">
+                <span class="collapsible-title">
+                    <span class="collapsible-icon">💰</span>
+                    Affiliate-Links Verwaltung
+                </span>
+                <span class="collapsible-arrow">▶</span>
+            </summary>
+            <div class="collapsible-content">
+                <p style="color: #94a3b8; margin-bottom: 20px;">Verwalte deine Affiliate-Links für Flüge, Hotels, Aktivitäten und Versicherungen.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <!-- Flüge -->
+                    <div class="affiliate-category" data-category="flights">
+                        <h3 style="color: #26d0ce; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 24px;">✈️</span> Flüge
+                        </h3>
+                        <div id="flights-links" class="affiliate-links-list"></div>
+                        <button onclick="holidayAdmin.addAffiliateLink('flights')" class="add-affiliate-btn">+ Link hinzufügen</button>
+                    </div>
+
+                    <!-- Hotels -->
+                    <div class="affiliate-category" data-category="hotels">
+                        <h3 style="color: #3b82f6; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 24px;">🏨</span> Hotels
+                        </h3>
+                        <div id="hotels-links" class="affiliate-links-list"></div>
+                        <button onclick="holidayAdmin.addAffiliateLink('hotels')" class="add-affiliate-btn">+ Link hinzufügen</button>
+                    </div>
+
+                    <!-- Aktivitäten -->
+                    <div class="affiliate-category" data-category="activities">
+                        <h3 style="color: #8b5cf6; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 24px;">🎯</span> Aktivitäten
+                        </h3>
+                        <div id="activities-links" class="affiliate-links-list"></div>
+                        <button onclick="holidayAdmin.addAffiliateLink('activities')" class="add-affiliate-btn">+ Link hinzufügen</button>
+                    </div>
+
+                    <!-- Versicherungen -->
+                    <div class="affiliate-category" data-category="insurance">
+                        <h3 style="color: #e8a54b; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 24px;">🛡️</span> Versicherungen
+                        </h3>
+                        <div id="insurance-links" class="affiliate-links-list"></div>
+                        <button onclick="holidayAdmin.addAffiliateLink('insurance')" class="add-affiliate-btn">+ Link hinzufügen</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; text-align: center;">
+                    <button onclick="holidayAdmin.saveAffiliateLinks()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px 30px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                        💾 Affiliate-Links speichern
+                    </button>
+                </div>
+            </div>
+        </details>
+
+        <!-- Social Media Links Verwaltung -->
+        <details class="collapsible-section" id="social-media-section">
+            <summary class="collapsible-header">
+                <span class="collapsible-title">
+                    <span class="collapsible-icon">📱</span>
+                    Social Media Links
+                </span>
+                <span class="collapsible-arrow">▶</span>
+            </summary>
+            <div class="collapsible-content">
+                <p style="color: #94a3b8; margin-bottom: 20px;">Verwalte deine Social Media Präsenz im Footer der Website.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <!-- Instagram -->
+                    <div class="affiliate-category">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="color: #E1306C; margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 24px;">📸</span> Instagram
+                            </h3>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="social-instagram-active" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: #94a3b8; font-size: 13px;">Aktiv</span>
+                            </label>
+                        </div>
+                        <input type="text" id="social-instagram-url" placeholder="https://instagram.com/holidayboost"
+                               style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    </div>
+
+                    <!-- TikTok -->
+                    <div class="affiliate-category">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="color: #00f2ea; margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 24px;">🎵</span> TikTok
+                            </h3>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="social-tiktok-active" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: #94a3b8; font-size: 13px;">Aktiv</span>
+                            </label>
+                        </div>
+                        <input type="text" id="social-tiktok-url" placeholder="https://tiktok.com/@holidayboost"
+                               style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    </div>
+
+                    <!-- Pinterest -->
+                    <div class="affiliate-category">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="color: #E60023; margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 24px;">📌</span> Pinterest
+                            </h3>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="social-pinterest-active" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: #94a3b8; font-size: 13px;">Aktiv</span>
+                            </label>
+                        </div>
+                        <input type="text" id="social-pinterest-url" placeholder="https://pinterest.com/holidayboost"
+                               style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    </div>
+
+                    <!-- YouTube -->
+                    <div class="affiliate-category">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="color: #FF0000; margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 24px;">▶️</span> YouTube
+                            </h3>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="social-youtube-active" style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: #94a3b8; font-size: 13px;">Aktiv</span>
+                            </label>
+                        </div>
+                        <input type="text" id="social-youtube-url" placeholder="https://youtube.com/@holidayboost"
+                               style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; text-align: center;">
+                    <button onclick="holidayAdmin.saveSocialMedia()" style="background: linear-gradient(135deg, #E1306C, #8b5cf6); color: white; border: none; padding: 14px 30px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                        💾 Social Media speichern
+                    </button>
+                </div>
+            </div>
+        </details>
+
+        <!-- SEO-Einstellungen -->
+        <details class="collapsible-section" id="seo-section">
+            <summary class="collapsible-header">
+                <span class="collapsible-title">
+                    <span class="collapsible-icon">🔍</span>
+                    SEO-Einstellungen
+                </span>
+                <span class="collapsible-arrow">▶</span>
+            </summary>
+            <div class="collapsible-content">
+                <p style="color: #94a3b8; margin-bottom: 20px;">Optimiere deine Website für Suchmaschinen.</p>
+
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Meta Title -->
+                    <div class="affiliate-category">
+                        <label style="color: #f8fafc; font-weight: 600; display: block; margin-bottom: 10px;">
+                            📝 Meta Title (max. 60 Zeichen)
+                        </label>
+                        <input type="text" id="seo-meta-title" maxlength="60"
+                               placeholder="HolidayBoost - Urlaubsplaner Deutschland | Brückentage optimal nutzen"
+                               style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                        <div style="text-align: right; margin-top: 5px;">
+                            <span id="seo-title-count" style="color: #94a3b8; font-size: 12px;">0/60</span>
+                        </div>
+                    </div>
+
+                    <!-- Meta Description -->
+                    <div class="affiliate-category">
+                        <label style="color: #f8fafc; font-weight: 600; display: block; margin-bottom: 10px;">
+                            📄 Meta Description (max. 160 Zeichen)
+                        </label>
+                        <textarea id="seo-meta-description" maxlength="160" rows="3"
+                                  placeholder="Plane deine Urlaubstage optimal. Finde die besten Brückentage für Deutschland und maximiere deine freien Tage."
+                                  style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; resize: vertical; box-sizing: border-box;"></textarea>
+                        <div style="text-align: right; margin-top: 5px;">
+                            <span id="seo-desc-count" style="color: #94a3b8; font-size: 12px;">0/160</span>
+                        </div>
+                    </div>
+
+                    <!-- Keywords -->
+                    <div class="affiliate-category">
+                        <label style="color: #f8fafc; font-weight: 600; display: block; margin-bottom: 10px;">
+                            🏷️ Keywords (kommagetrennt)
+                        </label>
+                        <input type="text" id="seo-keywords"
+                               placeholder="Urlaubsplaner, Brückentage, Feiertage Deutschland, Urlaub planen"
+                               style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; text-align: center;">
+                    <button onclick="holidayAdmin.saveSeoSettings()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px 30px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                        💾 SEO-Einstellungen speichern
+                    </button>
+                </div>
+            </div>
+        </details>
+
+        <!-- Header/Footer Bild Verwaltung -->
+        <details class="collapsible-section" id="hero-image-section">
+            <summary class="collapsible-header">
+                <span class="collapsible-title">
+                    <span class="collapsible-icon">🖼️</span>
+                    Header & Footer Bild
+                </span>
+                <span class="collapsible-arrow">▶</span>
+            </summary>
+            <div class="collapsible-content">
+                <p style="color: #94a3b8; margin-bottom: 20px;">Verwalte das Hintergrundbild für Header und Footer.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <!-- Bild Upload -->
+                    <div class="affiliate-category">
+                        <label style="color: #f8fafc; font-weight: 600; display: block; margin-bottom: 10px;">
+                            📤 Bild hochladen
+                        </label>
+                        <div id="hero-upload-zone"
+                             style="width: 100%; height: 150px; border: 2px dashed rgba(59, 130, 246, 0.5); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; background: rgba(59, 130, 246, 0.05);"
+                             ondragover="event.preventDefault(); this.style.borderColor='#3b82f6'; this.style.background='rgba(59, 130, 246, 0.1)';"
+                             ondragleave="this.style.borderColor='rgba(59, 130, 246, 0.5)'; this.style.background='rgba(59, 130, 246, 0.05)';"
+                             ondrop="event.preventDefault(); this.style.borderColor='rgba(59, 130, 246, 0.5)'; this.style.background='rgba(59, 130, 246, 0.05)'; holidayAdmin.uploadHeroImage(event.dataTransfer.files[0]);"
+                             onclick="document.getElementById('hero-file-input').click();">
+                            <span style="font-size: 32px; margin-bottom: 10px;">🖼️</span>
+                            <span style="color: #94a3b8; font-size: 13px;">Bild hierher ziehen oder klicken</span>
+                            <span style="color: #64748b; font-size: 11px; margin-top: 5px;">JPG, PNG, WebP (max. 10MB)</span>
+                        </div>
+                        <input type="file" id="hero-file-input" accept="image/*" style="display: none;"
+                               onchange="if(this.files[0]) holidayAdmin.uploadHeroImage(this.files[0]);">
+                    </div>
+
+                    <!-- Aktuelle Vorschau -->
+                    <div class="affiliate-category">
+                        <label style="color: #f8fafc; font-weight: 600; display: block; margin-bottom: 10px;">
+                            👁️ Aktuelle Vorschau
+                        </label>
+                        <div id="hero-image-preview" style="width: 100%; height: 150px; border-radius: 10px; background: url('urlaub2.jpg') center/cover no-repeat; border: 2px solid rgba(255,255,255,0.1);"></div>
+                        <div style="margin-top: 10px;">
+                            <label style="color: #94a3b8; font-size: 13px; display: block; margin-bottom: 5px;">Aktuelles Bild</label>
+                            <input type="text" id="hero-image-filename" value="urlaub2.jpg"
+                                   style="width: 100%; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 10px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <!-- Bildeinstellungen -->
+                    <div class="affiliate-category">
+                        <label style="color: #f8fafc; font-weight: 600; display: block; margin-bottom: 10px;">
+                            ⚙️ Position & Overlay
+                        </label>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="color: #94a3b8; font-size: 13px; display: block; margin-bottom: 5px;">Header Position (0-100%)</label>
+                            <input type="range" id="hero-header-position" min="0" max="100" value="35"
+                                   style="width: 100%; cursor: pointer;">
+                            <span id="hero-header-position-value" style="color: #60a5fa; font-size: 13px;">35%</span>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="color: #94a3b8; font-size: 13px; display: block; margin-bottom: 5px;">Footer Position (0-100%)</label>
+                            <input type="range" id="hero-footer-position" min="0" max="100" value="45"
+                                   style="width: 100%; cursor: pointer;">
+                            <span id="hero-footer-position-value" style="color: #60a5fa; font-size: 13px;">45%</span>
+                        </div>
+
+                        <div>
+                            <label style="color: #94a3b8; font-size: 13px; display: block; margin-bottom: 5px;">Overlay Stärke (0-100%)</label>
+                            <input type="range" id="hero-overlay-opacity" min="0" max="100" value="70"
+                                   style="width: 100%; cursor: pointer;">
+                            <span id="hero-overlay-opacity-value" style="color: #60a5fa; font-size: 13px;">70%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; text-align: center;">
+                    <button onclick="holidayAdmin.saveHeroImage()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; padding: 14px 30px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                        💾 Bildeinstellungen speichern
+                    </button>
+                </div>
+            </div>
+        </details>
+
+        <!-- System Information -->
+        <details class="collapsible-section" id="system-info-section">
+            <summary class="collapsible-header">
+                <span class="collapsible-title">
+                    <span class="collapsible-icon">ℹ️</span>
+                    System Information
+                </span>
+                <span class="collapsible-arrow">▶</span>
+            </summary>
+            <div class="collapsible-content">
+                <div style="background: rgba(45, 55, 72, 0.6); border-radius: 12px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #94a3b8; font-size: 14px;">Letzte Änderung</span>
+                        <span id="sys-last-modified" style="color: #f8fafc; font-size: 14px;">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #94a3b8; font-size: 14px;">Speichergröße</span>
+                        <span id="sys-storage-size" style="color: #f8fafc; font-size: 14px;">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #94a3b8; font-size: 14px;">Browser</span>
+                        <span id="sys-browser" style="color: #f8fafc; font-size: 14px;">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+                        <span style="color: #94a3b8; font-size: 14px;">Version</span>
+                        <span style="color: #f8fafc; font-size: 14px;">HolidayBoost Admin v2.0</span>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <!-- Tooltip für Feiertage -->
+    <div id="holiday-tooltip" class="holiday-tooltip"></div>
+
+    <!-- Session-Check & Auth-Funktionen -->
+    <script>
+        // Session prüfen
+        (async function checkAuth() {
+            const sessionToken = localStorage.getItem('adminSession');
+
+            if (!sessionToken) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/session', {
+                    headers: { 'X-Session-Token': sessionToken }
+                });
+                const data = await res.json();
+
+                if (!data.valid) {
+                    localStorage.removeItem('adminSession');
+                    window.location.href = 'admin-login.html';
+                }
+            } catch (e) {
+                // Server nicht erreichbar - trotzdem zur Login-Seite
+                window.location.href = 'admin-login.html';
+            }
+        })();
+
+        // Logout-Funktion
+        async function adminLogout() {
+            const sessionToken = localStorage.getItem('adminSession');
+
+            try {
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: { 'X-Session-Token': sessionToken }
+                });
+            } catch (e) {
+                // Ignorieren
+            }
+
+            localStorage.removeItem('adminSession');
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <script src="admin.js"></script>
+</body>
+</html>

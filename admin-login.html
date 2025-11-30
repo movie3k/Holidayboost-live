@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - HolidayBoost</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a3a 50%, #0a1628 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            color: #1a2a3a;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+            border: none;
+            border-radius: 8px;
+            color: #1a2a3a;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.error {
+            background: #ffe0e0;
+            color: #c00;
+            border: 1px solid #fcc;
+            display: block;
+        }
+
+        .message.success {
+            background: #e0ffe0;
+            color: #060;
+            border: 1px solid #cfc;
+            display: block;
+        }
+
+        .message.info {
+            background: #e0f0ff;
+            color: #036;
+            border: 1px solid #cdf;
+            display: block;
+        }
+
+        /* 2FA Schritt - initial versteckt */
+        .step-2fa {
+            display: none;
+        }
+
+        .code-input {
+            text-align: center;
+            letter-spacing: 8px;
+            font-size: 24px;
+            font-family: monospace;
+        }
+
+        .timer {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .timer.warning {
+            color: #c00;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #ffd700;
+        }
+
+        .security-info {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .resend-link {
+            color: #0066cc;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .resend-link:hover {
+            color: #0044aa;
+        }
+
+        .resend-link.disabled {
+            color: #999;
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="logo.png" alt="HolidayBoost Logo">
+            <h1>Admin Login</h1>
+            <p>Zugang zum Verwaltungsbereich</p>
+        </div>
+
+        <!-- SCHRITT 1: Passwort -->
+        <form id="step-password" class="step-password">
+            <div id="message-password" class="message"></div>
+
+            <div class="form-group">
+                <label for="password">Passwort</label>
+                <input type="password" id="password" placeholder="Admin-Passwort eingeben" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="submit-btn" id="btn-password">
+                Anmelden
+            </button>
+        </form>
+
+        <!-- SCHRITT 2: 2FA Code -->
+        <form id="step-2fa" class="step-2fa">
+            <div id="message-2fa" class="message"></div>
+
+            <div class="form-group">
+                <label for="code">Sicherheitscode</label>
+                <input type="text" id="code" class="code-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" required autocomplete="one-time-code">
+            </div>
+
+            <button type="submit" class="submit-btn" id="btn-2fa">
+                Code verifizieren
+            </button>
+
+            <div class="timer" id="timer">Code gültig für: <span id="countdown">5:00</span></div>
+
+            <p style="text-align: center; margin-top: 15px;">
+                <span class="resend-link" id="resend-link">Neuen Code anfordern</span>
+            </p>
+        </form>
+
+        <a href="index.html" class="back-link">Zurück zur Website</a>
+
+        <div class="security-info">
+            Geschützter Bereich mit 2-Faktor-Authentifizierung
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // ADMIN LOGIN - 2FA AUTHENTIFIZIERUNG
+        // ========================================
+
+        const API_BASE = '/api/auth';
+        let tempToken = null;
+        let countdownInterval = null;
+        let codeExpiresAt = null;
+
+        // DOM Elemente
+        const stepPassword = document.getElementById('step-password');
+        const step2FA = document.getElementById('step-2fa');
+        const msgPassword = document.getElementById('message-password');
+        const msg2FA = document.getElementById('message-2fa');
+        const btnPassword = document.getElementById('btn-password');
+        const btn2FA = document.getElementById('btn-2fa');
+        const countdownEl = document.getElementById('countdown');
+        const timerEl = document.getElementById('timer');
+        const resendLink = document.getElementById('resend-link');
+
+        // Prüfe ob bereits eingeloggt
+        async function checkExistingSession() {
+            const sessionToken = localStorage.getItem('adminSession');
+            if (!sessionToken) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/session`, {
+                    headers: { 'X-Session-Token': sessionToken }
+                });
+                const data = await res.json();
+
+                if (data.valid) {
+                    window.location.href = 'admin.html';
+                } else {
+                    localStorage.removeItem('adminSession');
+                }
+            } catch (e) {
+                localStorage.removeItem('adminSession');
+            }
+        }
+
+        // Nachricht anzeigen
+        function showMessage(element, type, text) {
+            element.className = `message ${type}`;
+            element.textContent = text;
+            element.style.display = 'block';
+        }
+
+        // Countdown starten
+        function startCountdown(durationMs) {
+            codeExpiresAt = Date.now() + durationMs;
+
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                const remaining = Math.max(0, codeExpiresAt - Date.now());
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+
+                countdownEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (remaining < 60000) {
+                    timerEl.classList.add('warning');
+                }
+
+                if (remaining <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownEl.textContent = 'Abgelaufen';
+                    showMessage(msg2FA, 'error', 'Der Code ist abgelaufen. Bitte fordern Sie einen neuen an.');
+                    btn2FA.disabled = true;
+                }
+            }, 1000);
+        }
+
+        // SCHRITT 1: Passwort prüfen
+        stepPassword.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const password = document.getElementById('password').value;
+            btnPassword.disabled = true;
+            btnPassword.textContent = 'Wird geprüft...';
+            msgPassword.style.display = 'none';
+
+            try {
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    tempToken = data.tempToken;
+
+                    // Zu 2FA Schritt wechseln
+                    stepPassword.style.display = 'none';
+                    step2FA.style.display = 'block';
+
+                    showMessage(msg2FA, 'info', data.message);
+                    startCountdown(5 * 60 * 1000); // 5 Minuten
+
+                    document.getElementById('code').focus();
+                } else {
+                    showMessage(msgPassword, 'error', data.error || 'Login fehlgeschlagen');
+                }
+            } catch (error) {
+                showMessage(msgPassword, 'error', 'Verbindungsfehler. Ist der Server gestartet?');
+            } finally {
+                btnPassword.disabled = false;
+                btnPassword.textContent = 'Anmelden';
+            }
+        });
+
+        // SCHRITT 2: 2FA Code verifizieren
+        step2FA.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const code = document.getElementById('code').value;
+            btn2FA.disabled = true;
+            btn2FA.textContent = 'Wird geprüft...';
+
+            try {
+                const res = await fetch(`${API_BASE}/verify`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tempToken, code })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    // Session speichern
+                    localStorage.setItem('adminSession', data.sessionToken);
+
+                    showMessage(msg2FA, 'success', 'Login erfolgreich! Weiterleitung...');
+
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                } else {
+                    let errorMsg = data.error || 'Verifizierung fehlgeschlagen';
+                    if (data.attemptsLeft !== undefined) {
+                        errorMsg += ` (${data.attemptsLeft} Versuche übrig)`;
+                    }
+                    showMessage(msg2FA, 'error', errorMsg);
+                    btn2FA.disabled = false;
+                    btn2FA.textContent = 'Code verifizieren';
+                }
+            } catch (error) {
+                showMessage(msg2FA, 'error', 'Verbindungsfehler');
+                btn2FA.disabled = false;
+                btn2FA.textContent = 'Code verifizieren';
+            }
+        });
+
+        // Neuen Code anfordern
+        resendLink.addEventListener('click', async () => {
+            if (resendLink.classList.contains('disabled')) return;
+
+            // Zurück zu Schritt 1
+            step2FA.style.display = 'none';
+            stepPassword.style.display = 'block';
+            document.getElementById('password').value = '';
+            document.getElementById('code').value = '';
+            tempToken = null;
+
+            if (countdownInterval) clearInterval(countdownInterval);
+            timerEl.classList.remove('warning');
+            btn2FA.disabled = false;
+            btn2FA.textContent = 'Code verifizieren';
+            msg2FA.style.display = 'none';
+
+            showMessage(msgPassword, 'info', 'Bitte geben Sie Ihr Passwort erneut ein.');
+        });
+
+        // Code-Input: nur Zahlen erlauben
+        document.getElementById('code').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        // Start
+        checkExistingSession();
+    </script>
+</body>
+</html>

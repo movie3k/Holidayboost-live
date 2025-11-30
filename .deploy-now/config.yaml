@@ -1,0 +1,43 @@
+# IONOS Deploy Now Konfiguration
+# Nur statische Dateien werden deployed - kein Node.js Backend
+
+version: 1
+
+# Dateien die NICHT deployed werden sollen
+excludes:
+  # Server-Dateien (Node.js - läuft nicht auf IONOS Webspace)
+  - server.js
+  - package.json
+  - package-lock.json
+  - node_modules
+
+  # Admin-Panel (nur lokal nutzbar)
+  - admin.html
+  - admin-login.html
+  - admin.js
+
+  # Test/Debug-Dateien
+  - test.html
+  - test-admin.html
+  - debug.html
+
+  # Entwicklungs-Dateien
+  - .git
+  - .github
+  - .deploy-now
+  - .claude
+  - ionos
+  - WORKFLOW.md
+
+  # Screenshots/temporäre Bilder
+  - "*.png"
+  - uploads
+
+  # Ausnahmen für benötigte Bilder
+  # (logo.png wird über include hinzugefügt)
+
+# Dateien die explizit inkludiert werden sollen
+includes:
+  - logo.png
+  - urlaub.jpg
+  - urlaub2.jpg

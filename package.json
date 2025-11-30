@@ -1,0 +1,23 @@
+{
+  "name": "holidayboost",
+  "version": "2.0.0",
+  "description": "HolidayBoost - Urlaubsplaner Deutschland mit Brückentage-Optimierung",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "urlaubsplaner",
+    "brueckentage",
+    "feiertage",
+    "deutschland"
+  ],
+  "author": "HolidayBoost",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^7.0.11"
+  }
+}

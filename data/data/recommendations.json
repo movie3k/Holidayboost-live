@@ -1,0 +1,95 @@
+[
+  {
+    "id": "rec-1764191623768",
+    "year": 2025,
+    "type": "bridge",
+    "title": "weihnachten",
+    "description": "9 tage",
+    "vacationDates": [
+      "2025-12-22",
+      "2025-12-23",
+      "2025-12-24"
+    ],
+    "periodStart": "2025-12-20",
+    "periodEnd": "2025-12-28",
+    "holidays": [
+      "Weihnachten"
+    ],
+    "states": [
+      "BY",
+      "RP"
+    ],
+    "cities": [],
+    "vacationDaysNeeded": 3,
+    "totalFreeDays": 9,
+    "efficiency": 3,
+    "effectiveDays": 9,
+    "allDates": [
+      "2025-12-20",
+      "2025-12-21",
+      "2025-12-22",
+      "2025-12-23",
+      "2025-12-24",
+      "2025-12-25",
+      "2025-12-26",
+      "2025-12-27",
+      "2025-12-28"
+    ]
+  },
+  {
+    "id": "rec-1764192173128",
+    "year": 2025,
+    "type": "bridge",
+    "title": "eestwetwe",
+    "description": "weerww",
+    "vacationDates": [
+      "2025-11-21"
+    ],
+    "periodStart": "2025-11-21",
+    "periodEnd": "2025-11-23",
+    "holidays": [
+      "rdhdrt"
+    ],
+    "states": [
+      "RP"
+    ],
+    "cities": [],
+    "vacationDaysNeeded": 1,
+    "totalFreeDays": 3,
+    "efficiency": 3,
+    "effectiveDays": 3,
+    "allDates": [
+      "2025-11-21",
+      "2025-11-22",
+      "2025-11-23"
+    ]
+  },
+  {
+    "id": "rec-1764193866300",
+    "year": 2026,
+    "type": "bridge",
+    "title": "test",
+    "description": "test",
+    "vacationDates": [
+      "2026-08-14"
+    ],
+    "periodStart": "2026-08-14",
+    "periodEnd": "2026-08-16",
+    "holidays": [
+      "as"
+    ],
+    "states": [
+      "RP"
+    ],
+    "cities": [],
+    "vacationDaysNeeded": 1,
+    "totalFreeDays": 3,
+    "efficiency": 3,
+    "effectiveDays": 3,
+    "allDates": [
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ]
+  }
+]

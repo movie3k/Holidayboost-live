@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Admin Panel</title>
+</head>
+<body>
+    <h1>Test Admin Panel</h1>
+
+    <button onclick="testFunction()">Test Button</button>
+
+    <div id="states-checkboxes"></div>
+    <div id="vacation-calendar-main"></div>
+    <div id="vacation-calendar-secondary"></div>
+    <div id="current-period-text"></div>
+
+    <script>
+        console.log('✅ Test page loaded');
+
+        function testFunction() {
+            console.log('✅ Button clicked successfully');
+            alert('Button works!');
+        }
+
+        // Check if containers exist
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Container check:');
+            console.log('states-checkboxes:', !!document.getElementById('states-checkboxes'));
+            console.log('vacation-calendar-main:', !!document.getElementById('vacation-calendar-main'));
+            console.log('vacation-calendar-secondary:', !!document.getElementById('vacation-calendar-secondary'));
+            console.log('current-period-text:', !!document.getElementById('current-period-text'));
+        });
+    </script>
+</body>
+</html>

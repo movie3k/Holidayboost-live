@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reisetipps nach Monat - HolidayBoost</title>
+    <meta name="description" content="Finde die besten Reiseziele für jeden Monat. Entdecke wann du wohin reisen solltest - von Städtetrips bis Fernreisen.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" href="urlaub2.jpg" as="image">
+</head>
+<body>
+    <div class="container">
+        <!-- KOMPAKTER HEADER -->
+        <header class="compact-header">
+            <div class="header-row">
+                <a href="index.html" class="logo-compact">
+                    <img src="logo.png" alt="HolidayBoost Logo" class="logo-img">
+                    <span class="logo-text"><span class="text-holiday">Holiday</span><span class="text-boost">Boost</span></span>
+                </a>
+            </div>
+        </header>
+
+        <!-- ZURÜCK-NAVIGATION -->
+        <nav class="back-nav">
+            <a href="index.html" class="back-nav-link">
+                <span class="arrow">←</span>
+                <span>Zurück zum Urlaubsplaner</span>
+            </a>
+        </nav>
+
+        <!-- REISETIPPS CONTENT -->
+        <main class="travel-tips-page">
+            <div class="page-header">
+                <h1>Reisetipps nach Monat</h1>
+                <p id="page-description">Entdecke die besten Reiseziele für jeden Monat des Jahres. Plane deinen Urlaub zur perfekten Reisezeit!</p>
+            </div>
+
+            <!-- AFFILIATE BEREICH - EYE-CATCHING OBEN -->
+            <section class="affiliate-hero">
+                <div class="affiliate-hero-glow"></div>
+                <div class="affiliate-hero-content">
+                    <div class="affiliate-hero-text">
+                        <span class="affiliate-hero-badge">Exklusive Angebote</span>
+                        <h2 class="affiliate-hero-title">Jetzt buchen & sparen!</h2>
+                    </div>
+                    <div class="affiliate-hero-buttons" id="page-affiliate-links">
+                        <!-- Wird dynamisch gefüllt -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- PERSONALISIERTE EMPFEHLUNGEN (wenn von Planer kommend) -->
+            <div id="personalized-section" class="personalized-section" style="display: none;">
+                <div id="periods-container">
+                    <!-- Wird dynamisch mit Urlaubszeiträumen gefüllt -->
+                </div>
+            </div>
+
+            <!-- ALLE REISEZIELE BROWSER -->
+            <div id="browse-section">
+                <div class="browse-header">
+                    <h2 class="browse-title" id="browse-title">Weitere Reiseziele entdecken</h2>
+                    <span class="browse-count"><span id="results-count">0</span> Ziele</span>
+                </div>
+
+                <!-- MODERNE FILTER-LEISTE -->
+                <div class="filter-modern">
+                    <!-- MONATS-SCROLL -->
+                    <div class="filter-months-scroll">
+                        <button class="month-pill active" data-month="all">Alle</button>
+                        <button class="month-pill" data-month="1">Jan</button>
+                        <button class="month-pill" data-month="2">Feb</button>
+                        <button class="month-pill" data-month="3">Mär</button>
+                        <button class="month-pill" data-month="4">Apr</button>
+                        <button class="month-pill" data-month="5">Mai</button>
+                        <button class="month-pill" data-month="6">Jun</button>
+                        <button class="month-pill" data-month="7">Jul</button>
+                        <button class="month-pill" data-month="8">Aug</button>
+                        <button class="month-pill" data-month="9">Sep</button>
+                        <button class="month-pill" data-month="10">Okt</button>
+                        <button class="month-pill" data-month="11">Nov</button>
+                        <button class="month-pill" data-month="12">Dez</button>
+                    </div>
+
+                    <!-- FILTER-DROPDOWNS -->
+                    <div class="filter-selects">
+                        <select class="filter-select" id="climate-select">
+                            <option value="all">Klima</option>
+                            <option value="warm">☀️ Warm & Tropisch</option>
+                            <option value="mild">🌤️ Mild</option>
+                            <option value="kalt">❄️ Ski/Kalt</option>
+                        </select>
+                        <select class="filter-select" id="region-select">
+                            <option value="all">Region</option>
+                            <option value="europa">🇪🇺 Europa</option>
+                            <option value="fernreise">🌍 Fernreise</option>
+                        </select>
+                        <select class="filter-select" id="duration-select">
+                            <option value="all">Dauer</option>
+                            <option value="kurz">4-8 Tage</option>
+                            <option value="mittel">9-15 Tage</option>
+                            <option value="lang">16+ Tage</option>
+                        </select>
+                        <select class="filter-select" id="price-select">
+                            <option value="all">Budget</option>
+                            <option value="1">€ Günstig</option>
+                            <option value="2">€€ Mittel</option>
+                            <option value="3">€€€ Premium</option>
+                        </select>
+                    </div>
+
+                    <!-- AKTIVE FILTER -->
+                    <div id="active-filters" class="active-filters-modern"></div>
+                </div>
+
+                <!-- REISEZIELE GRID -->
+                <div id="destinations-grid" class="destinations-grid">
+                    <!-- Wird dynamisch gefüllt -->
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER-LINKS -->
+        <nav class="footer-links">
+            <a href="about.html">Über HolidayBoost</a>
+            <span class="divider">|</span>
+            <a href="impressum.html">Impressum</a>
+            <span class="divider">|</span>
+            <a href="datenschutz.html">Datenschutz</a>
+            <span class="divider">|</span>
+            <a href="kontakt.html">Kontakt</a>
+
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="https://instagram.com/holidayboost" target="_blank" rel="noopener noreferrer" class="social-link social-instagram" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://tiktok.com/@holidayboost" target="_blank" rel="noopener noreferrer" class="social-link social-tiktok" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
+                </a>
+                <a href="https://pinterest.com/holidayboost" target="_blank" rel="noopener noreferrer" class="social-link social-pinterest" aria-label="Pinterest">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 00-4.37 23.17c-.1-.94-.2-2.4.04-3.44l1.4-5.96s-.37-.74-.37-1.82c0-1.7 1-2.98 2.24-2.98 1.06 0 1.57.8 1.57 1.74 0 1.07-.68 2.66-1.03 4.14-.3 1.24.62 2.26 1.84 2.26 2.22 0 3.92-2.34 3.92-5.7 0-2.98-2.14-5.07-5.2-5.07-3.54 0-5.62 2.66-5.62 5.4 0 1.07.4 2.22.92 2.84.1.12.12.24.08.36l-.34 1.4c-.06.24-.18.28-.42.18-1.56-.74-2.54-3.02-2.54-4.86 0-3.96 2.88-7.6 8.3-7.6 4.36 0 7.74 3.1 7.74 7.26 0 4.34-2.74 7.82-6.54 7.82-1.28 0-2.48-.66-2.88-1.44l-.8 3.02c-.28 1.1-1.04 2.48-1.56 3.32A12 12 0 1012 0z"/></svg>
+                </a>
+                <a href="https://youtube.com/@holidayboost" target="_blank" rel="noopener noreferrer" class="social-link social-youtube" aria-label="YouTube" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Reiseziele Daten mit Affiliate-Links pro Destination
+        // WICHTIG: Ersetze die # Links mit deinen echten Affiliate-Links!
+        const DESTINATIONS = [
+            // ==========================================
+            // KURZTRIPS EUROPA (4-6 Tage)
+            // price: 1 = günstig (€), 2 = mittel (€€), 3 = teuer (€€€)
+            // ==========================================
+            { id: 'barcelona', name: 'Barcelona', country: 'Spanien', region: 'europa', climate: 'warm', months: [3,4,5,9,10], minDays: 4, maxDays: 6, price: 2, emoji: '🏛️', description: 'Architektur, Strand und Tapas', tip: 'Günstige Flüge ab 50€',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bcn/', hotel: 'https://www.booking.com/city/es/barcelona.html', activities: 'https://www.getyourguide.de/barcelona-l45/' }},
+            { id: 'amsterdam', name: 'Amsterdam', country: 'Niederlande', region: 'europa', climate: 'mild', months: [4,5,6,7,8,9], minDays: 4, maxDays: 5, price: 2, emoji: '🚲', description: 'Grachten, Museen und Fahrräder', tip: 'Tulpenblüte im April',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ams/', hotel: 'https://www.booking.com/city/nl/amsterdam.html', activities: 'https://www.getyourguide.de/amsterdam-l36/' }},
+            { id: 'prag', name: 'Prag', country: 'Tschechien', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 5, price: 1, emoji: '🏰', description: 'Altstadt, Brücken und Bier', tip: 'Super günstig!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/prg/', hotel: 'https://www.booking.com/city/cz/prague.html', activities: 'https://www.getyourguide.de/prag-l10/' }},
+            { id: 'wien', name: 'Wien', country: 'Österreich', region: 'europa', climate: 'mild', months: [4,5,6,9,10,12], minDays: 4, maxDays: 5, price: 2, emoji: '🎻', description: 'Kultur, Kaffee und Schlösser', tip: 'Weihnachtsmärkte im Dezember',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vie/', hotel: 'https://www.booking.com/city/at/vienna.html', activities: 'https://www.getyourguide.de/wien-l37/' }},
+            { id: 'lissabon', name: 'Lissabon', country: 'Portugal', region: 'europa', climate: 'warm', months: [3,4,5,6,9,10], minDays: 4, maxDays: 6, price: 1, emoji: '🚃', description: 'Hügel, Pastéis und Fado', tip: 'Beste Pastéis de Nata!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lis/', hotel: 'https://www.booking.com/city/pt/lisbon.html', activities: 'https://www.getyourguide.de/lissabon-l42/' }},
+            { id: 'rom', name: 'Rom', country: 'Italien', region: 'europa', climate: 'warm', months: [3,4,5,9,10,11], minDays: 4, maxDays: 6, price: 2, emoji: '🏛️', description: 'Geschichte, Pizza und Gelato', tip: 'Nebensaison = weniger Touristen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rom/', hotel: 'https://www.booking.com/city/it/rome.html', activities: 'https://www.getyourguide.de/rom-l33/' }},
+            { id: 'london', name: 'London', country: 'England', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 6, price: 3, emoji: '💂', description: 'Geschichte, Theater und Pubs', tip: 'Museen kostenlos!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lond/', hotel: 'https://www.booking.com/city/gb/london.html', activities: 'https://www.getyourguide.de/london-l57/' }},
+            { id: 'paris', name: 'Paris', country: 'Frankreich', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 5, price: 3, emoji: '🗼', description: 'Kunst, Küche und Romantik', tip: 'Frühling am schönsten',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/pari/', hotel: 'https://www.booking.com/city/fr/paris.html', activities: 'https://www.getyourguide.de/paris-l16/' }},
+            { id: 'budapest', name: 'Budapest', country: 'Ungarn', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 5, price: 1, emoji: '♨️', description: 'Thermalbäder und Donau-Blick', tip: 'Günstiges Spa-Erlebnis',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bud/', hotel: 'https://www.booking.com/city/hu/budapest.html', activities: 'https://www.getyourguide.de/budapest-l29/' }},
+            { id: 'kopenhagen', name: 'Kopenhagen', country: 'Dänemark', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 4, maxDays: 5, price: 3, emoji: '🎡', description: 'Hygge, Design und Tivoli', tip: 'Fahrradstadt Nr. 1',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cph/', hotel: 'https://www.booking.com/city/dk/copenhagen.html', activities: 'https://www.getyourguide.de/kopenhagen-l12/' }},
+
+            // ==========================================
+            // MITTELLANGE EUROPA-TRIPS (7-10 Tage)
+            // ==========================================
+            { id: 'mallorca', name: 'Mallorca', country: 'Spanien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🏖️', description: 'Strände, Berge und Buchten', tip: 'Mai/Juni noch nicht überfüllt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/pmi/', hotel: 'https://www.booking.com/region/es/mallorca.html', activities: 'https://www.getyourguide.de/mallorca-l187/' }},
+            { id: 'kreta', name: 'Kreta', country: 'Griechenland', region: 'europa', climate: 'warm', months: [5,6,7,8,9,10], minDays: 7, maxDays: 10, price: 2, emoji: '🏺', description: 'Antike Ruinen und türkises Meer', tip: 'Oktober noch 25°C!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/her/', hotel: 'https://www.booking.com/region/gr/crete.html', activities: 'https://www.getyourguide.de/kreta-l309/' }},
+            { id: 'kroatien', name: 'Kroatien', country: 'Kroatien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '⛵', description: 'Dubrovnik, Inseln und Wasserfälle', tip: 'Dubrovnik + Inseln kombinieren',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/dbv/', hotel: 'https://www.booking.com/city/hr/dubrovnik.html', activities: 'https://www.getyourguide.de/kroatien-l278/' }},
+            { id: 'island', name: 'Island', country: 'Island', region: 'europa', climate: 'kalt', months: [6,7,8], minDays: 7, maxDays: 10, price: 3, emoji: '🌋', description: 'Geysire, Nordlichter und Gletscher', tip: 'Mitternachtssonne erleben',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/kef/', hotel: 'https://www.booking.com/country/is.html', activities: 'https://www.getyourguide.de/island-l74/' }},
+            { id: 'norwegen', name: 'Norwegen Fjorde', country: 'Norwegen', region: 'europa', climate: 'kalt', months: [6,7,8], minDays: 7, maxDays: 10, price: 3, emoji: '🏔️', description: 'Fjorde, Wikinger und Mitternachtssonne', tip: 'Hurtigruten-Kreuzfahrt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bgo/', hotel: 'https://www.booking.com/country/no.html', activities: 'https://www.getyourguide.de/norwegen-l141/' }},
+            { id: 'sardinien', name: 'Sardinien', country: 'Italien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🏝️', description: 'Traumstrände und Natur', tip: 'Karibik-Strände in Europa',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cag/', hotel: 'https://www.booking.com/region/it/sardinia.html', activities: 'https://www.getyourguide.de/sardinien-l616/' }},
+            { id: 'zypern', name: 'Zypern', country: 'Zypern', region: 'europa', climate: 'warm', months: [4,5,6,9,10,11], minDays: 7, maxDays: 10, price: 2, emoji: '☀️', description: 'Antike und Strände', tip: 'Lange Saison bis November',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lca/', hotel: 'https://www.booking.com/country/cy.html', activities: 'https://www.getyourguide.de/zypern-l298/' }},
+            { id: 'sizilien', name: 'Sizilien', country: 'Italien', region: 'europa', climate: 'warm', months: [4,5,6,9,10], minDays: 7, maxDays: 10, price: 2, emoji: '🌋', description: 'Vulkane, Geschichte und Küche', tip: 'Ätna + Strände',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cta/', hotel: 'https://www.booking.com/region/it/sicily.html', activities: 'https://www.getyourguide.de/sizilien-l1085/' }},
+            { id: 'algarve', name: 'Algarve', country: 'Portugal', region: 'europa', climate: 'warm', months: [5,6,7,8,9,10], minDays: 7, maxDays: 10, price: 1, emoji: '🏖️', description: 'Felsklippen und goldene Strände', tip: 'Europas schönste Küste',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/fao/', hotel: 'https://www.booking.com/region/pt/algarve.html', activities: 'https://www.getyourguide.de/algarve-l1133/' }},
+            { id: 'malta', name: 'Malta', country: 'Malta', region: 'europa', climate: 'warm', months: [4,5,6,9,10,11], minDays: 5, maxDays: 8, price: 2, emoji: '🏰', description: 'Geschichte und kristallklares Meer', tip: 'Kleine Insel, viel zu sehen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mla/', hotel: 'https://www.booking.com/country/mt.html', activities: 'https://www.getyourguide.de/malta-l96/' }},
+
+            // ==========================================
+            // WINTERFLUCHT - WARM IM WINTER (Europa-nah)
+            // ==========================================
+            { id: 'kanaren', name: 'Kanarische Inseln', country: 'Spanien', region: 'europa', climate: 'warm', months: [11,12,1,2,3], minDays: 7, maxDays: 14, price: 2, emoji: '🌴', description: 'Ewiger Frühling und Vulkane', tip: 'Sonne im Winter garantiert',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tfs/', hotel: 'https://www.booking.com/region/es/canary-islands.html', activities: 'https://www.getyourguide.de/kanarische-inseln-l305/' }},
+            { id: 'madeira', name: 'Madeira', country: 'Portugal', region: 'europa', climate: 'mild', months: [1,2,3,4,11,12], minDays: 5, maxDays: 8, price: 2, emoji: '🌺', description: 'Wandern und Natur', tip: 'Wanderparadies im Winter',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/fnc/', hotel: 'https://www.booking.com/region/pt/madeira.html', activities: 'https://www.getyourguide.de/madeira-l309/' }},
+            { id: 'kapverden', name: 'Kapverden', country: 'Kapverden', region: 'fernreise', climate: 'warm', months: [11,12,1,2,3,4], minDays: 7, maxDays: 10, price: 2, emoji: '🏝️', description: 'Afrikanische Inseln mit Stränden', tip: 'Nur 6h Flug, warm im Winter',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sid/', hotel: 'https://www.booking.com/country/cv.html', activities: 'https://www.getyourguide.de/kapverden-l1086/' }},
+            { id: 'dubai', name: 'Dubai', country: 'VAE', region: 'fernreise', climate: 'warm', months: [11,12,1,2,3], minDays: 5, maxDays: 8, price: 3, emoji: '🏙️', description: 'Wolkenkratzer, Shopping und Luxus', tip: 'Shopping + Strand',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/dxb/', hotel: 'https://www.booking.com/city/ae/dubai.html', activities: 'https://www.getyourguide.de/dubai-l173/' }},
+            { id: 'marokko', name: 'Marokko', country: 'Marokko', region: 'fernreise', climate: 'warm', months: [10,11,12,1,2,3,4], minDays: 7, maxDays: 10, price: 1, emoji: '🕌', description: 'Orient-Flair und Wüste', tip: 'Marrakesch + Wüste',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rak/', hotel: 'https://www.booking.com/city/ma/marrakech.html', activities: 'https://www.getyourguide.de/marrakesch-l208/' }},
+            { id: 'aegypten', name: 'Ägypten', country: 'Ägypten', region: 'fernreise', climate: 'warm', months: [10,11,12,1,2,3,4], minDays: 7, maxDays: 14, price: 1, emoji: '🏛️', description: 'Pyramiden und Rotes Meer', tip: 'Schnorcheln + Kultur',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/hrg/', hotel: 'https://www.booking.com/country/eg.html', activities: 'https://www.getyourguide.de/aegypten-l59/' }},
+            { id: 'oman', name: 'Oman', country: 'Oman', region: 'fernreise', climate: 'warm', months: [10,11,12,1,2,3], minDays: 7, maxDays: 10, price: 2, emoji: '🏜️', description: 'Wüste, Wadis und Tradition', tip: 'Geheimtipp Arabien',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mct/', hotel: 'https://www.booking.com/country/om.html', activities: 'https://www.getyourguide.de/oman-l1217/' }},
+            { id: 'tunesien', name: 'Tunesien', country: 'Tunesien', region: 'fernreise', climate: 'warm', months: [3,4,5,9,10,11], minDays: 7, maxDays: 10, price: 1, emoji: '🏜️', description: 'Strände und Wüstenabenteuer', tip: 'Günstig & nah',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tun/', hotel: 'https://www.booking.com/country/tn.html', activities: 'https://www.getyourguide.de/tunesien-l278/' }},
+            { id: 'jordanien', name: 'Jordanien', country: 'Jordanien', region: 'fernreise', climate: 'warm', months: [3,4,5,10,11], minDays: 7, maxDays: 10, price: 2, emoji: '🏛️', description: 'Petra und Wadi Rum', tip: 'Einzigartige Wüstenlandschaft',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/amm/', hotel: 'https://www.booking.com/country/jo.html', activities: 'https://www.getyourguide.de/jordanien-l289/' }},
+
+            // ==========================================
+            // SKIURLAUB EUROPA
+            // ==========================================
+            { id: 'ski-oesterreich', name: 'Skiurlaub Österreich', country: 'Österreich', region: 'europa', climate: 'kalt', months: [12,1,2,3], minDays: 4, maxDays: 10, price: 2, emoji: '⛷️', description: 'Pisten, Hütten und Après-Ski', tip: 'Januar günstiger als Weihnachten!',
+              links: { hotel: 'https://www.booking.com/ski/country/at.html', activities: 'https://www.getyourguide.de/oesterreich-l3/' }},
+            { id: 'ski-schweiz', name: 'Skiurlaub Schweiz', country: 'Schweiz', region: 'europa', climate: 'kalt', months: [12,1,2,3], minDays: 5, maxDays: 10, price: 3, emoji: '🎿', description: 'Weltklasse-Pisten und Luxus', tip: 'Premium-Pisten in Zermatt',
+              links: { hotel: 'https://www.booking.com/ski/country/ch.html', activities: 'https://www.getyourguide.de/schweiz-l68/' }},
+            { id: 'ski-frankreich', name: 'Skiurlaub Frankreich', country: 'Frankreich', region: 'europa', climate: 'kalt', months: [12,1,2,3], minDays: 5, maxDays: 10, price: 2, emoji: '🏔️', description: 'Große Skigebiete', tip: 'Große Skigebiete, faire Preise',
+              links: { hotel: 'https://www.booking.com/ski/country/fr.html', activities: 'https://www.getyourguide.de/frankreich-l59/' }},
+            { id: 'ski-italien', name: 'Skiurlaub Südtirol', country: 'Italien', region: 'europa', climate: 'kalt', months: [12,1,2,3], minDays: 4, maxDays: 8, price: 2, emoji: '🍝', description: 'Dolomiten und italienische Küche', tip: 'Beste Küche auf der Piste!',
+              links: { hotel: 'https://www.booking.com/region/it/south-tyrol.html', activities: 'https://www.getyourguide.de/suedtirol-l32288/' }},
+
+            // ==========================================
+            // FERNREISEN (11+ Tage)
+            // ==========================================
+            { id: 'thailand', name: 'Thailand', country: 'Thailand', region: 'fernreise', climate: 'tropisch', months: [11,12,1,2,3], minDays: 12, maxDays: 21, price: 1, emoji: '🛕', description: 'Tempel, Strände und Street Food', tip: 'Beste Reisezeit Nov-Feb',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bkk/', hotel: 'https://www.booking.com/country/th.html', activities: 'https://www.getyourguide.de/thailand-l169/' }},
+            { id: 'bali', name: 'Bali', country: 'Indonesien', region: 'fernreise', climate: 'tropisch', months: [4,5,6,7,8,9,10], minDays: 12, maxDays: 21, price: 2, emoji: '🌴', description: 'Reisterrassen, Tempel und Yoga', tip: 'Trockenzeit April-Oktober',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/dps/', hotel: 'https://www.booking.com/region/id/bali.html', activities: 'https://www.getyourguide.de/bali-l347/' }},
+            { id: 'japan', name: 'Japan', country: 'Japan', region: 'fernreise', climate: 'mild', months: [3,4,10,11], minDays: 14, maxDays: 21, price: 3, emoji: '🌸', description: 'Kirschblüten, Sushi und Tradition', tip: 'Kirschblüte März/April',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tyoa/', hotel: 'https://www.booking.com/country/jp.html', activities: 'https://www.getyourguide.de/japan-l193/' }},
+            { id: 'usa-west', name: 'USA Westküste', country: 'USA', region: 'fernreise', climate: 'warm', months: [4,5,6,9,10], minDays: 14, maxDays: 21, price: 3, emoji: '🚗', description: 'Roadtrip durch Nationalparks', tip: 'Roadtrip durch Nationalparks',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lax/', hotel: 'https://www.booking.com/city/us/los-angeles.html', activities: 'https://www.getyourguide.de/los-angeles-l63/' }},
+            { id: 'malediven', name: 'Malediven', country: 'Malediven', region: 'fernreise', climate: 'tropisch', months: [1,2,3,4,11,12], minDays: 10, maxDays: 14, price: 3, emoji: '🏝️', description: 'Luxus-Resorts und Unterwasserwelt', tip: 'Luxus-Overwater-Bungalows',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mle/', hotel: 'https://www.booking.com/country/mv.html', activities: 'https://www.getyourguide.de/malediven-l509/' }},
+            { id: 'karibik', name: 'Karibik', country: 'Diverse', region: 'fernreise', climate: 'tropisch', months: [12,1,2,3,4], minDays: 10, maxDays: 16, price: 3, emoji: '🌴', description: 'Traumstrände und Reggae-Vibes', tip: 'Hurrikan-Saison vermeiden',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mbj/', hotel: 'https://www.booking.com/region/jm/jamaica.html', activities: 'https://www.getyourguide.de/karibik-l86356/' }},
+            { id: 'vietnam', name: 'Vietnam', country: 'Vietnam', region: 'fernreise', climate: 'tropisch', months: [2,3,4,10,11,12], minDays: 14, maxDays: 21, price: 1, emoji: '🛵', description: 'Kultur, Natur und günstig', tip: 'Günstig & vielfältig',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sgn/', hotel: 'https://www.booking.com/country/vn.html', activities: 'https://www.getyourguide.de/vietnam-l198/' }},
+            { id: 'neuseeland', name: 'Neuseeland', country: 'Neuseeland', region: 'fernreise', climate: 'mild', months: [11,12,1,2,3], minDays: 16, maxDays: 21, price: 3, emoji: '🏔️', description: 'Spektakuläre Landschaften', tip: 'Sommer auf der Südhalbkugel',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/akl/', hotel: 'https://www.booking.com/country/nz.html', activities: 'https://www.getyourguide.de/neuseeland-l287/' }},
+            { id: 'suedafrika', name: 'Südafrika', country: 'Südafrika', region: 'fernreise', climate: 'warm', months: [9,10,11,12,1,2,3], minDays: 14, maxDays: 21, price: 2, emoji: '🦁', description: 'Safari und Kapstadt', tip: 'Safari + Kapstadt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cpt/', hotel: 'https://www.booking.com/city/za/cape-town.html', activities: 'https://www.getyourguide.de/suedafrika-l193/' }},
+            { id: 'srilanka', name: 'Sri Lanka', country: 'Sri Lanka', region: 'fernreise', climate: 'tropisch', months: [1,2,3,4,12], minDays: 12, maxDays: 18, price: 1, emoji: '🐘', description: 'Tempel, Tee und Elefanten', tip: 'Vielfalt auf kleiner Fläche',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cmb/', hotel: 'https://www.booking.com/country/lk.html', activities: 'https://www.getyourguide.de/sri-lanka-l203/' }},
+            { id: 'mauritius', name: 'Mauritius', country: 'Mauritius', region: 'fernreise', climate: 'tropisch', months: [5,6,7,8,9,10,11], minDays: 10, maxDays: 14, price: 3, emoji: '🏝️', description: 'Traumstrände im Indischen Ozean', tip: 'Beste Zeit Mai-November',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mru/', hotel: 'https://www.booking.com/country/mu.html', activities: 'https://www.getyourguide.de/mauritius-l177/' }},
+            { id: 'mexico', name: 'Mexiko', country: 'Mexiko', region: 'fernreise', climate: 'warm', months: [11,12,1,2,3,4], minDays: 12, maxDays: 18, price: 2, emoji: '🏛️', description: 'Maya-Ruinen und Karibikstrände', tip: 'Yucatan + Riviera Maya',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cun/', hotel: 'https://www.booking.com/country/mx.html', activities: 'https://www.getyourguide.de/mexiko-l169/' }},
+            { id: 'costa-rica', name: 'Costa Rica', country: 'Costa Rica', region: 'fernreise', climate: 'tropisch', months: [12,1,2,3,4], minDays: 14, maxDays: 21, price: 2, emoji: '🦜', description: 'Regenwald und Vulkane', tip: 'Pura Vida Lifestyle',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sjo/', hotel: 'https://www.booking.com/country/cr.html', activities: 'https://www.getyourguide.de/costa-rica-l174/' }},
+            { id: 'kuba', name: 'Kuba', country: 'Kuba', region: 'fernreise', climate: 'tropisch', months: [11,12,1,2,3,4], minDays: 10, maxDays: 16, price: 1, emoji: '🚗', description: 'Oldtimer, Salsa und Geschichte', tip: 'Havanna + Strände',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/hav/', hotel: 'https://www.booking.com/country/cu.html', activities: 'https://www.getyourguide.de/kuba-l224/' }},
+            { id: 'seychellen', name: 'Seychellen', country: 'Seychellen', region: 'fernreise', climate: 'tropisch', months: [4,5,10,11], minDays: 10, maxDays: 14, price: 3, emoji: '🏝️', description: 'Luxus-Inselparadies', tip: 'Traumstrände für Flitterwochen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sez/', hotel: 'https://www.booking.com/country/sc.html', activities: 'https://www.getyourguide.de/seychellen-l373/' }},
+
+            // ==========================================
+            // WEITERE STÄDTETRIPS EUROPA
+            // ==========================================
+            { id: 'edinburgh', name: 'Edinburgh', country: 'Schottland', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 4, maxDays: 6, price: 2, emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', description: 'Schlösser, Whisky und Highlands', tip: 'Festival im August',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/edi/', hotel: 'https://www.booking.com/city/gb/edinburgh.html', activities: 'https://www.getyourguide.de/edinburgh-l44/' }},
+            { id: 'dublin', name: 'Dublin', country: 'Irland', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 4, maxDays: 5, price: 2, emoji: '🍀', description: 'Pubs, Geschichte und grüne Landschaft', tip: 'St. Patricks Day im März',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/dub/', hotel: 'https://www.booking.com/city/ie/dublin.html', activities: 'https://www.getyourguide.de/dublin-l31/' }},
+            { id: 'stockholm', name: 'Stockholm', country: 'Schweden', region: 'europa', climate: 'mild', months: [5,6,7,8], minDays: 4, maxDays: 5, price: 3, emoji: '👑', description: 'Inseln, Design und Königspalast', tip: 'Mittsommer erleben',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sto/', hotel: 'https://www.booking.com/city/se/stockholm.html', activities: 'https://www.getyourguide.de/stockholm-l37/' }},
+            { id: 'helsinki', name: 'Helsinki', country: 'Finnland', region: 'europa', climate: 'kalt', months: [5,6,7,8,12], minDays: 4, maxDays: 5, price: 3, emoji: '🧖', description: 'Sauna-Kultur und Design', tip: 'Weihnachtsmarkt im Dezember',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/hel/', hotel: 'https://www.booking.com/city/fi/helsinki.html', activities: 'https://www.getyourguide.de/helsinki-l41/' }},
+            { id: 'brussel', name: 'Brüssel', country: 'Belgien', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 3, maxDays: 4, price: 2, emoji: '🍫', description: 'Schokolade, Waffeln und Grand Place', tip: 'Bier-Hauptstadt Europas',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bru/', hotel: 'https://www.booking.com/city/be/brussels.html', activities: 'https://www.getyourguide.de/bruessel-l24/' }},
+            { id: 'krakau', name: 'Krakau', country: 'Polen', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 5, price: 1, emoji: '🏰', description: 'Altstadt und jüdisches Viertel', tip: 'Sehr günstig!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/krk/', hotel: 'https://www.booking.com/city/pl/krakow.html', activities: 'https://www.getyourguide.de/krakau-l40/' }},
+            { id: 'bratislava', name: 'Bratislava', country: 'Slowakei', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 3, maxDays: 4, price: 1, emoji: '🏛️', description: 'Kompakte Altstadt an der Donau', tip: 'Tagesausflug von Wien',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bts/', hotel: 'https://www.booking.com/city/sk/bratislava.html', activities: 'https://www.getyourguide.de/bratislava-l53/' }},
+            { id: 'riga', name: 'Riga', country: 'Lettland', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 4, maxDays: 5, price: 1, emoji: '🏘️', description: 'Jugendstil und Altstadt', tip: 'Geheimtipp Baltikum',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rix/', hotel: 'https://www.booking.com/city/lv/riga.html', activities: 'https://www.getyourguide.de/riga-l54/' }},
+            { id: 'tallinn', name: 'Tallinn', country: 'Estland', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 4, maxDays: 5, price: 1, emoji: '🏰', description: 'Mittelalterliche Altstadt', tip: 'Digitalste Stadt Europas',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tll/', hotel: 'https://www.booking.com/city/ee/tallinn.html', activities: 'https://www.getyourguide.de/tallinn-l56/' }},
+            { id: 'florenz', name: 'Florenz', country: 'Italien', region: 'europa', climate: 'warm', months: [3,4,5,9,10,11], minDays: 4, maxDays: 6, price: 2, emoji: '🎨', description: 'Renaissance-Kunst und Toskana', tip: 'Uffizien früh buchen!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/flr/', hotel: 'https://www.booking.com/city/it/florence.html', activities: 'https://www.getyourguide.de/florenz-l32/' }},
+            { id: 'venedig', name: 'Venedig', country: 'Italien', region: 'europa', climate: 'mild', months: [3,4,5,9,10,11], minDays: 3, maxDays: 5, price: 3, emoji: '🚣', description: 'Kanäle und Masken', tip: 'Nebensaison weniger überlaufen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vce/', hotel: 'https://www.booking.com/city/it/venice.html', activities: 'https://www.getyourguide.de/venedig-l35/' }},
+            { id: 'mailand', name: 'Mailand', country: 'Italien', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 3, maxDays: 5, price: 2, emoji: '👗', description: 'Mode, Design und Dom', tip: 'Shopping-Paradies',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mil/', hotel: 'https://www.booking.com/city/it/milan.html', activities: 'https://www.getyourguide.de/mailand-l139/' }},
+            { id: 'neapel', name: 'Neapel', country: 'Italien', region: 'europa', climate: 'warm', months: [4,5,6,9,10], minDays: 4, maxDays: 6, price: 1, emoji: '🍕', description: 'Pizza, Pompeji und Amalfiküste', tip: 'Echte Pizza Napoletana!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/nap/', hotel: 'https://www.booking.com/city/it/naples.html', activities: 'https://www.getyourguide.de/neapel-l131/' }},
+            { id: 'sevilla', name: 'Sevilla', country: 'Spanien', region: 'europa', climate: 'warm', months: [3,4,5,10,11], minDays: 4, maxDays: 5, price: 1, emoji: '💃', description: 'Flamenco und Alcázar', tip: 'Frühling perfekt, Sommer zu heiß',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/svq/', hotel: 'https://www.booking.com/city/es/seville.html', activities: 'https://www.getyourguide.de/sevilla-l48/' }},
+            { id: 'valencia', name: 'Valencia', country: 'Spanien', region: 'europa', climate: 'warm', months: [3,4,5,6,9,10], minDays: 4, maxDays: 5, price: 1, emoji: '🥘', description: 'Paella, Strand und Architektur', tip: 'Fallas-Festival im März',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vlc/', hotel: 'https://www.booking.com/city/es/valencia.html', activities: 'https://www.getyourguide.de/valencia-l55/' }},
+            { id: 'bilbao', name: 'Bilbao', country: 'Spanien', region: 'europa', climate: 'mild', months: [5,6,7,9,10], minDays: 3, maxDays: 5, price: 2, emoji: '🏛️', description: 'Guggenheim und Pintxos', tip: 'Kulinarisches Baskenland',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bio/', hotel: 'https://www.booking.com/city/es/bilbao.html', activities: 'https://www.getyourguide.de/bilbao-l486/' }},
+            { id: 'porto', name: 'Porto', country: 'Portugal', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 5, price: 1, emoji: '🍷', description: 'Portwein und bunte Häuser', tip: 'Günstiger als Lissabon',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/opo/', hotel: 'https://www.booking.com/city/pt/porto.html', activities: 'https://www.getyourguide.de/porto-l151/' }},
+
+            // ==========================================
+            // WEITERE STRANDURLAUBE
+            // ==========================================
+            { id: 'santorin', name: 'Santorin', country: 'Griechenland', region: 'europa', climate: 'warm', months: [5,6,7,8,9,10], minDays: 5, maxDays: 7, price: 3, emoji: '🏛️', description: 'Weiße Häuser und Sonnenuntergänge', tip: 'Oia für beste Fotos',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/jtr/', hotel: 'https://www.booking.com/city/gr/santorini.html', activities: 'https://www.getyourguide.de/santorin-l319/' }},
+            { id: 'mykonos', name: 'Mykonos', country: 'Griechenland', region: 'europa', climate: 'warm', months: [6,7,8,9], minDays: 5, maxDays: 7, price: 3, emoji: '🎉', description: 'Partyinsel und Windmühlen', tip: 'Nachtleben legendär',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/jmk/', hotel: 'https://www.booking.com/city/gr/mykonos.html', activities: 'https://www.getyourguide.de/mykonos-l320/' }},
+            { id: 'rhodos', name: 'Rhodos', country: 'Griechenland', region: 'europa', climate: 'warm', months: [5,6,7,8,9,10], minDays: 7, maxDays: 10, price: 2, emoji: '☀️', description: 'Sonne, Geschichte und Strände', tip: '300 Sonnentage im Jahr',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rho/', hotel: 'https://www.booking.com/city/gr/rhodes.html', activities: 'https://www.getyourguide.de/rhodos-l321/' }},
+            { id: 'korfu', name: 'Korfu', country: 'Griechenland', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🏝️', description: 'Grüne Insel mit Stränden', tip: 'Familienfreundlich',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cfu/', hotel: 'https://www.booking.com/region/gr/corfu.html', activities: 'https://www.getyourguide.de/korfu-l310/' }},
+            { id: 'ibiza', name: 'Ibiza', country: 'Spanien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 5, maxDays: 8, price: 2, emoji: '🎧', description: 'Clubs, Strände und Hippie-Märkte', tip: 'Nicht nur Party!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ibz/', hotel: 'https://www.booking.com/city/es/ibiza.html', activities: 'https://www.getyourguide.de/ibiza-l181/' }},
+            { id: 'menorca', name: 'Menorca', country: 'Spanien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🏖️', description: 'Unberührte Buchten', tip: 'Ruhiger als Mallorca',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mah/', hotel: 'https://www.booking.com/region/es/menorca.html', activities: 'https://www.getyourguide.de/menorca-l1134/' }},
+            { id: 'azoren', name: 'Azoren', country: 'Portugal', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🌋', description: 'Vulkane und Natur mitten im Atlantik', tip: 'Wanderparadies',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/pdl/', hotel: 'https://www.booking.com/region/pt/azores.html', activities: 'https://www.getyourguide.de/azoren-l1135/' }},
+            { id: 'amalfi', name: 'Amalfiküste', country: 'Italien', region: 'europa', climate: 'warm', months: [5,6,9,10], minDays: 5, maxDays: 8, price: 3, emoji: '🍋', description: 'Spektakuläre Küstenstraße', tip: 'Limoncello probieren!',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/nap/', hotel: 'https://www.booking.com/region/it/amalfi-coast.html', activities: 'https://www.getyourguide.de/amalfikueste-l32438/' }},
+            { id: 'cote-azur', name: 'Côte d\'Azur', country: 'Frankreich', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 5, maxDays: 8, price: 3, emoji: '🌴', description: 'Glamour und Mittelmeer', tip: 'Nizza, Cannes, Monaco',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/nce/', hotel: 'https://www.booking.com/city/fr/nice.html', activities: 'https://www.getyourguide.de/nizza-l176/' }},
+
+            // ==========================================
+            // WEITERE FERNREISEN
+            // ==========================================
+            { id: 'kambodscha', name: 'Kambodscha', country: 'Kambodscha', region: 'fernreise', climate: 'tropisch', months: [11,12,1,2,3], minDays: 10, maxDays: 14, price: 1, emoji: '🛕', description: 'Angkor Wat und Kultur', tip: 'Sonnenaufgang bei Angkor',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rep/', hotel: 'https://www.booking.com/country/kh.html', activities: 'https://www.getyourguide.de/kambodscha-l265/' }},
+            { id: 'laos', name: 'Laos', country: 'Laos', region: 'fernreise', climate: 'tropisch', months: [11,12,1,2,3], minDays: 10, maxDays: 14, price: 1, emoji: '🏔️', description: 'Mekong und Tempel', tip: 'Entspanntes Südostasien',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vte/', hotel: 'https://www.booking.com/country/la.html', activities: 'https://www.getyourguide.de/laos-l266/' }},
+            { id: 'philippinen', name: 'Philippinen', country: 'Philippinen', region: 'fernreise', climate: 'tropisch', months: [1,2,3,4,5], minDays: 14, maxDays: 21, price: 1, emoji: '🏝️', description: 'Trauminseln und Lagunen', tip: 'Palawan und Cebu',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mnl/', hotel: 'https://www.booking.com/country/ph.html', activities: 'https://www.getyourguide.de/philippinen-l267/' }},
+            { id: 'malaysia', name: 'Malaysia', country: 'Malaysia', region: 'fernreise', climate: 'tropisch', months: [3,4,5,6,7,8,9], minDays: 12, maxDays: 18, price: 1, emoji: '🏙️', description: 'Kuala Lumpur und Langkawi', tip: 'Vielfältige Küche',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/kul/', hotel: 'https://www.booking.com/country/my.html', activities: 'https://www.getyourguide.de/malaysia-l268/' }},
+            { id: 'singapur', name: 'Singapur', country: 'Singapur', region: 'fernreise', climate: 'tropisch', months: [1,2,3,4,5,6,7,8,9,10,11,12], minDays: 4, maxDays: 6, price: 3, emoji: '🏙️', description: 'Zukunftsstadt und Gardens by the Bay', tip: 'Hawker Center für günstiges Essen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sin/', hotel: 'https://www.booking.com/city/sg/singapore.html', activities: 'https://www.getyourguide.de/singapur-l171/' }},
+            { id: 'peru', name: 'Peru', country: 'Peru', region: 'fernreise', climate: 'mild', months: [5,6,7,8,9], minDays: 14, maxDays: 21, price: 2, emoji: '🏔️', description: 'Machu Picchu und Inka-Kultur', tip: 'Höhenanpassung beachten',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lim/', hotel: 'https://www.booking.com/country/pe.html', activities: 'https://www.getyourguide.de/peru-l270/' }},
+            { id: 'argentinien', name: 'Argentinien', country: 'Argentinien', region: 'fernreise', climate: 'mild', months: [10,11,12,1,2,3], minDays: 16, maxDays: 21, price: 2, emoji: '🥩', description: 'Tango, Steaks und Patagonien', tip: 'Buenos Aires + Iguazu',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bue/', hotel: 'https://www.booking.com/country/ar.html', activities: 'https://www.getyourguide.de/argentinien-l271/' }},
+            { id: 'brasilien', name: 'Brasilien', country: 'Brasilien', region: 'fernreise', climate: 'tropisch', months: [5,6,7,8,9], minDays: 14, maxDays: 21, price: 2, emoji: '🎭', description: 'Rio, Strände und Amazonas', tip: 'Karneval im Februar',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/gig/', hotel: 'https://www.booking.com/country/br.html', activities: 'https://www.getyourguide.de/brasilien-l272/' }},
+            { id: 'kolumbien', name: 'Kolumbien', country: 'Kolumbien', region: 'fernreise', climate: 'tropisch', months: [12,1,2,3], minDays: 14, maxDays: 18, price: 1, emoji: '☕', description: 'Kaffee, Karibik und Kultur', tip: 'Sicherer als sein Ruf',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bog/', hotel: 'https://www.booking.com/country/co.html', activities: 'https://www.getyourguide.de/kolumbien-l273/' }},
+            { id: 'tansania', name: 'Tansania', country: 'Tansania', region: 'fernreise', climate: 'warm', months: [6,7,8,9,1,2], minDays: 10, maxDays: 16, price: 3, emoji: '🦁', description: 'Serengeti und Sansibar', tip: 'Große Migration erleben',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/jro/', hotel: 'https://www.booking.com/country/tz.html', activities: 'https://www.getyourguide.de/tansania-l274/' }},
+            { id: 'kenia', name: 'Kenia', country: 'Kenia', region: 'fernreise', climate: 'warm', months: [7,8,9,10,1,2], minDays: 10, maxDays: 14, price: 2, emoji: '🐘', description: 'Safari und Masai Mara', tip: 'Big Five sehen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/nbo/', hotel: 'https://www.booking.com/country/ke.html', activities: 'https://www.getyourguide.de/kenia-l275/' }},
+            { id: 'namibia', name: 'Namibia', country: 'Namibia', region: 'fernreise', climate: 'warm', months: [5,6,7,8,9,10], minDays: 12, maxDays: 18, price: 2, emoji: '🏜️', description: 'Wüste und Wildtiere', tip: 'Sossusvlei bei Sonnenaufgang',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/wdh/', hotel: 'https://www.booking.com/country/na.html', activities: 'https://www.getyourguide.de/namibia-l276/' }},
+            { id: 'indien', name: 'Indien', country: 'Indien', region: 'fernreise', climate: 'warm', months: [10,11,12,1,2,3], minDays: 14, maxDays: 21, price: 1, emoji: '🕌', description: 'Taj Mahal und Kultur', tip: 'Goldenes Dreieck',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/del/', hotel: 'https://www.booking.com/country/in.html', activities: 'https://www.getyourguide.de/indien-l277/' }},
+
+            // ==========================================
+            // WEITERE STÄDTETRIPS WELTWEIT
+            // ==========================================
+            { id: 'new-york', name: 'New York', country: 'USA', region: 'fernreise', climate: 'mild', months: [4,5,6,9,10,11], minDays: 6, maxDays: 10, price: 3, emoji: '🗽', description: 'Die Stadt die niemals schläft', tip: 'Frühling oder Herbst ideal',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/nyca/', hotel: 'https://www.booking.com/city/us/new-york.html', activities: 'https://www.getyourguide.de/new-york-l59/' }},
+            { id: 'hongkong', name: 'Hongkong', country: 'China', region: 'fernreise', climate: 'tropisch', months: [10,11,12,1,2,3], minDays: 5, maxDays: 8, price: 2, emoji: '🌃', description: 'Skyline und Dim Sum', tip: 'Victoria Peak bei Nacht',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/hkg/', hotel: 'https://www.booking.com/city/hk/hong-kong.html', activities: 'https://www.getyourguide.de/hongkong-l179/' }},
+            { id: 'seoul', name: 'Seoul', country: 'Südkorea', region: 'fernreise', climate: 'mild', months: [4,5,9,10], minDays: 7, maxDays: 10, price: 2, emoji: '🏯', description: 'K-Pop, Tempel und Street Food', tip: 'Kirschblüte im April',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sel/', hotel: 'https://www.booking.com/city/kr/seoul.html', activities: 'https://www.getyourguide.de/seoul-l236/' }},
+            { id: 'taipei', name: 'Taipei', country: 'Taiwan', region: 'fernreise', climate: 'tropisch', months: [3,4,5,10,11], minDays: 6, maxDays: 10, price: 1, emoji: '🏙️', description: 'Nachtmärkte und Taipei 101', tip: 'Beste Nachtmärkte Asiens',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tpe/', hotel: 'https://www.booking.com/city/tw/taipei.html', activities: 'https://www.getyourguide.de/taipei-l278/' }},
+            { id: 'istanbul', name: 'Istanbul', country: 'Türkei', region: 'europa', climate: 'mild', months: [4,5,6,9,10], minDays: 4, maxDays: 6, price: 1, emoji: '🕌', description: 'Orient trifft Europa', tip: 'Basare und Bosporus',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ist/', hotel: 'https://www.booking.com/city/tr/istanbul.html', activities: 'https://www.getyourguide.de/istanbul-l56/' }},
+            { id: 'athen', name: 'Athen', country: 'Griechenland', region: 'europa', climate: 'warm', months: [3,4,5,10,11], minDays: 4, maxDays: 6, price: 1, emoji: '🏛️', description: 'Akropolis und Antike', tip: 'Sommer zu heiß, Frühling perfekt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ath/', hotel: 'https://www.booking.com/city/gr/athens.html', activities: 'https://www.getyourguide.de/athen-l60/' }},
+            { id: 'montreal', name: 'Montreal', country: 'Kanada', region: 'fernreise', climate: 'mild', months: [6,7,8,9], minDays: 5, maxDays: 8, price: 2, emoji: '🍁', description: 'Französisches Flair in Nordamerika', tip: 'Jazz Festival im Juli',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/yul/', hotel: 'https://www.booking.com/city/ca/montreal.html', activities: 'https://www.getyourguide.de/montreal-l189/' }},
+            { id: 'vancouver', name: 'Vancouver', country: 'Kanada', region: 'fernreise', climate: 'mild', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🏔️', description: 'Berge, Meer und Natur', tip: 'Outdoor-Paradies',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/yvr/', hotel: 'https://www.booking.com/city/ca/vancouver.html', activities: 'https://www.getyourguide.de/vancouver-l190/' }},
+            { id: 'warschau', name: 'Warschau', country: 'Polen', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 3, maxDays: 5, price: 1, emoji: '🏰', description: 'Auferstanden aus Ruinen', tip: 'Sehr günstig und unterschätzt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/waw/', hotel: 'https://www.booking.com/city/pl/warsaw.html', activities: 'https://www.getyourguide.de/warschau-l40/' }},
+            { id: 'bukarest', name: 'Bukarest', country: 'Rumänien', region: 'europa', climate: 'mild', months: [5,6,9,10], minDays: 3, maxDays: 5, price: 1, emoji: '🏛️', description: 'Paris des Ostens', tip: 'Parlamentspalast besichtigen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/buh/', hotel: 'https://www.booking.com/city/ro/bucharest.html', activities: 'https://www.getyourguide.de/bukarest-l295/' }},
+            { id: 'belgrad', name: 'Belgrad', country: 'Serbien', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 3, maxDays: 5, price: 1, emoji: '🎉', description: 'Nachtleben und Geschichte', tip: 'Beste Clubs Europas',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/beg/', hotel: 'https://www.booking.com/city/rs/belgrade.html', activities: 'https://www.getyourguide.de/belgrad-l296/' }},
+            { id: 'sofia', name: 'Sofia', country: 'Bulgarien', region: 'europa', climate: 'mild', months: [5,6,9,10], minDays: 3, maxDays: 5, price: 1, emoji: '⛪', description: 'Günstig und authentisch', tip: 'Rila-Kloster als Tagesausflug',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sof/', hotel: 'https://www.booking.com/city/bg/sofia.html', activities: 'https://www.getyourguide.de/sofia-l297/' }},
+
+            // ==========================================
+            // WEITERE STRANDURLAUBE & INSELN
+            // ==========================================
+            { id: 'fuerteventura', name: 'Fuerteventura', country: 'Spanien', region: 'europa', climate: 'warm', months: [1,2,3,4,5,9,10,11,12], minDays: 7, maxDays: 14, price: 1, emoji: '🏄', description: 'Endlose Strände und Wind', tip: 'Surfer-Paradies',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/fue/', hotel: 'https://www.booking.com/region/es/fuerteventura.html', activities: 'https://www.getyourguide.de/fuerteventura-l490/' }},
+            { id: 'lanzarote', name: 'Lanzarote', country: 'Spanien', region: 'europa', climate: 'warm', months: [1,2,3,4,5,9,10,11,12], minDays: 7, maxDays: 10, price: 2, emoji: '🌋', description: 'Vulkanlandschaft und Kunst', tip: 'César Manrique erleben',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ace/', hotel: 'https://www.booking.com/region/es/lanzarote.html', activities: 'https://www.getyourguide.de/lanzarote-l491/' }},
+            { id: 'gran-canaria', name: 'Gran Canaria', country: 'Spanien', region: 'europa', climate: 'warm', months: [1,2,3,4,5,9,10,11,12], minDays: 7, maxDays: 14, price: 2, emoji: '🏖️', description: 'Dünen und Vielfalt', tip: 'Maspalomas Dünen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lpa/', hotel: 'https://www.booking.com/region/es/gran-canaria.html', activities: 'https://www.getyourguide.de/gran-canaria-l492/' }},
+            { id: 'teneriffa', name: 'Teneriffa', country: 'Spanien', region: 'europa', climate: 'warm', months: [1,2,3,4,5,9,10,11,12], minDays: 7, maxDays: 14, price: 2, emoji: '🏔️', description: 'Teide und Strände', tip: 'Höchster Berg Spaniens',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tfs/', hotel: 'https://www.booking.com/region/es/tenerife.html', activities: 'https://www.getyourguide.de/teneriffa-l493/' }},
+            { id: 'kos', name: 'Kos', country: 'Griechenland', region: 'europa', climate: 'warm', months: [5,6,7,8,9,10], minDays: 7, maxDays: 10, price: 1, emoji: '🏺', description: 'Strände und Antike', tip: 'Familienfreundlich und günstig',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/kgs/', hotel: 'https://www.booking.com/city/gr/kos.html', activities: 'https://www.getyourguide.de/kos-l324/' }},
+            { id: 'zakynthos', name: 'Zakynthos', country: 'Griechenland', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🐢', description: 'Navagio Beach und Schildkröten', tip: 'Schiffswrack-Strand',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/zth/', hotel: 'https://www.booking.com/city/gr/zakynthos.html', activities: 'https://www.getyourguide.de/zakynthos-l325/' }},
+            { id: 'antalya', name: 'Antalya', country: 'Türkei', region: 'europa', climate: 'warm', months: [4,5,6,9,10], minDays: 7, maxDays: 14, price: 1, emoji: '☀️', description: 'Türkische Riviera', tip: 'All-Inclusive günstig',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ayt/', hotel: 'https://www.booking.com/city/tr/antalya.html', activities: 'https://www.getyourguide.de/antalya-l326/' }},
+            { id: 'bodrum', name: 'Bodrum', country: 'Türkei', region: 'europa', climate: 'warm', months: [5,6,7,8,9,10], minDays: 7, maxDays: 10, price: 1, emoji: '⛵', description: 'Ägäis und Nachtleben', tip: 'Saint-Tropez der Türkei',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/bjv/', hotel: 'https://www.booking.com/city/tr/bodrum.html', activities: 'https://www.getyourguide.de/bodrum-l327/' }},
+            { id: 'hurghada', name: 'Hurghada', country: 'Ägypten', region: 'fernreise', climate: 'warm', months: [3,4,5,9,10,11], minDays: 7, maxDays: 14, price: 1, emoji: '🤿', description: 'Rotes Meer zum Schnorcheln', tip: 'Ganzjährig Sonne',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/hrg/', hotel: 'https://www.booking.com/city/eg/hurghada.html', activities: 'https://www.getyourguide.de/hurghada-l328/' }},
+            { id: 'sharm-el-sheikh', name: 'Sharm el Sheikh', country: 'Ägypten', region: 'fernreise', climate: 'warm', months: [3,4,5,9,10,11], minDays: 7, maxDays: 10, price: 1, emoji: '🐠', description: 'Tauchen im Roten Meer', tip: 'Ras Mohammed Nationalpark',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ssh/', hotel: 'https://www.booking.com/city/eg/sharm-el-sheikh.html', activities: 'https://www.getyourguide.de/sharm-el-sheikh-l329/' }},
+
+            // ==========================================
+            // ABENTEUER & NATUR
+            // ==========================================
+            { id: 'schottland', name: 'Schottische Highlands', country: 'Schottland', region: 'europa', climate: 'kalt', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', description: 'Lochs, Castles und Whisky', tip: 'Roadtrip durchs Hochland',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/edi/', hotel: 'https://www.booking.com/region/gb/scottish-highlands.html', activities: 'https://www.getyourguide.de/schottland-l501/' }},
+            { id: 'irland', name: 'Irland Rundreise', country: 'Irland', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 8, maxDays: 12, price: 2, emoji: '🍀', description: 'Wild Atlantic Way', tip: 'Grüne Landschaft das ganze Jahr',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/dub/', hotel: 'https://www.booking.com/country/ie.html', activities: 'https://www.getyourguide.de/irland-l502/' }},
+            { id: 'lappland', name: 'Lappland', country: 'Finnland', region: 'europa', climate: 'kalt', months: [12,1,2,3], minDays: 5, maxDays: 8, price: 3, emoji: '🦌', description: 'Nordlichter und Huskys', tip: 'Aurora Borealis erleben',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rvn/', hotel: 'https://www.booking.com/region/fi/lapland.html', activities: 'https://www.getyourguide.de/lappland-l503/' }},
+            { id: 'dolomiten', name: 'Dolomiten', country: 'Italien', region: 'europa', climate: 'mild', months: [6,7,8,9], minDays: 5, maxDays: 8, price: 2, emoji: '🏔️', description: 'Wandern in den Alpen', tip: 'Drei Zinnen als Highlight',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vce/', hotel: 'https://www.booking.com/region/it/dolomites.html', activities: 'https://www.getyourguide.de/dolomiten-l504/' }},
+            { id: 'nepal', name: 'Nepal', country: 'Nepal', region: 'fernreise', climate: 'mild', months: [3,4,5,10,11], minDays: 14, maxDays: 21, price: 1, emoji: '🏔️', description: 'Himalaya und Tempel', tip: 'Trekking zum Everest Base Camp',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ktm/', hotel: 'https://www.booking.com/country/np.html', activities: 'https://www.getyourguide.de/nepal-l505/' }},
+            { id: 'patagonien', name: 'Patagonien', country: 'Argentinien/Chile', region: 'fernreise', climate: 'kalt', months: [11,12,1,2,3], minDays: 14, maxDays: 21, price: 3, emoji: '🧊', description: 'Gletscher und Torres del Paine', tip: 'Beste Trekking-Region der Welt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/pue/', hotel: 'https://www.booking.com/region/cl/patagonia.html', activities: 'https://www.getyourguide.de/patagonien-l506/' }},
+            { id: 'galapagos', name: 'Galápagos', country: 'Ecuador', region: 'fernreise', climate: 'tropisch', months: [1,2,3,4,5,6], minDays: 10, maxDays: 14, price: 3, emoji: '🐢', description: 'Einzigartige Tierwelt', tip: 'Darwins Naturparadies',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/gps/', hotel: 'https://www.booking.com/region/ec/galapagos.html', activities: 'https://www.getyourguide.de/galapagos-l507/' }},
+
+            // ==========================================
+            // WELLNESS & KULTUR
+            // ==========================================
+            { id: 'badeninbaden', name: 'Baden-Baden', country: 'Deutschland', region: 'europa', climate: 'mild', months: [4,5,6,7,8,9,10], minDays: 3, maxDays: 5, price: 2, emoji: '♨️', description: 'Thermen und Schwarzwald', tip: 'Friedrichsbad besuchen',
+              links: { hotel: 'https://www.booking.com/city/de/baden-baden.html', activities: 'https://www.getyourguide.de/baden-baden-l601/' }},
+            { id: 'tirol', name: 'Tirol', country: 'Österreich', region: 'europa', climate: 'mild', months: [6,7,8,9,12,1,2,3], minDays: 5, maxDays: 10, price: 2, emoji: '⛰️', description: 'Alpen und Wellness', tip: 'Sommer wandern, Winter Ski',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/inn/', hotel: 'https://www.booking.com/region/at/tyrol.html', activities: 'https://www.getyourguide.de/tirol-l602/' }},
+            { id: 'gardasee', name: 'Gardasee', country: 'Italien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 5, maxDays: 8, price: 2, emoji: '⛵', description: 'Italiens größter See', tip: 'Limone sul Garda besuchen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vrn/', hotel: 'https://www.booking.com/region/it/lake-garda.html', activities: 'https://www.getyourguide.de/gardasee-l603/' }},
+            { id: 'comer-see', name: 'Comer See', country: 'Italien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 4, maxDays: 7, price: 3, emoji: '🏡', description: 'Villen und Glamour', tip: 'Bellagio besuchen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mil/', hotel: 'https://www.booking.com/region/it/lake-como.html', activities: 'https://www.getyourguide.de/comer-see-l604/' }},
+            { id: 'provence', name: 'Provence', country: 'Frankreich', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 2, emoji: '💜', description: 'Lavendelfelder und Wein', tip: 'Lavendelblüte Juni/Juli',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mrs/', hotel: 'https://www.booking.com/region/fr/provence.html', activities: 'https://www.getyourguide.de/provence-l605/' }},
+            { id: 'toskana', name: 'Toskana', country: 'Italien', region: 'europa', climate: 'warm', months: [4,5,6,9,10], minDays: 7, maxDays: 10, price: 2, emoji: '🍷', description: 'Wein, Kunst und Zypressen', tip: 'Chianti-Region erkunden',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/flr/', hotel: 'https://www.booking.com/region/it/tuscany.html', activities: 'https://www.getyourguide.de/toskana-l606/' }},
+            { id: 'andalusien', name: 'Andalusien', country: 'Spanien', region: 'europa', climate: 'warm', months: [3,4,5,10,11], minDays: 8, maxDays: 12, price: 1, emoji: '💃', description: 'Flamenco und Alhambra', tip: 'Granada, Sevilla, Córdoba',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/agp/', hotel: 'https://www.booking.com/region/es/andalusia.html', activities: 'https://www.getyourguide.de/andalusien-l607/' }},
+
+            // Exotische Inseln & Traumstrände (Ergänzungen)
+            { id: 'reunion', name: 'Réunion', country: 'Frankreich', region: 'fernreise', climate: 'warm', months: [5,6,9,10,11], minDays: 10, maxDays: 14, price: 2, emoji: '🌋', description: 'Vulkane und Dschungel', tip: 'Piton de la Fournaise besteigen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/run/', hotel: 'https://www.booking.com/region/re/reunion-island.html', activities: 'https://www.getyourguide.de/reunion-l610/' }},
+            { id: 'fiji', name: 'Fidschi', country: 'Fidschi', region: 'fernreise', climate: 'warm', months: [5,6,7,8,9,10], minDays: 12, maxDays: 18, price: 3, emoji: '🏝️', description: 'Südsee-Trauminseln', tip: 'Island Hopping empfohlen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/suv/', hotel: 'https://www.booking.com/country/fj.html', activities: 'https://www.getyourguide.de/fidschi-l611/' }},
+            { id: 'tahiti', name: 'Tahiti', country: 'Französisch-Polynesien', region: 'fernreise', climate: 'warm', months: [5,6,7,8,9,10], minDays: 12, maxDays: 18, price: 3, emoji: '🌸', description: 'Bora Bora und Lagune', tip: 'Overwater Bungalow erleben',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/ppt/', hotel: 'https://www.booking.com/region/pf/french-polynesia.html', activities: 'https://www.getyourguide.de/tahiti-l612/' }},
+            { id: 'cookinseln', name: 'Cookinseln', country: 'Cookinseln', region: 'fernreise', climate: 'warm', months: [4,5,6,7,8,9,10], minDays: 10, maxDays: 16, price: 3, emoji: '🐠', description: 'Unberührte Südsee', tip: 'Aitutaki Lagune besuchen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rar/', hotel: 'https://www.booking.com/country/ck.html', activities: 'https://www.getyourguide.de/cookinseln-l613/' }},
+            { id: 'malediven-2', name: 'Malediven Luxus', country: 'Malediven', region: 'fernreise', climate: 'warm', months: [1,2,3,4,11,12], minDays: 7, maxDays: 14, price: 3, emoji: '💎', description: 'Ultimativer Insel-Luxus', tip: 'Resort mit Hausriff wählen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/mle/', hotel: 'https://www.booking.com/country/mv.html', activities: 'https://www.getyourguide.de/malediven-l614/' }},
+
+            // Mittel- und Südamerika (Ergänzungen)
+            { id: 'mexiko', name: 'Mexiko', country: 'Mexiko', region: 'fernreise', climate: 'warm', months: [11,12,1,2,3,4], minDays: 10, maxDays: 16, price: 2, emoji: '🌮', description: 'Maya-Ruinen und Karibik', tip: 'Yucatán-Halbinsel erkunden',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/cun/', hotel: 'https://www.booking.com/country/mx.html', activities: 'https://www.getyourguide.de/mexiko-l616/' }},
+            { id: 'chile', name: 'Chile', country: 'Chile', region: 'fernreise', climate: 'mild', months: [11,12,1,2,3], minDays: 14, maxDays: 21, price: 2, emoji: '🏔️', description: 'Atacama bis Patagonien', tip: 'Torres del Paine Nationalpark',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/scl/', hotel: 'https://www.booking.com/country/cl.html', activities: 'https://www.getyourguide.de/chile-l620/' }},
+            { id: 'ecuador', name: 'Ecuador', country: 'Ecuador', region: 'fernreise', climate: 'warm', months: [6,7,8,9], minDays: 12, maxDays: 18, price: 2, emoji: '🐢', description: 'Galapagos und Amazonas', tip: 'Kombination Festland + Inseln',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/uio/', hotel: 'https://www.booking.com/country/ec.html', activities: 'https://www.getyourguide.de/ecuador-l621/' }},
+            { id: 'dominikanische-republik', name: 'Dom. Republik', country: 'Dominikanische Republik', region: 'fernreise', climate: 'warm', months: [12,1,2,3,4], minDays: 8, maxDays: 14, price: 2, emoji: '🌴', description: 'Karibik für jedermann', tip: 'Punta Cana oder Samana',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/puj/', hotel: 'https://www.booking.com/country/do.html', activities: 'https://www.getyourguide.de/dominikanische-republik-l623/' }},
+
+            // Afrika & Arabien (Ergänzungen)
+            { id: 'marokko-2', name: 'Marokko Wüste', country: 'Marokko', region: 'fernreise', climate: 'warm', months: [3,4,5,10,11], minDays: 8, maxDays: 12, price: 1, emoji: '🐪', description: 'Sahara und Berber', tip: 'Wüstentour ab Marrakesch',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rak/', hotel: 'https://www.booking.com/country/ma.html', activities: 'https://www.getyourguide.de/marokko-l628/' }},
+            { id: 'abudhabi', name: 'Abu Dhabi', country: 'VAE', region: 'fernreise', climate: 'warm', months: [10,11,12,1,2,3,4], minDays: 5, maxDays: 8, price: 2, emoji: '🏰', description: 'Luxus und Tradition', tip: 'Louvre und Sheikh Zayed Moschee',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/auh/', hotel: 'https://www.booking.com/city/ae/abu-dhabi.html', activities: 'https://www.getyourguide.de/abu-dhabi-l631/' }},
+
+            // Osteuropa & Balkan
+            { id: 'montenegro', name: 'Montenegro', country: 'Montenegro', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 7, maxDays: 10, price: 1, emoji: '⛰️', description: 'Kotor und wilde Küste', tip: 'Bucht von Kotor per Boot',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tgd/', hotel: 'https://www.booking.com/country/me.html', activities: 'https://www.getyourguide.de/montenegro-l632/' }},
+            { id: 'albanien', name: 'Albanien', country: 'Albanien', region: 'europa', climate: 'warm', months: [5,6,7,8,9], minDays: 8, maxDays: 12, price: 1, emoji: '🏖️', description: 'Geheimtipp Riviera', tip: 'Albanische Riviera erkunden',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tia/', hotel: 'https://www.booking.com/country/al.html', activities: 'https://www.getyourguide.de/albanien-l633/' }},
+            { id: 'nordmazedonien', name: 'Nordmazedonien', country: 'Nordmazedonien', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 5, maxDays: 8, price: 1, emoji: '🏔️', description: 'Ohrid-See und Kultur', tip: 'Ohrid Altstadt UNESCO',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/skp/', hotel: 'https://www.booking.com/country/mk.html', activities: 'https://www.getyourguide.de/nordmazedonien-l634/' }},
+            { id: 'slowenien', name: 'Slowenien', country: 'Slowenien', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 5, maxDays: 8, price: 1, emoji: '🏞️', description: 'Bled und Julische Alpen', tip: 'Ljubljana und Piran besuchen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/lju/', hotel: 'https://www.booking.com/country/si.html', activities: 'https://www.getyourguide.de/slowenien-l635/' }},
+            { id: 'bosnien', name: 'Bosnien', country: 'Bosnien-Herzegowina', region: 'europa', climate: 'mild', months: [5,6,7,8,9], minDays: 5, maxDays: 8, price: 1, emoji: '🌉', description: 'Mostar und Sarajevo', tip: 'Stari Most Brücke besuchen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/sjj/', hotel: 'https://www.booking.com/country/ba.html', activities: 'https://www.getyourguide.de/bosnien-l636/' }},
+            { id: 'litauen', name: 'Litauen', country: 'Litauen', region: 'europa', climate: 'mild', months: [5,6,7,8], minDays: 4, maxDays: 6, price: 1, emoji: '🏰', description: 'Vilnius und Kurische Nehrung', tip: 'Trakai Wasserburg besuchen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vno/', hotel: 'https://www.booking.com/country/lt.html', activities: 'https://www.getyourguide.de/litauen-l637/' }},
+            { id: 'lettland', name: 'Lettland', country: 'Lettland', region: 'europa', climate: 'mild', months: [5,6,7,8], minDays: 4, maxDays: 6, price: 1, emoji: '🌲', description: 'Riga und Ostsee', tip: 'Jugendstil in Riga',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/rix/', hotel: 'https://www.booking.com/country/lv.html', activities: 'https://www.getyourguide.de/lettland-l638/' }},
+            { id: 'estland', name: 'Estland', country: 'Estland', region: 'europa', climate: 'mild', months: [5,6,7,8], minDays: 4, maxDays: 6, price: 1, emoji: '💻', description: 'Tallinn und Natur', tip: 'Altstadt von Tallinn UNESCO',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/tll/', hotel: 'https://www.booking.com/country/ee.html', activities: 'https://www.getyourguide.de/estland-l639/' }},
+
+            // Ski & Winterdestinationen
+            { id: 'zermatt', name: 'Zermatt', country: 'Schweiz', region: 'europa', climate: 'kalt', months: [12,1,2,3,4], minDays: 5, maxDays: 8, price: 3, emoji: '⛷️', description: 'Matterhorn und Weltklasse-Ski', tip: 'Gletscherskilauf möglich',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/gva/', hotel: 'https://www.booking.com/city/ch/zermatt.html', activities: 'https://www.getyourguide.de/zermatt-l640/' }},
+            { id: 'stanton', name: 'St. Anton', country: 'Österreich', region: 'europa', climate: 'kalt', months: [12,1,2,3,4], minDays: 5, maxDays: 8, price: 2, emoji: '🎿', description: 'Legendary Après-Ski', tip: 'Ski Arlberg Pass nutzen',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/inn/', hotel: 'https://www.booking.com/city/at/sankt-anton-am-arlberg.html', activities: 'https://www.getyourguide.de/st-anton-l641/' }},
+            { id: 'chamonix', name: 'Chamonix', country: 'Frankreich', region: 'europa', climate: 'kalt', months: [12,1,2,3,4], minDays: 5, maxDays: 8, price: 2, emoji: '🏔️', description: 'Mont Blanc und Freeride', tip: 'Vallée Blanche Abfahrt',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/gva/', hotel: 'https://www.booking.com/city/fr/chamonix-mont-blanc.html', activities: 'https://www.getyourguide.de/chamonix-l642/' }},
+            { id: 'cortina', name: 'Cortina', country: 'Italien', region: 'europa', climate: 'kalt', months: [12,1,2,3], minDays: 5, maxDays: 8, price: 2, emoji: '🎭', description: 'Glamour der Dolomiten', tip: 'Olympia 2026 Austragungsort',
+              links: { flight: 'https://www.skyscanner.de/transport/fluge/de/vce/', hotel: 'https://www.booking.com/city/it/cortina-d-ampezzo.html', activities: 'https://www.getyourguide.de/cortina-l643/' }}
+        ];
+
+        const MONTH_NAMES = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                            'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+        const CLIMATE_LABELS = {
+            'warm': '☀️ Warm',
+            'mild': '🌤️ Mild',
+            'kalt': '❄️ Kalt',
+            'tropisch': '🌴 Tropisch'
+        };
+
+        // ==========================================
+        // FILTER STATE
+        // ==========================================
+        let selectedMonth = 'all';
+        let selectedClimate = 'all';
+        let selectedRegion = 'all';
+        let selectedDuration = 'all';
+        let selectedPrice = 'all';
+        let urlPeriods = null;
+
+        // ==========================================
+        // HELPER FUNCTIONS
+        // ==========================================
+
+        // URL-Parameter auslesen
+        function getUrlPeriods() {
+            const params = new URLSearchParams(window.location.search);
+            const periodsParam = params.get('periods');
+            if (periodsParam) {
+                try {
+                    return JSON.parse(decodeURIComponent(periodsParam));
+                } catch (e) {
+                    console.error('Fehler beim Parsen der Urlaubszeiträume:', e);
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        // Reiseziele nach Tagen und Monat filtern
+        function findMatchingDestinations(days, month) {
+            return DESTINATIONS.filter(dest => {
+                const daysMatch = days >= dest.minDays && days <= dest.maxDays + 3;
+                const monthMatch = dest.months.includes(month);
+                return daysMatch && monthMatch;
+            });
+        }
+
+        // Personalisierte Empfehlungen rendern
+        function renderPersonalizedSection(periods) {
+            const section = document.getElementById('personalized-section');
+            const container = document.getElementById('periods-container');
+            const description = document.getElementById('page-description');
+            const browseTitle = document.getElementById('browse-title');
+
+            section.style.display = 'block';
+
+            // Beschreibung anpassen
+            const totalDays = periods.reduce((sum, p) => sum + p.days, 0);
+            description.textContent = `Basierend auf deinen ${totalDays} freien Tagen haben wir passende Reiseziele für dich gefunden.`;
+
+            // Titel für Browse-Bereich anpassen
+            browseTitle.textContent = 'Weitere Reiseziele entdecken';
+
+            container.innerHTML = '';
+
+            // Für jeden Zeitraum einen Abschnitt erstellen
+            periods.forEach((period, index) => {
+                const startDate = new Date(period.start);
+                const endDate = new Date(period.end);
+                const startStr = `${startDate.getDate()}. ${MONTH_NAMES[startDate.getMonth()]}`;
+                const endStr = `${endDate.getDate()}. ${MONTH_NAMES[endDate.getMonth()]} ${endDate.getFullYear()}`;
+
+                const periodSection = document.createElement('div');
+                periodSection.className = 'period-section';
+
+                // Period Header
+                const periodHeader = document.createElement('div');
+                periodHeader.className = 'period-header';
+                periodHeader.innerHTML = `
+                    <h3>📅 ${startStr} - ${endStr}</h3>
+                    <span class="period-days">${period.days} Tage frei</span>
+                `;
+                periodSection.appendChild(periodHeader);
+
+                // Passende Reiseziele finden
+                const destinations = findMatchingDestinations(period.days, period.month);
+
+                const destGrid = document.createElement('div');
+                destGrid.className = 'destinations-grid';
+
+                if (destinations.length === 0) {
+                    destGrid.innerHTML = `
+                        <div class="no-destinations">
+                            <p>Keine passenden Reiseziele für ${period.days} Tage im ${MONTH_NAMES[period.month - 1]} gefunden.</p>
+                            <p>Schau dir unten weitere Reiseziele an!</p>
+                        </div>
+                    `;
+                } else {
+                    // Max 4 Empfehlungen pro Zeitraum
+                    destinations.slice(0, 4).forEach(dest => {
+                        const priceInfo = getPriceIndicator(dest.price || 2);
+                        const card = document.createElement('div');
+                        card.className = 'destination-card-large';
+                        card.innerHTML = `
+                            <div class="card-header">
+                                <span class="card-emoji">${dest.emoji}</span>
+                                <div class="card-title">
+                                    <h3>${dest.name}</h3>
+                                    <span class="card-country">${dest.country}</span>
+                                </div>
+                                <span class="card-price price-${dest.price || 2}" title="${priceInfo.label}">${priceInfo.symbols}</span>
+                            </div>
+                            <p class="card-description">${dest.description}</p>
+                            <div class="card-meta">
+                                <span class="meta-tag climate-${dest.climate}">${CLIMATE_LABELS[dest.climate]}</span>
+                                <span class="meta-tag">📅 ${dest.minDays}-${dest.maxDays} Tage</span>
+                            </div>
+                            ${dest.tip ? `<div class="destination-tip">💡 ${dest.tip}</div>` : ''}
+                            ${createBookingButtons(dest, period.start, period.end)}
+                        `;
+                        destGrid.appendChild(card);
+                    });
+                }
+
+                periodSection.appendChild(destGrid);
+                container.appendChild(periodSection);
+
+                // Trennlinie zwischen Zeiträumen
+                if (index < periods.length - 1) {
+                    const divider = document.createElement('div');
+                    divider.className = 'period-divider';
+                    container.appendChild(divider);
+                }
+            });
+
+            // Versicherungshinweis bei langen Reisen
+            const needsInsurance = periods.some(p => p.days >= 16);
+            if (needsInsurance) {
+                const insuranceHint = document.createElement('div');
+                insuranceHint.className = 'insurance-hint';
+                insuranceHint.innerHTML = `
+                    <span class="hint-icon">🛡️</span>
+                    <span>Bei Reisen ab 16 Tagen empfehlen wir eine Auslandskrankenversicherung!</span>
+                `;
+                container.appendChild(insuranceHint);
+            }
+        }
+
+        // Formatiert Datum als YYYY-MM-DD für URLs
+        function formatDateForUrl(date) {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Fügt Datum-Parameter zu Skyscanner-URL hinzu
+        // Format: YYMMDD als Pfad + Query-Parameter für korrekte Verarbeitung
+        function addSkyscannerDates(baseUrl, startDate, endDate) {
+            if (!startDate || !endDate) return baseUrl;
+            const d1 = new Date(startDate);
+            const d2 = new Date(endDate);
+            // Format: YYMMDD
+            const outbound = String(d1.getFullYear()).slice(2) +
+                             String(d1.getMonth() + 1).padStart(2, '0') +
+                             String(d1.getDate()).padStart(2, '0');
+            const inbound = String(d2.getFullYear()).slice(2) +
+                            String(d2.getMonth() + 1).padStart(2, '0') +
+                            String(d2.getDate()).padStart(2, '0');
+            // Pfad + Query-Parameter (wie von Skyscanner Website erwartet)
+            return baseUrl + outbound + '/' + inbound + '/?adultsv2=1&cabinclass=economy&childrenv2=&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false';
+        }
+
+        // Fügt Datum-Parameter zu Booking.com-URL hinzu
+        function addBookingDates(baseUrl, startDate, endDate) {
+            if (!startDate || !endDate) return baseUrl;
+            const checkin = formatDateForUrl(startDate);
+            const checkout = formatDateForUrl(endDate);
+            const separator = baseUrl.includes('?') ? '&' : '?';
+            return baseUrl + separator + `checkin=${checkin}&checkout=${checkout}`;
+        }
+
+        // Erstellt die Buchungsbuttons HTML für eine Destination
+        // Optional: startDate und endDate für personalisierte Zeiträume
+        function createBookingButtons(dest, startDate = null, endDate = null) {
+            if (!dest.links) return '';
+
+            let buttons = '<div class="booking-buttons">';
+
+            if (dest.links.flight) {
+                const flightUrl = addSkyscannerDates(dest.links.flight, startDate, endDate);
+                buttons += `<a href="${flightUrl}" target="_blank" rel="noopener" class="booking-btn flight-btn">✈️ Flüge</a>`;
+            }
+            if (dest.links.hotel) {
+                const hotelUrl = addBookingDates(dest.links.hotel, startDate, endDate);
+                buttons += `<a href="${hotelUrl}" target="_blank" rel="noopener" class="booking-btn hotel-btn">🏨 Hotels</a>`;
+            }
+            if (dest.links.activities) {
+                buttons += `<a href="${dest.links.activities}" target="_blank" rel="noopener" class="booking-btn activity-btn">🎯 Aktivitäten</a>`;
+            }
+
+            buttons += '</div>';
+            return buttons;
+        }
+
+        // ==========================================
+        // FILTER LOGIK
+        // ==========================================
+
+        // Prüft ob Destination zur Reisedauer passt
+        // kurz: 4-8 Tage, mittel: 9-15 Tage, lang: 16+ Tage
+        // Logik: Prüft ob Destination FÜR diese Dauer geeignet ist (Überschneidung der Bereiche)
+        function matchesDuration(dest, duration) {
+            if (duration === 'all') return true;
+            // kurz (4-8 Tage): Destination muss 4-8 Tage Aufenthalt ermöglichen
+            if (duration === 'kurz') return dest.minDays <= 8 && dest.maxDays >= 4;
+            // mittel (9-15 Tage): Destination muss 9-15 Tage Aufenthalt ermöglichen
+            if (duration === 'mittel') return dest.minDays <= 15 && dest.maxDays >= 9;
+            // lang (16+ Tage): Destination muss 16+ Tage Aufenthalt ermöglichen
+            if (duration === 'lang') return dest.maxDays >= 16;
+            return true;
+        }
+
+        // Filtert Destinations nach allen aktiven Filtern
+        function getFilteredDestinations() {
+            return DESTINATIONS.filter(dest => {
+                // Monats-Filter
+                if (selectedMonth !== 'all') {
+                    const month = parseInt(selectedMonth);
+                    if (!dest.months.includes(month)) return false;
+                }
+
+                // Klima-Filter (warm schließt tropisch mit ein, da tropisch = auch warm)
+                if (selectedClimate !== 'all') {
+                    if (selectedClimate === 'warm') {
+                        // "Warm" zeigt auch tropische Ziele (beides = warmes Wetter)
+                        if (dest.climate !== 'warm' && dest.climate !== 'tropisch') return false;
+                    } else {
+                        if (dest.climate !== selectedClimate) return false;
+                    }
+                }
+
+                // Region-Filter
+                if (selectedRegion !== 'all') {
+                    if (dest.region !== selectedRegion) return false;
+                }
+
+                // Dauer-Filter
+                if (!matchesDuration(dest, selectedDuration)) return false;
+
+                // Preis-Filter
+                if (selectedPrice !== 'all') {
+                    if (dest.price !== parseInt(selectedPrice)) return false;
+                }
+
+                return true;
+            });
+        }
+
+        // Aktualisiert die Anzeige der aktiven Filter
+        function updateActiveFilters() {
+            const container = document.getElementById('active-filters');
+            const filters = [];
+
+            if (selectedMonth !== 'all') {
+                filters.push({ type: 'month', label: MONTH_NAMES[parseInt(selectedMonth) - 1], value: selectedMonth });
+            }
+            if (selectedClimate !== 'all') {
+                const climateLabel = selectedClimate === 'warm' ? '☀️ Warm & Tropisch' : CLIMATE_LABELS[selectedClimate];
+                filters.push({ type: 'climate', label: climateLabel, value: selectedClimate });
+            }
+            if (selectedRegion !== 'all') {
+                const regionLabels = { 'europa': '🇪🇺 Europa', 'fernreise': '🌍 Fernreise' };
+                filters.push({ type: 'region', label: regionLabels[selectedRegion], value: selectedRegion });
+            }
+            if (selectedDuration !== 'all') {
+                const durationLabels = { 'kurz': '4-8 Tage', 'mittel': '9-15 Tage', 'lang': '16+ Tage' };
+                filters.push({ type: 'duration', label: durationLabels[selectedDuration], value: selectedDuration });
+            }
+            if (selectedPrice !== 'all') {
+                const priceLabels = { '1': '€ Günstig', '2': '€€ Mittel', '3': '€€€ Gehoben' };
+                filters.push({ type: 'price', label: priceLabels[selectedPrice], value: selectedPrice });
+            }
+
+            if (filters.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = filters.map(f => `
+                <span class="active-filter" data-type="${f.type}">
+                    ${f.label}
+                    <button class="remove-filter" data-type="${f.type}">✕</button>
+                </span>
+            `).join('') + `<button class="clear-all-filters">Alle Filter löschen</button>`;
+
+            // Event Listener für Filter entfernen
+            container.querySelectorAll('.remove-filter').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const type = btn.dataset.type;
+                    resetFilter(type);
+                });
+            });
+
+            container.querySelector('.clear-all-filters')?.addEventListener('click', clearAllFilters);
+        }
+
+        // Setzt einen einzelnen Filter zurück
+        function resetFilter(type) {
+            if (type === 'month') {
+                selectedMonth = 'all';
+                document.querySelectorAll('.month-pill').forEach(b => b.classList.remove('active'));
+                document.querySelector('.month-pill[data-month="all"]')?.classList.add('active');
+            }
+            if (type === 'climate') {
+                selectedClimate = 'all';
+                document.getElementById('climate-select').value = 'all';
+            }
+            if (type === 'region') {
+                selectedRegion = 'all';
+                document.getElementById('region-select').value = 'all';
+            }
+            if (type === 'duration') {
+                selectedDuration = 'all';
+                document.getElementById('duration-select').value = 'all';
+            }
+            if (type === 'price') {
+                selectedPrice = 'all';
+                document.getElementById('price-select').value = 'all';
+            }
+            renderDestinations();
+        }
+
+        // Setzt alle Filter zurück
+        function clearAllFilters() {
+            selectedMonth = 'all';
+            selectedClimate = 'all';
+            selectedRegion = 'all';
+            selectedDuration = 'all';
+            selectedPrice = 'all';
+
+            // Month Pills zurücksetzen
+            document.querySelectorAll('.month-pill').forEach(b => b.classList.remove('active'));
+            document.querySelector('.month-pill[data-month="all"]')?.classList.add('active');
+
+            // Select-Elemente zurücksetzen
+            document.getElementById('climate-select').value = 'all';
+            document.getElementById('region-select').value = 'all';
+            document.getElementById('duration-select').value = 'all';
+            document.getElementById('price-select').value = 'all';
+
+            renderDestinations();
+        }
+
+        // ==========================================
+        // RENDER FUNCTIONS
+        // ==========================================
+
+        // Preis-Indikator generieren (€ = günstig, €€ = mittel, €€€ = teuer)
+        function getPriceIndicator(price) {
+            const labels = { 1: 'Günstig', 2: 'Mittel', 3: 'Gehoben' };
+            const symbols = '€'.repeat(price);
+            return { symbols, label: labels[price] || 'Mittel' };
+        }
+
+        // Render Destinations (für Browse-Bereich)
+        function renderDestinations() {
+            const grid = document.getElementById('destinations-grid');
+            const countEl = document.getElementById('results-count');
+            grid.innerHTML = '';
+
+            const filteredDestinations = getFilteredDestinations();
+
+            // Ergebnis-Zähler aktualisieren
+            countEl.textContent = filteredDestinations.length;
+
+            // Aktive Filter anzeigen
+            updateActiveFilters();
+
+            if (filteredDestinations.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <p>Keine Reiseziele gefunden.</p>
+                        <p>Versuche andere Filter-Kombinationen!</p>
+                        <button class="btn-clear-filters" onclick="clearAllFilters()">Filter zurücksetzen</button>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredDestinations.forEach(dest => {
+                const monthsStr = dest.months.map(m => MONTH_NAMES[m-1].substring(0,3)).join(', ');
+                const priceInfo = getPriceIndicator(dest.price || 2);
+                const card = document.createElement('div');
+                card.className = 'destination-card-large';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="card-emoji">${dest.emoji}</span>
+                        <div class="card-title">
+                            <h3>${dest.name}</h3>
+                            <span class="card-country">${dest.country}</span>
+                        </div>
+                        <span class="card-price price-${dest.price || 2}" title="${priceInfo.label}">${priceInfo.symbols}</span>
+                    </div>
+                    <p class="card-description">${dest.description}</p>
+                    <div class="card-meta">
+                        <span class="meta-tag climate-${dest.climate}">${CLIMATE_LABELS[dest.climate]}</span>
+                        <span class="meta-tag">📅 ${dest.minDays}-${dest.maxDays} Tage</span>
+                    </div>
+                    <div class="card-months">
+                        <span class="months-label">Beste Reisezeit:</span>
+                        <span class="months-value">${monthsStr}</span>
+                    </div>
+                    ${dest.tip ? `<div class="destination-tip">💡 ${dest.tip}</div>` : ''}
+                    ${createBookingButtons(dest)}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Globale Affiliate-Links Variable
+        let globalAffiliates = null;
+
+        // Affiliate-Links laden und rendern (statische JSON für IONOS Webspace)
+        async function renderAffiliateLinks() {
+            const container = document.getElementById('page-affiliate-links');
+
+            try {
+                const response = await fetch('/data/affiliates.json');
+                if (response.ok) {
+                    globalAffiliates = await response.json();
+                }
+            } catch (error) {
+                console.log('Affiliates nicht geladen, verwende Fallback');
+            }
+
+            // Fallback oder geladene Links anzeigen
+            const categories = [
+                { key: 'flights', fallback: { icon: '✈️', name: 'Flüge finden', template: '#' }},
+                { key: 'hotels', fallback: { icon: '🏨', name: 'Hotels buchen', template: '#' }},
+                { key: 'activities', fallback: { icon: '🎯', name: 'Aktivitäten entdecken', template: '#' }},
+                { key: 'insurance', fallback: { icon: '🛡️', name: 'Reiseversicherung', template: '#' }}
+            ];
+
+            container.innerHTML = categories.map(cat => {
+                const affiliate = globalAffiliates?.[cat.key]?.[0] || cat.fallback;
+                const url = affiliate.template || affiliate.url || '#';
+                return `<a href="${url}" target="_blank" rel="noopener" class="affiliate-btn ${cat.key}">${affiliate.icon || cat.fallback.icon} ${affiliate.name || cat.fallback.name}</a>`;
+            }).join('');
+        }
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // URL-Parameter prüfen
+            urlPeriods = getUrlPeriods();
+
+            if (urlPeriods && urlPeriods.length > 0) {
+                // Personalisierte Empfehlungen anzeigen
+                renderPersonalizedSection(urlPeriods);
+            }
+
+            renderDestinations();
+            renderAffiliateLinks();
+
+            // Monats-Filter (Pills)
+            document.querySelectorAll('.month-pill').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.month-pill').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedMonth = btn.dataset.month;
+                    renderDestinations();
+                });
+            });
+
+            // Klima-Filter (Select)
+            document.getElementById('climate-select').addEventListener('change', (e) => {
+                selectedClimate = e.target.value;
+                renderDestinations();
+            });
+
+            // Region-Filter (Select)
+            document.getElementById('region-select').addEventListener('change', (e) => {
+                selectedRegion = e.target.value;
+                renderDestinations();
+            });
+
+            // Dauer-Filter (Select)
+            document.getElementById('duration-select').addEventListener('change', (e) => {
+                selectedDuration = e.target.value;
+                renderDestinations();
+            });
+
+            // Preis-Filter (Select)
+            document.getElementById('price-select').addEventListener('change', (e) => {
+                selectedPrice = e.target.value;
+                renderDestinations();
+            });
+        });
+    </script>
+    <script src="config-loader.js"></script>
+</body>
+</html>
