@@ -1,11 +1,11 @@
 {
   "socialMedia": {
     "instagram": {
-      "url": "https://instagram.com/holidayboost",
+      "url": "https://www.instagram.com/holidayboostde/",
       "active": true
     },
     "tiktok": {
-      "url": "https://tiktok.com/@holidayboost",
+      "url": "https://www.tiktok.com/@holidayboostde",
       "active": true
     },
     "pinterest": {
@@ -13,7 +13,7 @@
       "active": false
     },
     "youtube": {
-      "url": "youtube.comholiay",
+      "url": "https://www.youtube.com/@HolidayBoostDE",
       "active": true
     }
   },
