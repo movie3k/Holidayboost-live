@@ -141,7 +141,7 @@ const RECOMMENDATIONS = [];
 // 2.1. State - Zentraler Zustand der Anwendung
 const State = {
     selectedYear: new Date().getFullYear(),
-    selectedStateId: 'BY',
+    selectedStateId: 'BW',
     selectedCityId: null,
     selectedDates: new Set(),
     vacationDays: 0,
@@ -1138,7 +1138,7 @@ function initApp() {
         // Setze Standardwerte nur wenn keine gespeicherte Auswahl vorhanden
         const currentYear = new Date().getFullYear();
         State.selectedYear = Math.max(currentYear, 2025);
-        State.selectedStateId = 'BY'; // Standard: Bayern
+        State.selectedStateId = 'BW'; // Standard: Baden-Württemberg
     }
 
     // Event Listener für Dropdowns
