@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "WebSearch",
+      "WebFetch(domain:feiertag.info)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(npm run dev:*)",
+      "Bash(xargs:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "WebFetch(domain:urlaubstage-planen.info)",
+      "WebFetch(domain:feiertags.info)",
+      "WebFetch(domain:developers.skyscanner.net)",
+      "WebFetch(domain:www.denislisunov.xyz)",
+      "Bash(pip3 install:*)",
+      "Bash(sudo apt-get update:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(apt-get install:*)",
+      "Bash(npm install)",
+      "Bash(npm start)",
+      "Bash(npm install:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(printf:*)",
+      "Bash(git rm:*)",
+      "WebFetch(domain:holidayboost.de)",
+      "WebFetch(domain:docs.ionos.space)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nIONOS Deploy Now Setup - Statisches Hosting\n\n- API-Calls auf statische JSON-Dateien umgestellt\n- GitHub Actions Workflow für automatisches Deployment\n- Statische sitemap.xml erstellt\n- Setup-Anleitung hinzugefügt\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git remote add:*)",
+      "Bash(git remote remove:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
