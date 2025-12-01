@@ -790,6 +790,7 @@ body {
     background: var(--bg-tertiary);
     transform: scale(1.05);
     border-color: rgba(255, 255, 255, 0.2);
+    z-index: 100; /* Tooltip über anderen Tagen anzeigen */
 }
 
 .day.other-month {
@@ -854,18 +855,9 @@ body {
     background: var(--selected);
     color: var(--text-white);
     font-weight: 600;
-    box-shadow: 0 0 0 2px var(--selected);
-}
-
-.day.selected::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(45deg, var(--accent-purple), var(--accent-blue));
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0.3;
-    filter: none;
+    box-shadow: 0 0 0 2px var(--selected),
+                0 0 15px rgba(139, 92, 246, 0.3),
+                0 0 30px rgba(56, 189, 248, 0.2);
 }
 
 .day.holiday.selected {
@@ -875,6 +867,72 @@ body {
                 var(--accent-blue) 100%);
     box-shadow: 0 0 30px rgba(255, 82, 82, 0.4),
                 0 0 25px rgba(38, 208, 206, 0.4);
+}
+
+/* School Holidays Styling - Modern Bottom Line + Glow */
+.day.school-holiday {
+    border-bottom: 2px solid #3b82f6;
+    box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.15),
+                inset 0 -4px 8px rgba(59, 130, 246, 0.1);
+}
+
+.day.school-holiday:not(.holiday):not(.selected):not(.weekend) {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+/* School holiday + holiday combined */
+.day.school-holiday.holiday {
+    border-bottom: 2px solid #3b82f6;
+    box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.2),
+                inset 0 -4px 8px rgba(59, 130, 246, 0.15);
+}
+
+/* School holiday + selected combined */
+.day.school-holiday.selected {
+    border-bottom: 2px solid #60a5fa;
+    box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.25),
+                0 0 0 2px var(--selected);
+}
+
+/* School holiday + weekend combined */
+.day.school-holiday.weekend {
+    border-bottom: 2px solid #3b82f6;
+}
+
+/* School holiday only (no regular holiday) - use ::after for tooltip */
+.day.school-holiday:not(.holiday)[data-school-holiday]:after {
+    content: attr(data-school-holiday);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(59, 130, 246, 0.95);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    margin-bottom: 10px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.day.school-holiday:not(.holiday)[data-school-holiday]:hover:after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px);
+}
+
+/* School holiday + regular holiday combined - show both names in existing tooltip */
+.day.holiday.school-holiday[data-holiday][data-school-holiday]:after {
+    content: attr(data-holiday) " | " attr(data-school-holiday) !important;
 }
 
 /* Premium Holiday tooltip - ENHANCED FOR VISIBILITY */
@@ -2184,6 +2242,124 @@ a.logo-compact:visited {
     font-size: 18px;
 }
 
+/* School Holidays Pill Button - Modern Design */
+.btn-school-holidays-pill {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(30, 41, 59, 0.6);
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-school-holidays-pill:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+    transform: translateY(-1px);
+}
+
+.btn-school-holidays-pill.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(37, 99, 235, 0.3) 100%);
+    border-color: #3b82f6;
+    color: #60a5fa;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+                0 0 40px rgba(59, 130, 246, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-school-holidays-pill.loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.btn-school-holidays-pill.loading .school-icon {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.95); }
+}
+
+.btn-school-holidays-pill .school-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.btn-school-holidays-pill .school-text {
+    font-family: inherit;
+    letter-spacing: 0.02em;
+}
+
+/* School Holidays Hint Toast (MODULE 10) */
+.school-holidays-hint {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.95) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3),
+                0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.school-holidays-hint.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.school-holidays-hint .hint-icon {
+    font-size: 18px;
+}
+
+.school-holidays-hint .hint-text {
+    flex: 1;
+}
+
+.school-holidays-hint .hint-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.school-holidays-hint .hint-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 /* ============================================
    MODULE 9: ARBEITSWOCHE-KONFIGURATION
    - Flexible Arbeitswoche für alle Arbeitsmodelle
@@ -2468,6 +2644,12 @@ a.logo-compact:visited {
 .legend-compact .dot.weekend {
     background: rgba(100, 116, 139, 0.5);
     border: 1px dashed rgba(100, 116, 139, 0.8);
+}
+
+.legend-compact .dot.schulferien {
+    background: rgba(59, 130, 246, 0.15);
+    border-bottom: 2px solid #3b82f6;
+    box-shadow: inset 0 0 6px rgba(59, 130, 246, 0.2);
 }
 
 /* 3. KALENDER MAIN BEREICH */
@@ -4789,7 +4971,7 @@ a.logo-compact:visited {
     /* Container - EDGE TO EDGE - MAXIMALE BREITE */
     .container {
         padding: 0 !important;
-        padding-top: 120px !important; /* Header hat 2 Zeilen: Logo + Dropdowns */
+        padding-top: 110px !important; /* Header kompakter */
         padding-bottom: 0 !important;
     }
 
@@ -4814,18 +4996,23 @@ a.logo-compact:visited {
         flex: 0 0 auto;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         order: 1;
     }
 
     .logo-img {
-        width: 62px;
-        height: 62px;
+        width: 52px;
+        height: 52px;
     }
 
     .logo-text {
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 700;
+    }
+
+    /* ".de" auf Mobile ausblenden für mehr Platz */
+    .logo-text .text-boost + .text-boost {
+        display: none;
     }
 
     /* Header Spacer - füllt Platz zwischen Logo und Buttons */
@@ -4837,18 +5024,16 @@ a.logo-compact:visited {
 
     /* Reisetipps-Button RECHTS (vor Teilen) */
     .travel-tips-btn {
-        padding: 6px 8px;
-        font-size: 11px;
-        height: 32px;
+        padding: 4px 6px;
+        font-size: 10px;
+        height: 30px;
         border-radius: 8px;
         order: 3;
         flex-shrink: 0;
     }
 
     .travel-tips-btn .travel-tips-text {
-        display: inline !important;
-        font-size: 11px;
-        text-decoration: none !important;
+        display: none !important; /* Nur Icon auf Mobile */
     }
 
     .travel-tips-btn .travel-tips-icon {
@@ -5174,8 +5359,8 @@ a.logo-compact:visited {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         padding: 0;
         border: none;
         border-radius: 8px;
@@ -5184,7 +5369,7 @@ a.logo-compact:visited {
         cursor: pointer;
         order: 4;
         flex-shrink: 0;
-        margin-left: 4px;
+        margin-left: 2px;
         transition: all 0.2s ease;
         box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
     }
@@ -5194,7 +5379,7 @@ a.logo-compact:visited {
     }
 
     .share-header-btn .share-icon {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     /* Footer Share-Button auf Mobile AUSBLENDEN */
@@ -5204,11 +5389,11 @@ a.logo-compact:visited {
 
     /* Dropdowns Styling */
     .controls-compact select {
-        font-size: 14px;
-        padding: 8px 10px;
-        min-height: 38px;
-        height: 38px;
-        border-radius: 10px;
+        font-size: 13px;
+        padding: 6px 8px;
+        min-height: 32px;
+        height: 32px;
+        border-radius: 8px;
         background: var(--bg-tertiary);
         border: 1px solid var(--calendar-border);
         color: var(--text-primary);
@@ -5216,8 +5401,8 @@ a.logo-compact:visited {
         -webkit-appearance: none;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 8px center;
-        padding-right: 28px;
+        background-position: right 6px center;
+        padding-right: 24px;
         text-overflow: ellipsis;
         order: 10;
     }
@@ -5232,20 +5417,20 @@ a.logo-compact:visited {
     .controls-compact {
         display: flex !important;
         flex-wrap: nowrap !important;
-        gap: 6px;
+        gap: 4px;
         align-items: center;
         flex: 0 0 100%;
         order: 10;
-        margin-top: 10px;
-        padding-top: 10px;
+        margin-top: 6px;
+        padding-top: 6px;
         border-top: 1px solid rgba(255,255,255,0.08);
     }
 
     /* Jahr-Select - fixe Breite für 4-stellige Jahreszahl */
     #year-select {
-        flex: 0 0 72px;
-        min-width: 72px;
-        padding-right: 22px !important; /* Weniger Platz für Pfeil */
+        flex: 0 0 65px;
+        min-width: 65px;
+        padding-right: 20px !important; /* Weniger Platz für Pfeil */
         order: 1;
     }
 
@@ -5272,16 +5457,16 @@ a.logo-compact:visited {
     .controls-compact .btn-clear,
     .controls-compact .btn-settings {
         flex-shrink: 0;
-        min-width: 34px;
-        width: 34px;
-        height: 34px;
-        min-height: 34px;
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        min-height: 30px;
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 8px;
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .controls-compact .btn-clear {
@@ -5290,6 +5475,22 @@ a.logo-compact:visited {
 
     .controls-compact .btn-settings {
         order: 5;
+    }
+
+    /* Schulferien-Button kompakt für 430px */
+    .btn-school-holidays-pill {
+        height: 30px;
+        padding: 0 8px;
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .btn-school-holidays-pill .school-icon {
+        font-size: 13px;
+    }
+
+    .btn-school-holidays-pill .school-text {
+        display: none; /* Nur Icon auf Mobile */
     }
 
     /* Legende ULTRA kompakt */
@@ -5974,7 +6175,7 @@ a.logo-compact:visited {
 @media (max-width: 375px) {
     .container {
         padding: 0 !important;
-        padding-top: 115px !important; /* Header hat 2 Zeilen */
+        padding-top: 105px !important; /* Header kompakter */
     }
 
     /* Header - ULTRA MINIMAL */
@@ -6028,15 +6229,39 @@ a.logo-compact:visited {
         padding: 1px;
     }
 
-    /* Logo groß aber Header klein */
+    /* Logo kompakter für 375px */
     .logo-img {
-        width: 56px;
-        height: 56px;
+        width: 48px;
+        height: 48px;
     }
 
     .logo-text {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 700;
+    }
+
+    .logo-compact {
+        gap: 6px;
+    }
+
+    /* ".de" auf sehr kleinen Screens ausblenden */
+    .logo-text .text-boost + .text-boost {
+        display: none;
+    }
+
+    /* Ferien-Button kompakter für 375px */
+    .btn-school-holidays-pill {
+        height: 28px;
+        padding: 0 8px;
+        font-size: 10px;
+    }
+
+    .btn-school-holidays-pill .school-icon {
+        font-size: 12px;
+    }
+
+    .btn-school-holidays-pill .school-text {
+        display: none; /* Nur Icon auf 375px */
     }
 
     /* Controls kompakter */
@@ -6076,12 +6301,13 @@ a.logo-compact:visited {
     }
 
     .share-header-btn {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
+        margin-left: 2px;
     }
 
     .share-header-btn .share-icon {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     /* Footer Share-Button auch auf 375px ausblenden */

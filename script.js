@@ -149,7 +149,11 @@ const State = {
     extraMonths: new Set(), // Stores extra months to display: 'YYYY-MM' format
     // Arbeitswoche-Konfiguration: Welche Wochentage sind regulär frei?
     // 0 = Sonntag, 1 = Montag, ..., 6 = Samstag
-    freeDays: new Set([0, 6]) // Default: Samstag + Sonntag frei (klassische 5-Tage-Woche)
+    freeDays: new Set([0, 6]), // Default: Samstag + Sonntag frei (klassische 5-Tage-Woche)
+    // Schulferien-Konfiguration (MODULE 10)
+    schoolHolidaysVisible: false,        // Toggle-Status für Schulferien-Anzeige
+    schoolHolidaysData: new Map(),       // Cache: "BW-2025" → Array mit Ferienperioden
+    schoolHolidaysLoading: false         // Ladezustand für API-Calls
 };
 
 // 2.2. isRegularFreeDay - Zentrale Funktion: Ist ein Wochentag regulär frei?
@@ -852,6 +856,13 @@ function createMonthView(year, monthIndex) {
             dayDiv.setAttribute('data-holiday', holidayInfo.name);
         }
 
+        // Prüfe ob Schulferien (MODULE 10)
+        const schoolHolidayInfo = getSchoolHolidayInfo(dateString);
+        if (schoolHolidayInfo) {
+            dayDiv.classList.add('school-holiday');
+            dayDiv.setAttribute('data-school-holiday', schoolHolidayInfo.name);
+        }
+
         // Prüfe ob ausgewählt
         if (State.selectedDates.has(dateString)) {
             dayDiv.classList.add('selected');
@@ -1162,6 +1173,7 @@ function setupEventListeners() {
     stateSelect.addEventListener('change', (e) => {
         State.selectedStateId = e.target.value;
         State.selectedCityId = null; // Reset city selection
+        onStateChangeSchoolHolidays(e.target.value); // MODULE 10: Schulferien aktualisieren
         updateUI();
     });
 
@@ -1182,6 +1194,9 @@ function setupEventListeners() {
 
     // MODULE 6: Initialize Recommendation Cards
     initRecommendationsModule();
+
+    // MODULE 10: Initialize School Holidays
+    initSchoolHolidays();
 }
 
 // MODULE 6: URLAUBSEMPFEHLUNGS-KARTEN (Holiday Recommendation Cards)
@@ -3225,3 +3240,291 @@ window.runFullTest = function() {
 
     return allPassed;
 };
+
+// MODULE 10: SCHULFERIEN (School Holidays Module)
+
+// 10.1. Konstanten für Schulferien
+const SCHOOL_HOLIDAY_NAMES = {
+    'winterferien': 'Winterferien',
+    'osterferien': 'Osterferien',
+    'pfingstferien': 'Pfingstferien',
+    'sommerferien': 'Sommerferien',
+    'herbstferien': 'Herbstferien',
+    'weihnachtsferien': 'Weihnachtsferien',
+    'frühjahrsferien': 'Frühjahrsferien',
+    'faschingsferien': 'Faschingsferien',
+    'christi himmelfahrt': 'Himmelfahrtsferien',
+    'himmelfahrt': 'Himmelfahrtsferien'
+};
+
+// 10.2. API-Funktion: Schulferien von OpenHolidaysAPI laden
+async function fetchSchoolHolidaysFromOpenHolidays(stateCode, year) {
+    const subdivisionCode = `DE-${stateCode}`;
+    const url = `https://openholidaysapi.org/SchoolHolidays?countryIsoCode=DE&subdivisionCode=${subdivisionCode}&validFrom=${year}-01-01&validTo=${year}-12-31`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+
+        // Konvertiere OpenHolidaysAPI Format zu unserem Format
+        return data.map(holiday => ({
+            start: holiday.startDate,
+            end: holiday.endDate,
+            name: holiday.name.find(n => n.language === 'DE')?.text || holiday.name[0]?.text || 'Schulferien',
+            stateCode: stateCode,
+            year: year
+        }));
+    } catch (error) {
+        console.warn(`OpenHolidaysAPI Fehler für ${stateCode}/${year}:`, error.message);
+        return null; // Fallback wird verwendet
+    }
+}
+
+// 10.3. Fallback-API: ferien-api.de
+async function fetchSchoolHolidaysFromFerienApi(stateCode, year) {
+    const url = `https://ferien-api.de/api/v1/holidays/${stateCode}/${year}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+
+        // Konvertiere ferien-api Format zu unserem Format
+        return data.map(holiday => ({
+            start: holiday.start.split('T')[0],
+            end: holiday.end.split('T')[0],
+            name: formatSchoolHolidayName(holiday.name),
+            stateCode: stateCode,
+            year: year
+        }));
+    } catch (error) {
+        console.error(`Ferien-API Fehler für ${stateCode}/${year}:`, error.message);
+        return [];
+    }
+}
+
+// 10.4. Formatiert Feriennamen (lowercase → Lesbare Form)
+function formatSchoolHolidayName(name) {
+    const lowerName = name.toLowerCase();
+    return SCHOOL_HOLIDAY_NAMES[lowerName] || name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+// 10.5. Haupt-Ladefunktion: Schulferien für ein Jahr laden (mit Fallback)
+async function fetchSchoolHolidays(stateCode, year) {
+    const cacheKey = `${stateCode}-${year}`;
+
+    // Prüfe Cache
+    if (State.schoolHolidaysData.has(cacheKey)) {
+        return State.schoolHolidaysData.get(cacheKey);
+    }
+
+    // Versuche primäre API (OpenHolidaysAPI)
+    let holidays = await fetchSchoolHolidaysFromOpenHolidays(stateCode, year);
+
+    // Fallback auf ferien-api.de wenn primäre API fehlschlägt
+    if (!holidays || holidays.length === 0) {
+        console.log(`Fallback auf ferien-api.de für ${stateCode}/${year}`);
+        holidays = await fetchSchoolHolidaysFromFerienApi(stateCode, year);
+    }
+
+    // In Cache speichern
+    State.schoolHolidaysData.set(cacheKey, holidays);
+
+    return holidays;
+}
+
+// 10.6. Lädt Schulferien für aktuelles Jahr + 3 Jahre
+async function loadSchoolHolidaysForRange(stateCode) {
+    if (State.schoolHolidaysLoading) return;
+
+    State.schoolHolidaysLoading = true;
+    updateSchoolHolidaysButton();
+
+    const currentYear = new Date().getFullYear();
+    const years = [currentYear, currentYear + 1, currentYear + 2, currentYear + 3];
+
+    try {
+        // Lade alle Jahre parallel
+        await Promise.all(years.map(year => fetchSchoolHolidays(stateCode, year)));
+        console.log(`Schulferien geladen für ${stateCode}: ${years.join(', ')}`);
+    } catch (error) {
+        console.error('Fehler beim Laden der Schulferien:', error);
+    } finally {
+        State.schoolHolidaysLoading = false;
+        updateSchoolHolidaysButton();
+        renderCalendar(State.selectedYear);
+    }
+}
+
+// 10.7. Prüft ob ein Datum in Schulferien liegt
+function getSchoolHolidayInfo(dateString) {
+    if (!State.schoolHolidaysVisible) return null;
+
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const cacheKey = `${State.selectedStateId}-${year}`;
+
+    const holidays = State.schoolHolidaysData.get(cacheKey);
+    if (!holidays) return null;
+
+    for (const holiday of holidays) {
+        const start = new Date(holiday.start);
+        const end = new Date(holiday.end);
+
+        // Setze Zeit auf Mitternacht für korrekten Vergleich
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
+        date.setHours(12, 0, 0, 0);
+
+        if (date >= start && date <= end) {
+            return {
+                name: holiday.name,
+                start: holiday.start,
+                end: holiday.end
+            };
+        }
+    }
+
+    return null;
+}
+
+// 10.8. Toggle Schulferien-Anzeige
+async function toggleSchoolHolidays() {
+    State.schoolHolidaysVisible = !State.schoolHolidaysVisible;
+
+    // Speichere Präferenz
+    saveSchoolHolidaysPreference();
+
+    // Button-Status aktualisieren
+    updateSchoolHolidaysButton();
+
+    // Legende aktualisieren
+    updateSchoolHolidaysLegend();
+
+    if (State.schoolHolidaysVisible) {
+        // Zeige Hint beim ersten Aktivieren
+        showSchoolHolidaysHint();
+
+        // Prüfe ob Daten für aktuelles Bundesland vorhanden
+        const currentYear = new Date().getFullYear();
+        const cacheKey = `${State.selectedStateId}-${currentYear}`;
+
+        if (!State.schoolHolidaysData.has(cacheKey)) {
+            // Lade Schulferien
+            await loadSchoolHolidaysForRange(State.selectedStateId);
+        } else {
+            // Nur neu rendern wenn Daten bereits vorhanden
+            renderCalendar(State.selectedYear);
+        }
+    } else {
+        // Schulferien ausblenden - Kalender neu rendern
+        renderCalendar(State.selectedYear);
+    }
+}
+
+// 10.9. Button-Status aktualisieren
+function updateSchoolHolidaysButton() {
+    const btn = document.getElementById('school-holidays-btn');
+    if (!btn) return;
+
+    if (State.schoolHolidaysLoading) {
+        btn.classList.add('loading');
+        btn.title = 'Schulferien werden geladen...';
+    } else {
+        btn.classList.remove('loading');
+        btn.classList.toggle('active', State.schoolHolidaysVisible);
+        btn.title = State.schoolHolidaysVisible ? 'Schulferien ausblenden' : 'Schulferien anzeigen';
+    }
+}
+
+// 10.10. Legende aktualisieren
+function updateSchoolHolidaysLegend() {
+    const legendItem = document.querySelector('.legend-school-holidays');
+    if (!legendItem) return;
+
+    if (State.schoolHolidaysVisible) {
+        legendItem.classList.remove('hidden');
+    } else {
+        legendItem.classList.add('hidden');
+    }
+}
+
+// 10.11. Präferenz speichern
+function saveSchoolHolidaysPreference() {
+    try {
+        localStorage.setItem('holidayboost_schoolholidays', State.schoolHolidaysVisible ? '1' : '0');
+    } catch (e) {
+        console.warn('Konnte Schulferien-Präferenz nicht speichern');
+    }
+}
+
+// 10.12. Präferenz laden
+function loadSchoolHolidaysPreference() {
+    try {
+        const saved = localStorage.getItem('holidayboost_schoolholidays');
+        if (saved === '1') {
+            State.schoolHolidaysVisible = true;
+            updateSchoolHolidaysButton();
+            updateSchoolHolidaysLegend();
+            // Lade Schulferien im Hintergrund
+            loadSchoolHolidaysForRange(State.selectedStateId);
+        }
+    } catch (e) {
+        console.warn('Konnte Schulferien-Präferenz nicht laden');
+    }
+}
+
+// 10.13. Initialisierung der Schulferien-Funktionalität
+function initSchoolHolidays() {
+    const btn = document.getElementById('school-holidays-btn');
+    if (btn) {
+        btn.addEventListener('click', toggleSchoolHolidays);
+    }
+
+    // Lade gespeicherte Präferenz
+    loadSchoolHolidaysPreference();
+}
+
+// 10.14. Bei Bundesland-Wechsel: Neue Schulferien laden falls sichtbar
+function onStateChangeSchoolHolidays(newStateId) {
+    if (State.schoolHolidaysVisible) {
+        const currentYear = new Date().getFullYear();
+        const cacheKey = `${newStateId}-${currentYear}`;
+
+        if (!State.schoolHolidaysData.has(cacheKey)) {
+            loadSchoolHolidaysForRange(newStateId);
+        }
+    }
+}
+
+// 10.15. Schulferien-Hint anzeigen (einmalig beim ersten Aktivieren)
+function showSchoolHolidaysHint() {
+    // Prüfe ob Hint bereits gezeigt wurde
+    const hintShown = localStorage.getItem('holidayboost_schoolhint_shown');
+    if (hintShown) return;
+
+    const hint = document.getElementById('school-holidays-hint');
+    if (!hint) return;
+
+    // Hint anzeigen
+    hint.classList.remove('hidden');
+    setTimeout(() => hint.classList.add('visible'), 50);
+
+    // Nach 6 Sekunden automatisch ausblenden
+    setTimeout(() => {
+        closeSchoolHolidaysHint();
+    }, 6000);
+
+    // Merken dass Hint gezeigt wurde
+    localStorage.setItem('holidayboost_schoolhint_shown', '1');
+}
+
+// 10.16. Schulferien-Hint schließen
+function closeSchoolHolidaysHint() {
+    const hint = document.getElementById('school-holidays-hint');
+    if (!hint) return;
+
+    hint.classList.remove('visible');
+    setTimeout(() => hint.classList.add('hidden'), 400);
+}

@@ -32,6 +32,10 @@
                     <button id="workweek-settings-btn" class="btn-settings" title="Arbeitswoche anpassen">
                         <span class="settings-icon">⚙️</span>
                     </button>
+                    <button id="school-holidays-btn" class="btn-school-holidays-pill" title="Schulferien anzeigen">
+                        <span class="school-icon">🎒</span>
+                        <span class="school-text">Ferien</span>
+                    </button>
                 </div>
 
                 <div class="header-spacer"></div>
@@ -42,6 +46,13 @@
             </div>
         </header>
 
+        <!-- SCHULFERIEN HINT (MODULE 10) -->
+        <div id="school-holidays-hint" class="school-holidays-hint hidden">
+            <span class="hint-icon">💡</span>
+            <span class="hint-text">Außerhalb der Schulferien reisen = günstigere Preise!</span>
+            <button class="hint-close" onclick="closeSchoolHolidaysHint()">✕</button>
+        </div>
+
         <!-- KOMPAKTE LEGENDE -->
         <div class="legend-wrapper">
             <div class="legend-compact">
@@ -50,6 +61,7 @@
                 <div class="legend-item"><span class="dot landesfeiertag"></span>Landesfeiertag</div>
                 <div class="legend-item"><span class="dot stadtfeiertag"></span>Stadtfeiertag</div>
                 <div class="legend-item"><span class="dot weekend"></span><span id="legend-freedays-text">Wochenende</span></div>
+                <div class="legend-item legend-school-holidays hidden"><span class="dot schulferien"></span>Schulferien</div>
             </div>
         </div>
 
