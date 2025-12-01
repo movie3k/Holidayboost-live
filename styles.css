@@ -4971,7 +4971,7 @@ a.logo-compact:visited {
     /* Container - EDGE TO EDGE - MAXIMALE BREITE */
     .container {
         padding: 0 !important;
-        padding-top: 110px !important; /* Header kompakter */
+        padding-top: 100px !important; /* Header kompakter */
         padding-bottom: 0 !important;
     }
 
@@ -5001,18 +5001,13 @@ a.logo-compact:visited {
     }
 
     .logo-img {
-        width: 52px;
-        height: 52px;
+        width: 46px;
+        height: 46px;
     }
 
     .logo-text {
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 700;
-    }
-
-    /* ".de" auf Mobile ausblenden für mehr Platz */
-    .logo-text .text-boost + .text-boost {
-        display: none;
     }
 
     /* Header Spacer - füllt Platz zwischen Logo und Buttons */
@@ -6175,7 +6170,7 @@ a.logo-compact:visited {
 @media (max-width: 375px) {
     .container {
         padding: 0 !important;
-        padding-top: 105px !important; /* Header kompakter */
+        padding-top: 95px !important; /* Header kompakter */
     }
 
     /* Header - ULTRA MINIMAL */
@@ -6231,22 +6226,17 @@ a.logo-compact:visited {
 
     /* Logo kompakter für 375px */
     .logo-img {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
     }
 
     .logo-text {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 700;
     }
 
     .logo-compact {
-        gap: 6px;
-    }
-
-    /* ".de" auf sehr kleinen Screens ausblenden */
-    .logo-text .text-boost + .text-boost {
-        display: none;
+        gap: 4px;
     }
 
     /* Ferien-Button kompakter für 375px */
