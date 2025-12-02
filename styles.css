@@ -871,32 +871,32 @@ body {
 
 /* School Holidays Styling - Modern Bottom Line + Glow */
 .day.school-holiday {
-    border-bottom: 2px solid #3b82f6;
-    box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.15),
-                inset 0 -4px 8px rgba(59, 130, 246, 0.1);
+    border-bottom: 2px solid #22c55e;
+    box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.15),
+                inset 0 -4px 8px rgba(34, 197, 94, 0.1);
 }
 
 .day.school-holiday:not(.holiday):not(.selected):not(.weekend) {
-    background: rgba(59, 130, 246, 0.08);
+    background: rgba(34, 197, 94, 0.08);
 }
 
 /* School holiday + holiday combined */
 .day.school-holiday.holiday {
-    border-bottom: 2px solid #3b82f6;
-    box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.2),
-                inset 0 -4px 8px rgba(59, 130, 246, 0.15);
+    border-bottom: 2px solid #22c55e;
+    box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.2),
+                inset 0 -4px 8px rgba(34, 197, 94, 0.15);
 }
 
 /* School holiday + selected combined */
 .day.school-holiday.selected {
-    border-bottom: 2px solid #60a5fa;
-    box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.25),
+    border-bottom: 2px solid #4ade80;
+    box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.25),
                 0 0 0 2px var(--selected);
 }
 
 /* School holiday + weekend combined */
 .day.school-holiday.weekend {
-    border-bottom: 2px solid #3b82f6;
+    border-bottom: 2px solid #22c55e;
 }
 
 /* School holiday only (no regular holiday) - use ::after for tooltip */
@@ -906,12 +906,12 @@ body {
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(59, 130, 246, 0.95);
+    background: rgba(34, 197, 94, 0.95);
     backdrop-filter: blur(8px);
     color: white;
     padding: 10px 14px;
     border-radius: 10px;
-    border: 1px solid rgba(96, 165, 250, 0.3);
+    border: 1px solid rgba(74, 222, 128, 0.3);
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
@@ -2647,9 +2647,9 @@ a.logo-compact:visited {
 }
 
 .legend-compact .dot.schulferien {
-    background: rgba(59, 130, 246, 0.15);
-    border-bottom: 2px solid #3b82f6;
-    box-shadow: inset 0 0 6px rgba(59, 130, 246, 0.2);
+    background: rgba(34, 197, 94, 0.15);
+    border-bottom: 2px solid #22c55e;
+    box-shadow: inset 0 0 6px rgba(34, 197, 94, 0.2);
 }
 
 /* 3. KALENDER MAIN BEREICH */
