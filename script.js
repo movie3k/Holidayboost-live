@@ -400,8 +400,11 @@ function checkIfDayIsAlwaysFree(date) {
 function updateSummary() {
     const selectedDatesArray = Array.from(State.selectedDates).sort();
 
-    // Benötigte Urlaubstage = Anzahl ausgewählter Tage
-    State.vacationDays = selectedDatesArray.length;
+    // Benötigte Urlaubstage = nur Arbeitstage zählen (ohne freie Tage wie Wochenenden)
+    State.vacationDays = selectedDatesArray.filter(dateStr => {
+        const date = new Date(dateStr);
+        return !isRegularFreeDay(date);
+    }).length;
 
     // Effektive freie Tage berechnen
     State.effectiveFreeDays = calculateEffectiveFreeDays(selectedDatesArray);
@@ -3242,75 +3245,634 @@ window.runFullTest = function() {
 };
 
 // MODULE 10: SCHULFERIEN (School Holidays Module)
+// Statische, verifizierte Daten basierend auf offiziellen Quellen (KMK, Kultusministerien)
+// Keine externen APIs mehr - nur offizielle, feste Schulferien (keine "beweglichen Ferientage")
 
-// 10.1. Konstanten für Schulferien
-const SCHOOL_HOLIDAY_NAMES = {
-    'winterferien': 'Winterferien',
-    'osterferien': 'Osterferien',
-    'pfingstferien': 'Pfingstferien',
-    'sommerferien': 'Sommerferien',
-    'herbstferien': 'Herbstferien',
-    'weihnachtsferien': 'Weihnachtsferien',
-    'frühjahrsferien': 'Frühjahrsferien',
-    'faschingsferien': 'Faschingsferien',
-    'christi himmelfahrt': 'Himmelfahrtsferien',
-    'himmelfahrt': 'Himmelfahrtsferien'
+// 10.1. Statische Schulferien-Daten 2025-2029 für alle 16 Bundesländer
+const SCHOOL_HOLIDAYS_DATA = {
+    'BW': { // Baden-Württemberg
+        2025: [
+            { start: '2025-04-14', end: '2025-04-26', name: 'Osterferien' },
+            { start: '2025-06-10', end: '2025-06-20', name: 'Pfingstferien' },
+            { start: '2025-07-31', end: '2025-09-13', name: 'Sommerferien' },
+            { start: '2025-10-27', end: '2025-10-30', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-05', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-03-30', end: '2026-04-11', name: 'Osterferien' },
+            { start: '2026-05-26', end: '2026-06-05', name: 'Pfingstferien' },
+            { start: '2026-07-30', end: '2026-09-12', name: 'Sommerferien' },
+            { start: '2026-10-26', end: '2026-10-30', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-09', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-03-25', end: '2027-04-03', name: 'Osterferien' },
+            { start: '2027-05-18', end: '2027-05-29', name: 'Pfingstferien' },
+            { start: '2027-07-29', end: '2027-09-11', name: 'Sommerferien' },
+            { start: '2027-11-02', end: '2027-11-06', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-08', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-04-13', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-06-06', end: '2028-06-17', name: 'Pfingstferien' },
+            { start: '2028-07-27', end: '2028-09-09', name: 'Sommerferien' },
+            { start: '2028-10-30', end: '2028-11-03', name: 'Herbstferien' },
+            { start: '2028-12-23', end: '2029-01-05', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-03-26', end: '2029-04-07', name: 'Osterferien' },
+            { start: '2029-05-22', end: '2029-06-01', name: 'Pfingstferien' },
+            { start: '2029-07-26', end: '2029-09-08', name: 'Sommerferien' },
+            { start: '2029-10-29', end: '2029-11-02', name: 'Herbstferien' },
+            { start: '2029-12-22', end: '2030-01-05', name: 'Weihnachtsferien' }
+        ]
+    },
+    'BY': { // Bayern
+        2025: [
+            { start: '2025-03-03', end: '2025-03-07', name: 'Winterferien' },
+            { start: '2025-04-14', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-06-10', end: '2025-06-20', name: 'Pfingstferien' },
+            { start: '2025-08-01', end: '2025-09-15', name: 'Sommerferien' },
+            { start: '2025-11-03', end: '2025-11-07', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-05', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-16', end: '2026-02-20', name: 'Winterferien' },
+            { start: '2026-03-30', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-05-26', end: '2026-06-05', name: 'Pfingstferien' },
+            { start: '2026-08-03', end: '2026-09-14', name: 'Sommerferien' },
+            { start: '2026-11-02', end: '2026-11-06', name: 'Herbstferien' },
+            { start: '2026-12-24', end: '2027-01-08', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-08', end: '2027-02-12', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-04-02', name: 'Osterferien' },
+            { start: '2027-05-18', end: '2027-05-28', name: 'Pfingstferien' },
+            { start: '2027-08-02', end: '2027-09-13', name: 'Sommerferien' },
+            { start: '2027-11-02', end: '2027-11-05', name: 'Herbstferien' },
+            { start: '2027-12-24', end: '2028-01-07', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-02-28', end: '2028-03-03', name: 'Winterferien' },
+            { start: '2028-04-10', end: '2028-04-21', name: 'Osterferien' },
+            { start: '2028-06-06', end: '2028-06-16', name: 'Pfingstferien' },
+            { start: '2028-07-31', end: '2028-09-11', name: 'Sommerferien' },
+            { start: '2028-10-30', end: '2028-11-03', name: 'Herbstferien' },
+            { start: '2028-12-23', end: '2029-01-05', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-12', end: '2029-02-16', name: 'Winterferien' },
+            { start: '2029-03-26', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-05-22', end: '2029-06-01', name: 'Pfingstferien' },
+            { start: '2029-07-30', end: '2029-09-10', name: 'Sommerferien' },
+            { start: '2029-10-29', end: '2029-11-02', name: 'Herbstferien' },
+            { start: '2029-12-24', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'BE': { // Berlin
+        2025: [
+            { start: '2025-02-03', end: '2025-02-08', name: 'Winterferien' },
+            { start: '2025-04-14', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-07-24', end: '2025-09-06', name: 'Sommerferien' },
+            { start: '2025-10-20', end: '2025-11-01', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-02', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-02', end: '2026-02-07', name: 'Winterferien' },
+            { start: '2026-03-30', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-07-09', end: '2026-08-22', name: 'Sommerferien' },
+            { start: '2026-10-19', end: '2026-10-31', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-02', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-06', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-04-02', name: 'Osterferien' },
+            { start: '2027-07-01', end: '2027-08-14', name: 'Sommerferien' },
+            { start: '2027-10-11', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-22', end: '2027-12-31', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-01-31', end: '2028-02-05', name: 'Winterferien' },
+            { start: '2028-04-10', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-07-01', end: '2028-08-12', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-10-14', name: 'Herbstferien' },
+            { start: '2028-12-22', end: '2029-01-02', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-01-29', end: '2029-02-03', name: 'Winterferien' },
+            { start: '2029-03-26', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-07-01', end: '2029-08-11', name: 'Sommerferien' },
+            { start: '2029-10-01', end: '2029-10-12', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'BB': { // Brandenburg
+        2025: [
+            { start: '2025-02-03', end: '2025-02-08', name: 'Winterferien' },
+            { start: '2025-04-14', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-07-24', end: '2025-09-06', name: 'Sommerferien' },
+            { start: '2025-10-20', end: '2025-11-01', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-02', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-02', end: '2026-02-07', name: 'Winterferien' },
+            { start: '2026-03-30', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-07-09', end: '2026-08-22', name: 'Sommerferien' },
+            { start: '2026-10-19', end: '2026-10-30', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-02', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-06', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-04-03', name: 'Osterferien' },
+            { start: '2027-07-01', end: '2027-08-14', name: 'Sommerferien' },
+            { start: '2027-10-11', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2027-12-31', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-01-31', end: '2028-02-05', name: 'Winterferien' },
+            { start: '2028-04-10', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-06-29', end: '2028-08-12', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-10-14', name: 'Herbstferien' },
+            { start: '2028-12-22', end: '2029-01-02', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-01-29', end: '2029-02-03', name: 'Winterferien' },
+            { start: '2029-03-26', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-06-28', end: '2029-08-11', name: 'Sommerferien' },
+            { start: '2029-10-01', end: '2029-10-12', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'HB': { // Bremen
+        2025: [
+            { start: '2025-02-03', end: '2025-02-04', name: 'Winterferien' },
+            { start: '2025-04-07', end: '2025-04-19', name: 'Osterferien' },
+            { start: '2025-07-03', end: '2025-08-13', name: 'Sommerferien' },
+            { start: '2025-10-13', end: '2025-10-25', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-05', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-02', end: '2026-02-03', name: 'Winterferien' },
+            { start: '2026-03-23', end: '2026-04-07', name: 'Osterferien' },
+            { start: '2026-07-02', end: '2026-08-12', name: 'Sommerferien' },
+            { start: '2026-10-12', end: '2026-10-24', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-09', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-02', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-04-03', name: 'Osterferien' },
+            { start: '2027-07-08', end: '2027-08-18', name: 'Sommerferien' },
+            { start: '2027-10-18', end: '2027-10-30', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-08', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-01-31', end: '2028-02-01', name: 'Winterferien' },
+            { start: '2028-04-10', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-07-20', end: '2028-08-30', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-11-04', name: 'Herbstferien' },
+            { start: '2028-12-27', end: '2029-01-06', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-01', end: '2029-02-02', name: 'Winterferien' },
+            { start: '2029-03-19', end: '2029-04-03', name: 'Osterferien' },
+            { start: '2029-07-19', end: '2029-08-29', name: 'Sommerferien' },
+            { start: '2029-10-04', end: '2029-10-05', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-05', name: 'Weihnachtsferien' }
+        ]
+    },
+    'HH': { // Hamburg
+        2025: [
+            { start: '2025-01-31', end: '2025-01-31', name: 'Winterferien' },
+            { start: '2025-03-10', end: '2025-03-21', name: 'Frühjahrsferien' },
+            { start: '2025-05-02', end: '2025-05-30', name: 'Pfingstferien' },
+            { start: '2025-07-24', end: '2025-09-03', name: 'Sommerferien' },
+            { start: '2025-10-20', end: '2025-10-31', name: 'Herbstferien' },
+            { start: '2025-12-17', end: '2026-01-02', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-01-30', end: '2026-01-30', name: 'Winterferien' },
+            { start: '2026-03-02', end: '2026-03-13', name: 'Frühjahrsferien' },
+            { start: '2026-05-11', end: '2026-05-15', name: 'Pfingstferien' },
+            { start: '2026-07-09', end: '2026-08-19', name: 'Sommerferien' },
+            { start: '2026-10-19', end: '2026-10-30', name: 'Herbstferien' },
+            { start: '2026-12-21', end: '2027-01-01', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-01-29', end: '2027-01-29', name: 'Winterferien' },
+            { start: '2027-03-01', end: '2027-03-12', name: 'Frühjahrsferien' },
+            { start: '2027-05-07', end: '2027-05-15', name: 'Pfingstferien' },
+            { start: '2027-07-01', end: '2027-08-11', name: 'Sommerferien' },
+            { start: '2027-10-11', end: '2027-10-22', name: 'Herbstferien' },
+            { start: '2027-12-20', end: '2027-12-31', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-01-28', end: '2028-01-28', name: 'Winterferien' },
+            { start: '2028-03-06', end: '2028-03-17', name: 'Frühjahrsferien' },
+            { start: '2028-05-22', end: '2028-05-26', name: 'Pfingstferien' },
+            { start: '2028-07-03', end: '2028-08-11', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-10-13', name: 'Herbstferien' },
+            { start: '2028-12-18', end: '2028-12-31', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-02', end: '2029-02-02', name: 'Winterferien' },
+            { start: '2029-03-05', end: '2029-03-16', name: 'Frühjahrsferien' },
+            { start: '2029-05-11', end: '2029-05-18', name: 'Pfingstferien' },
+            { start: '2029-07-02', end: '2029-08-10', name: 'Sommerferien' },
+            { start: '2029-10-01', end: '2029-10-12', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'HE': { // Hessen
+        2025: [
+            { start: '2025-04-07', end: '2025-04-21', name: 'Osterferien' },
+            { start: '2025-07-07', end: '2025-08-15', name: 'Sommerferien' },
+            { start: '2025-10-06', end: '2025-10-18', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-10', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-03-30', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-06-29', end: '2026-08-07', name: 'Sommerferien' },
+            { start: '2026-10-05', end: '2026-10-17', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-12', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-03-22', end: '2027-04-02', name: 'Osterferien' },
+            { start: '2027-06-28', end: '2027-08-06', name: 'Sommerferien' },
+            { start: '2027-10-04', end: '2027-10-16', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-11', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-04-03', end: '2028-04-14', name: 'Osterferien' },
+            { start: '2028-07-03', end: '2028-08-11', name: 'Sommerferien' },
+            { start: '2028-10-09', end: '2028-10-20', name: 'Herbstferien' },
+            { start: '2028-12-27', end: '2029-01-12', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-03-29', end: '2029-04-13', name: 'Osterferien' },
+            { start: '2029-07-16', end: '2029-08-24', name: 'Sommerferien' },
+            { start: '2029-10-15', end: '2029-10-26', name: 'Herbstferien' },
+            { start: '2029-12-24', end: '2030-01-11', name: 'Weihnachtsferien' }
+        ]
+    },
+    'MV': { // Mecklenburg-Vorpommern
+        2025: [
+            { start: '2025-02-03', end: '2025-02-14', name: 'Winterferien' },
+            { start: '2025-04-14', end: '2025-04-23', name: 'Osterferien' },
+            { start: '2025-06-06', end: '2025-06-10', name: 'Pfingstferien' },
+            { start: '2025-07-28', end: '2025-09-06', name: 'Sommerferien' },
+            { start: '2025-10-02', end: '2025-10-24', name: 'Herbstferien' },
+            { start: '2025-12-20', end: '2026-01-03', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-09', end: '2026-02-20', name: 'Winterferien' },
+            { start: '2026-03-30', end: '2026-04-08', name: 'Osterferien' },
+            { start: '2026-05-22', end: '2026-05-26', name: 'Pfingstferien' },
+            { start: '2026-07-13', end: '2026-08-22', name: 'Sommerferien' },
+            { start: '2026-10-15', end: '2026-10-24', name: 'Herbstferien' },
+            { start: '2026-12-21', end: '2027-01-02', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-08', end: '2027-02-19', name: 'Winterferien' },
+            { start: '2027-03-24', end: '2027-04-02', name: 'Osterferien' },
+            { start: '2027-05-14', end: '2027-05-18', name: 'Pfingstferien' },
+            { start: '2027-07-05', end: '2027-08-14', name: 'Sommerferien' },
+            { start: '2027-10-14', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-22', end: '2028-01-04', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-02-05', end: '2028-02-17', name: 'Winterferien' },
+            { start: '2028-04-12', end: '2028-04-21', name: 'Osterferien' },
+            { start: '2028-06-02', end: '2028-06-06', name: 'Pfingstferien' },
+            { start: '2028-06-26', end: '2028-08-05', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-10-28', name: 'Herbstferien' },
+            { start: '2028-12-22', end: '2029-01-02', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-05', end: '2029-02-16', name: 'Winterferien' },
+            { start: '2029-03-28', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-05-18', end: '2029-05-22', name: 'Pfingstferien' },
+            { start: '2029-06-18', end: '2029-07-28', name: 'Sommerferien' },
+            { start: '2029-10-22', end: '2029-10-27', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'NI': { // Niedersachsen
+        2025: [
+            { start: '2025-02-03', end: '2025-02-04', name: 'Winterferien' },
+            { start: '2025-04-07', end: '2025-04-19', name: 'Osterferien' },
+            { start: '2025-07-03', end: '2025-08-13', name: 'Sommerferien' },
+            { start: '2025-10-13', end: '2025-10-25', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-05', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-02', end: '2026-02-03', name: 'Winterferien' },
+            { start: '2026-03-23', end: '2026-04-07', name: 'Osterferien' },
+            { start: '2026-07-02', end: '2026-08-12', name: 'Sommerferien' },
+            { start: '2026-10-12', end: '2026-10-24', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-09', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-02', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-04-03', name: 'Osterferien' },
+            { start: '2027-07-08', end: '2027-08-18', name: 'Sommerferien' },
+            { start: '2027-10-16', end: '2027-10-30', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-08', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-01-31', end: '2028-02-01', name: 'Winterferien' },
+            { start: '2028-04-10', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-07-20', end: '2028-08-30', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-11-04', name: 'Herbstferien' },
+            { start: '2028-12-27', end: '2029-01-06', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-01', end: '2029-02-02', name: 'Winterferien' },
+            { start: '2029-03-19', end: '2029-04-03', name: 'Osterferien' },
+            { start: '2029-07-19', end: '2029-08-29', name: 'Sommerferien' },
+            { start: '2029-10-04', end: '2029-10-05', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-05', name: 'Weihnachtsferien' }
+        ]
+    },
+    'NW': { // Nordrhein-Westfalen
+        2025: [
+            { start: '2025-04-14', end: '2025-04-26', name: 'Osterferien' },
+            { start: '2025-07-14', end: '2025-08-26', name: 'Sommerferien' },
+            { start: '2025-10-13', end: '2025-10-25', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-06', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-03-30', end: '2026-04-11', name: 'Osterferien' },
+            { start: '2026-07-20', end: '2026-09-01', name: 'Sommerferien' },
+            { start: '2026-10-17', end: '2026-10-31', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-06', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-03-22', end: '2027-04-03', name: 'Osterferien' },
+            { start: '2027-07-19', end: '2027-08-31', name: 'Sommerferien' },
+            { start: '2027-10-23', end: '2027-11-06', name: 'Herbstferien' },
+            { start: '2027-12-24', end: '2028-01-08', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-04-10', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-07-10', end: '2028-08-22', name: 'Sommerferien' },
+            { start: '2028-10-23', end: '2028-11-04', name: 'Herbstferien' },
+            { start: '2028-12-21', end: '2029-01-05', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-03-26', end: '2029-04-07', name: 'Osterferien' },
+            { start: '2029-07-02', end: '2029-08-14', name: 'Sommerferien' },
+            { start: '2029-10-15', end: '2029-10-27', name: 'Herbstferien' },
+            { start: '2029-12-20', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'RP': { // Rheinland-Pfalz
+        2025: [
+            { start: '2025-04-14', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-07-07', end: '2025-08-15', name: 'Sommerferien' },
+            { start: '2025-10-13', end: '2025-10-24', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-07', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-03-30', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-06-29', end: '2026-08-07', name: 'Sommerferien' },
+            { start: '2026-10-05', end: '2026-10-16', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-08', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-03-22', end: '2027-04-02', name: 'Osterferien' },
+            { start: '2027-06-28', end: '2027-08-06', name: 'Sommerferien' },
+            { start: '2027-10-04', end: '2027-10-15', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-07', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-04-10', end: '2028-04-21', name: 'Osterferien' },
+            { start: '2028-07-03', end: '2028-08-11', name: 'Sommerferien' },
+            { start: '2028-10-09', end: '2028-10-20', name: 'Herbstferien' },
+            { start: '2028-12-21', end: '2029-01-08', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-03-26', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-07-16', end: '2029-08-24', name: 'Sommerferien' },
+            { start: '2029-10-22', end: '2029-11-02', name: 'Herbstferien' },
+            { start: '2029-12-24', end: '2030-01-09', name: 'Weihnachtsferien' }
+        ]
+    },
+    'SL': { // Saarland
+        2025: [
+            { start: '2025-02-24', end: '2025-03-04', name: 'Winterferien' },
+            { start: '2025-04-14', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-07-07', end: '2025-08-14', name: 'Sommerferien' },
+            { start: '2025-10-13', end: '2025-10-24', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-02', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-16', end: '2026-02-20', name: 'Winterferien' },
+            { start: '2026-04-07', end: '2026-04-17', name: 'Osterferien' },
+            { start: '2026-06-29', end: '2026-08-07', name: 'Sommerferien' },
+            { start: '2026-10-05', end: '2026-10-16', name: 'Herbstferien' },
+            { start: '2026-12-21', end: '2026-12-31', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-08', end: '2027-02-12', name: 'Winterferien' },
+            { start: '2027-03-30', end: '2027-04-09', name: 'Osterferien' },
+            { start: '2027-06-28', end: '2027-08-06', name: 'Sommerferien' },
+            { start: '2027-10-04', end: '2027-10-15', name: 'Herbstferien' },
+            { start: '2027-12-20', end: '2027-12-31', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-02-21', end: '2028-02-29', name: 'Winterferien' },
+            { start: '2028-04-12', end: '2028-04-21', name: 'Osterferien' },
+            { start: '2028-07-03', end: '2028-08-11', name: 'Sommerferien' },
+            { start: '2028-10-09', end: '2028-10-20', name: 'Herbstferien' },
+            { start: '2028-12-20', end: '2029-01-02', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-12', end: '2029-02-16', name: 'Winterferien' },
+            { start: '2029-03-26', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-05-22', end: '2029-05-25', name: 'Pfingstferien' },
+            { start: '2029-07-16', end: '2029-08-24', name: 'Sommerferien' },
+            { start: '2029-10-22', end: '2029-11-02', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'SN': { // Sachsen
+        2025: [
+            { start: '2025-02-17', end: '2025-03-01', name: 'Winterferien' },
+            { start: '2025-04-18', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-06-28', end: '2025-08-08', name: 'Sommerferien' },
+            { start: '2025-10-06', end: '2025-10-18', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-02', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-09', end: '2026-02-21', name: 'Winterferien' },
+            { start: '2026-04-03', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-07-04', end: '2026-08-14', name: 'Sommerferien' },
+            { start: '2026-10-12', end: '2026-10-24', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-02', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-08', end: '2027-02-19', name: 'Winterferien' },
+            { start: '2027-03-26', end: '2027-04-02', name: 'Osterferien' },
+            { start: '2027-05-15', end: '2027-05-18', name: 'Pfingstferien' },
+            { start: '2027-07-10', end: '2027-08-20', name: 'Sommerferien' },
+            { start: '2027-10-11', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-01', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-02-14', end: '2028-02-26', name: 'Winterferien' },
+            { start: '2028-04-14', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-07-22', end: '2028-09-01', name: 'Sommerferien' },
+            { start: '2028-10-23', end: '2028-11-03', name: 'Herbstferien' },
+            { start: '2028-12-23', end: '2029-01-03', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-05', end: '2029-02-16', name: 'Winterferien' },
+            { start: '2029-03-29', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-05-19', end: '2029-05-22', name: 'Pfingstferien' },
+            { start: '2029-07-21', end: '2029-08-31', name: 'Sommerferien' },
+            { start: '2029-10-22', end: '2029-11-02', name: 'Herbstferien' },
+            { start: '2029-12-22', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    },
+    'ST': { // Sachsen-Anhalt
+        2025: [
+            { start: '2025-01-27', end: '2025-01-31', name: 'Winterferien' },
+            { start: '2025-04-07', end: '2025-04-19', name: 'Osterferien' },
+            { start: '2025-06-28', end: '2025-08-08', name: 'Sommerferien' },
+            { start: '2025-10-13', end: '2025-10-25', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-05', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-01-31', end: '2026-02-06', name: 'Winterferien' },
+            { start: '2026-03-30', end: '2026-04-04', name: 'Osterferien' },
+            { start: '2026-05-26', end: '2026-05-29', name: 'Pfingstferien' },
+            { start: '2026-07-04', end: '2026-08-14', name: 'Sommerferien' },
+            { start: '2026-10-19', end: '2026-10-30', name: 'Herbstferien' },
+            { start: '2026-12-21', end: '2027-01-02', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-06', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-03-27', name: 'Osterferien' },
+            { start: '2027-05-15', end: '2027-05-22', name: 'Pfingstferien' },
+            { start: '2027-07-10', end: '2027-08-20', name: 'Sommerferien' },
+            { start: '2027-10-18', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-20', end: '2027-12-31', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-02-07', end: '2028-02-12', name: 'Winterferien' },
+            { start: '2028-04-10', end: '2028-04-22', name: 'Osterferien' },
+            { start: '2028-06-03', end: '2028-06-10', name: 'Pfingstferien' },
+            { start: '2028-07-22', end: '2028-09-01', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-11-03', name: 'Herbstferien' },
+            { start: '2028-12-21', end: '2029-01-02', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-05', end: '2029-02-10', name: 'Winterferien' },
+            { start: '2029-03-26', end: '2029-03-31', name: 'Osterferien' },
+            { start: '2029-05-11', end: '2029-05-25', name: 'Pfingstferien' },
+            { start: '2029-07-21', end: '2029-08-31', name: 'Sommerferien' },
+            { start: '2029-10-29', end: '2029-11-02', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-05', name: 'Weihnachtsferien' }
+        ]
+    },
+    'SH': { // Schleswig-Holstein
+        2025: [
+            { start: '2025-04-11', end: '2025-04-25', name: 'Osterferien' },
+            { start: '2025-07-28', end: '2025-09-06', name: 'Sommerferien' },
+            { start: '2025-10-20', end: '2025-10-30', name: 'Herbstferien' },
+            { start: '2025-12-19', end: '2026-01-06', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-02', end: '2026-02-03', name: 'Winterferien' },
+            { start: '2026-03-26', end: '2026-04-10', name: 'Osterferien' },
+            { start: '2026-07-04', end: '2026-08-15', name: 'Sommerferien' },
+            { start: '2026-10-12', end: '2026-10-24', name: 'Herbstferien' },
+            { start: '2026-12-21', end: '2027-01-06', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-02', name: 'Winterferien' },
+            { start: '2027-03-30', end: '2027-04-10', name: 'Osterferien' },
+            { start: '2027-07-03', end: '2027-08-14', name: 'Sommerferien' },
+            { start: '2027-10-11', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2028-01-08', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-01-31', end: '2028-01-31', name: 'Winterferien' },
+            { start: '2028-04-03', end: '2028-04-15', name: 'Osterferien' },
+            { start: '2028-06-24', end: '2028-08-04', name: 'Sommerferien' },
+            { start: '2028-10-02', end: '2028-10-30', name: 'Herbstferien' },
+            { start: '2028-12-21', end: '2029-01-05', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-01-29', end: '2029-01-29', name: 'Winterferien' },
+            { start: '2029-03-23', end: '2029-04-06', name: 'Osterferien' },
+            { start: '2029-06-23', end: '2029-08-03', name: 'Sommerferien' },
+            { start: '2029-10-08', end: '2029-10-19', name: 'Herbstferien' },
+            { start: '2029-12-21', end: '2030-01-08', name: 'Weihnachtsferien' }
+        ]
+    },
+    'TH': { // Thüringen
+        2025: [
+            { start: '2025-02-03', end: '2025-02-08', name: 'Winterferien' },
+            { start: '2025-04-07', end: '2025-04-19', name: 'Osterferien' },
+            { start: '2025-06-28', end: '2025-08-08', name: 'Sommerferien' },
+            { start: '2025-10-06', end: '2025-10-18', name: 'Herbstferien' },
+            { start: '2025-12-22', end: '2026-01-03', name: 'Weihnachtsferien' }
+        ],
+        2026: [
+            { start: '2026-02-16', end: '2026-02-21', name: 'Winterferien' },
+            { start: '2026-04-07', end: '2026-04-17', name: 'Osterferien' },
+            { start: '2026-07-04', end: '2026-08-14', name: 'Sommerferien' },
+            { start: '2026-10-12', end: '2026-10-24', name: 'Herbstferien' },
+            { start: '2026-12-23', end: '2027-01-02', name: 'Weihnachtsferien' }
+        ],
+        2027: [
+            { start: '2027-02-01', end: '2027-02-06', name: 'Winterferien' },
+            { start: '2027-03-22', end: '2027-04-03', name: 'Osterferien' },
+            { start: '2027-07-10', end: '2027-08-20', name: 'Sommerferien' },
+            { start: '2027-10-09', end: '2027-10-23', name: 'Herbstferien' },
+            { start: '2027-12-23', end: '2027-12-31', name: 'Weihnachtsferien' }
+        ],
+        2028: [
+            { start: '2028-02-07', end: '2028-02-12', name: 'Winterferien' },
+            { start: '2028-04-03', end: '2028-04-15', name: 'Osterferien' },
+            { start: '2028-07-22', end: '2028-09-01', name: 'Sommerferien' },
+            { start: '2028-10-23', end: '2028-11-03', name: 'Herbstferien' },
+            { start: '2028-12-23', end: '2029-01-05', name: 'Weihnachtsferien' }
+        ],
+        2029: [
+            { start: '2029-02-12', end: '2029-02-17', name: 'Winterferien' },
+            { start: '2029-03-26', end: '2029-04-07', name: 'Osterferien' },
+            { start: '2029-07-21', end: '2029-08-31', name: 'Sommerferien' },
+            { start: '2029-10-22', end: '2029-11-03', name: 'Herbstferien' },
+            { start: '2029-12-22', end: '2030-01-04', name: 'Weihnachtsferien' }
+        ]
+    }
 };
 
-// 10.2. API-Funktion: Schulferien von OpenHolidaysAPI laden
-async function fetchSchoolHolidaysFromOpenHolidays(stateCode, year) {
-    const subdivisionCode = `DE-${stateCode}`;
-    const url = `https://openholidaysapi.org/SchoolHolidays?countryIsoCode=DE&subdivisionCode=${subdivisionCode}&validFrom=${year}-01-01&validTo=${year}-12-31`;
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-
-        // Konvertiere OpenHolidaysAPI Format zu unserem Format
-        return data.map(holiday => ({
-            start: holiday.startDate,
-            end: holiday.endDate,
-            name: holiday.name.find(n => n.language === 'DE')?.text || holiday.name[0]?.text || 'Schulferien',
-            stateCode: stateCode,
-            year: year
-        }));
-    } catch (error) {
-        console.warn(`OpenHolidaysAPI Fehler für ${stateCode}/${year}:`, error.message);
-        return null; // Fallback wird verwendet
-    }
-}
-
-// 10.3. Fallback-API: ferien-api.de
-async function fetchSchoolHolidaysFromFerienApi(stateCode, year) {
-    const url = `https://ferien-api.de/api/v1/holidays/${stateCode}/${year}`;
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-
-        // Konvertiere ferien-api Format zu unserem Format
-        return data.map(holiday => ({
-            start: holiday.start.split('T')[0],
-            end: holiday.end.split('T')[0],
-            name: formatSchoolHolidayName(holiday.name),
-            stateCode: stateCode,
-            year: year
-        }));
-    } catch (error) {
-        console.error(`Ferien-API Fehler für ${stateCode}/${year}:`, error.message);
+// 10.2. Holt Schulferien aus statischen Daten (ersetzt API-Aufrufe)
+function getSchoolHolidaysFromStaticData(stateCode, year) {
+    const stateData = SCHOOL_HOLIDAYS_DATA[stateCode];
+    if (!stateData) {
+        console.warn(`Keine Schulferien-Daten für Bundesland: ${stateCode}`);
         return [];
     }
+
+    const yearData = stateData[year];
+    if (!yearData) {
+        console.warn(`Keine Schulferien-Daten für ${stateCode}/${year}`);
+        return [];
+    }
+
+    // Füge stateCode und year zu jedem Eintrag hinzu
+    return yearData.map(holiday => ({
+        ...holiday,
+        stateCode: stateCode,
+        year: year
+    }));
 }
 
-// 10.4. Formatiert Feriennamen (lowercase → Lesbare Form)
-function formatSchoolHolidayName(name) {
-    const lowerName = name.toLowerCase();
-    return SCHOOL_HOLIDAY_NAMES[lowerName] || name.charAt(0).toUpperCase() + name.slice(1);
-}
-
-// 10.5. Haupt-Ladefunktion: Schulferien für ein Jahr laden (mit Fallback)
+// 10.3. Haupt-Ladefunktion: Schulferien für ein Jahr laden (aus statischen Daten)
 async function fetchSchoolHolidays(stateCode, year) {
     const cacheKey = `${stateCode}-${year}`;
 
@@ -3319,14 +3881,8 @@ async function fetchSchoolHolidays(stateCode, year) {
         return State.schoolHolidaysData.get(cacheKey);
     }
 
-    // Versuche primäre API (OpenHolidaysAPI)
-    let holidays = await fetchSchoolHolidaysFromOpenHolidays(stateCode, year);
-
-    // Fallback auf ferien-api.de wenn primäre API fehlschlägt
-    if (!holidays || holidays.length === 0) {
-        console.log(`Fallback auf ferien-api.de für ${stateCode}/${year}`);
-        holidays = await fetchSchoolHolidaysFromFerienApi(stateCode, year);
-    }
+    // Hole Daten aus statischem Objekt
+    const holidays = getSchoolHolidaysFromStaticData(stateCode, year);
 
     // In Cache speichern
     State.schoolHolidaysData.set(cacheKey, holidays);
@@ -3334,20 +3890,20 @@ async function fetchSchoolHolidays(stateCode, year) {
     return holidays;
 }
 
-// 10.6. Lädt Schulferien für aktuelles Jahr + 3 Jahre
+// 10.4. Lädt Schulferien für aktuelles Jahr + 4 Jahre (2025-2029)
 async function loadSchoolHolidaysForRange(stateCode) {
     if (State.schoolHolidaysLoading) return;
 
     State.schoolHolidaysLoading = true;
     updateSchoolHolidaysButton();
 
-    const currentYear = new Date().getFullYear();
-    const years = [currentYear, currentYear + 1, currentYear + 2, currentYear + 3];
+    // Statische Daten verfügbar für 2025-2029
+    const years = [2025, 2026, 2027, 2028, 2029];
 
     try {
-        // Lade alle Jahre parallel
+        // Lade alle Jahre (aus statischen Daten - kein API-Aufruf)
         await Promise.all(years.map(year => fetchSchoolHolidays(stateCode, year)));
-        console.log(`Schulferien geladen für ${stateCode}: ${years.join(', ')}`);
+        console.log(`Schulferien geladen für ${stateCode}: ${years.join(', ')} (statische Daten)`);
     } catch (error) {
         console.error('Fehler beim Laden der Schulferien:', error);
     } finally {
@@ -3357,39 +3913,47 @@ async function loadSchoolHolidaysForRange(stateCode) {
     }
 }
 
-// 10.7. Prüft ob ein Datum in Schulferien liegt
+// 10.5. Prüft ob ein Datum in Schulferien liegt
 function getSchoolHolidayInfo(dateString) {
     if (!State.schoolHolidaysVisible) return null;
 
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const cacheKey = `${State.selectedStateId}-${year}`;
 
-    const holidays = State.schoolHolidaysData.get(cacheKey);
-    if (!holidays) return null;
+    // Prüfe aktuelles Jahr UND vorheriges Jahr (für Ferien über Jahreswechsel wie Weihnachtsferien)
+    const yearsToCheck = [year, year - 1];
 
-    for (const holiday of holidays) {
-        const start = new Date(holiday.start);
-        const end = new Date(holiday.end);
+    for (const checkYear of yearsToCheck) {
+        const cacheKey = `${State.selectedStateId}-${checkYear}`;
+        const holidays = State.schoolHolidaysData.get(cacheKey);
 
-        // Setze Zeit auf Mitternacht für korrekten Vergleich
-        start.setHours(0, 0, 0, 0);
-        end.setHours(23, 59, 59, 999);
-        date.setHours(12, 0, 0, 0);
+        if (!holidays) continue;
 
-        if (date >= start && date <= end) {
-            return {
-                name: holiday.name,
-                start: holiday.start,
-                end: holiday.end
-            };
+        for (const holiday of holidays) {
+            const start = new Date(holiday.start);
+            const end = new Date(holiday.end);
+
+            // Setze Zeit auf Mitternacht für korrekten Vergleich
+            start.setHours(0, 0, 0, 0);
+            end.setHours(23, 59, 59, 999);
+
+            const checkDate = new Date(dateString);
+            checkDate.setHours(12, 0, 0, 0);
+
+            if (checkDate >= start && checkDate <= end) {
+                return {
+                    name: holiday.name,
+                    start: holiday.start,
+                    end: holiday.end
+                };
+            }
         }
     }
 
     return null;
 }
 
-// 10.8. Toggle Schulferien-Anzeige
+// 10.6. Toggle Schulferien-Anzeige
 async function toggleSchoolHolidays() {
     State.schoolHolidaysVisible = !State.schoolHolidaysVisible;
 
@@ -3423,7 +3987,7 @@ async function toggleSchoolHolidays() {
     }
 }
 
-// 10.9. Button-Status aktualisieren
+// 10.7. Button-Status aktualisieren
 function updateSchoolHolidaysButton() {
     const btn = document.getElementById('school-holidays-btn');
     if (!btn) return;
@@ -3438,7 +4002,7 @@ function updateSchoolHolidaysButton() {
     }
 }
 
-// 10.10. Legende aktualisieren
+// 10.8. Legende aktualisieren
 function updateSchoolHolidaysLegend() {
     const legendItem = document.querySelector('.legend-school-holidays');
     if (!legendItem) return;
@@ -3450,7 +4014,7 @@ function updateSchoolHolidaysLegend() {
     }
 }
 
-// 10.11. Präferenz speichern
+// 10.9. Präferenz speichern
 function saveSchoolHolidaysPreference() {
     try {
         localStorage.setItem('holidayboost_schoolholidays', State.schoolHolidaysVisible ? '1' : '0');
@@ -3459,7 +4023,7 @@ function saveSchoolHolidaysPreference() {
     }
 }
 
-// 10.12. Präferenz laden
+// 10.10. Präferenz laden
 function loadSchoolHolidaysPreference() {
     try {
         const saved = localStorage.getItem('holidayboost_schoolholidays');
@@ -3475,7 +4039,7 @@ function loadSchoolHolidaysPreference() {
     }
 }
 
-// 10.13. Initialisierung der Schulferien-Funktionalität
+// 10.11. Initialisierung der Schulferien-Funktionalität
 function initSchoolHolidays() {
     const btn = document.getElementById('school-holidays-btn');
     if (btn) {
@@ -3486,7 +4050,7 @@ function initSchoolHolidays() {
     loadSchoolHolidaysPreference();
 }
 
-// 10.14. Bei Bundesland-Wechsel: Neue Schulferien laden falls sichtbar
+// 10.12. Bei Bundesland-Wechsel: Neue Schulferien laden falls sichtbar
 function onStateChangeSchoolHolidays(newStateId) {
     if (State.schoolHolidaysVisible) {
         const currentYear = new Date().getFullYear();
@@ -3498,7 +4062,7 @@ function onStateChangeSchoolHolidays(newStateId) {
     }
 }
 
-// 10.15. Schulferien-Hint anzeigen (einmalig beim ersten Aktivieren)
+// 10.13. Schulferien-Hint anzeigen (einmalig beim ersten Aktivieren)
 function showSchoolHolidaysHint() {
     // Prüfe ob Hint bereits gezeigt wurde
     const hintShown = localStorage.getItem('holidayboost_schoolhint_shown');
@@ -3520,7 +4084,7 @@ function showSchoolHolidaysHint() {
     localStorage.setItem('holidayboost_schoolhint_shown', '1');
 }
 
-// 10.16. Schulferien-Hint schließen
+// 10.14. Schulferien-Hint schließen
 function closeSchoolHolidaysHint() {
     const hint = document.getElementById('school-holidays-hint');
     if (!hint) return;

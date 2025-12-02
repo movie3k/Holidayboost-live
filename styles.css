@@ -474,18 +474,26 @@ body {
         gap: 28px; /* Increased gap */
         padding: 35px; /* Maintain padding for tooltips */
     }
+
+    /* Grid-Positionen für 3 Spalten zurücksetzen */
+    .month-view:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
+    }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
     .calendar-grid {
         grid-template-columns: repeat(2, 1fr);
-        max-width: 900px; /* Increased for tooltip space */
-        gap: 24px; /* Increased gap */
-        padding: 30px; /* Maintain padding */
+        max-width: 100%; /* Volle Breite für Tablets */
+        gap: 24px;
+        padding: 20px;
     }
 
-    .month-view {
-        min-height: 340px; /* Increased height for better tooltip space */
+    /* Grid-Positionen für 2 Spalten zurücksetzen - überschreibt feste Zuweisungen */
+    .month-view:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
     }
 }
 
@@ -497,13 +505,16 @@ body {
         padding: 25px; /* Maintain padding for tooltips */
     }
 
-    .month-view {
-        min-height: 360px; /* Increased for tooltip space */
+    /* Grid-Positionen für 1 Spalte zurücksetzen */
+    .month-view:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
     }
 
     .day {
-        font-size: 16px;
-        min-height: 40px; /* Increased for better touch targets */
+        font-size: 14px;
+        min-height: 36px; /* Kleiner für 6 Wochen-Reihen */
+        aspect-ratio: auto; /* Entfernt quadratische Zellen auf Mobile */
     }
 
     /* Adjust tooltip size for mobile */
@@ -517,13 +528,16 @@ body {
 /* Month view styles - MODULE 4 - WIDER CONTAINERS */
 .month-view {
     background: var(--calendar-bg);
-    border: var(--border-glass);
+    border: none; /* Keine sichtbare Strichlinie */
     border-radius: 16px;
     overflow: visible;
     box-shadow: var(--shadow-medium);
     transition: transform 0.2s ease;
     backdrop-filter: none;
-    min-height: 320px;
+    /* Flexibles Layout - passt sich automatisch an Inhalt an */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     position: relative;
     z-index: 1;
     padding: 0;
@@ -626,7 +640,7 @@ body {
 /* Extra Month Styling */
 .extra-month {
     opacity: 0.85;
-    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border: none; /* Kein gestrichelter Rand mehr */
     border-radius: 8px;
     position: relative;
     background: rgba(255, 255, 255, 0.02);
@@ -761,11 +775,13 @@ body {
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr; /* Alle Reihen gleich hoch */
     gap: 3px;
     padding: 6px;
     overflow: visible;
     position: relative;
     z-index: 1;
+    flex: 1 1 auto; /* Flexibel im month-view Container */
 }
 
 .day {
@@ -1375,6 +1391,53 @@ body {
     }
 }
 
+/* Tablet & Mobile - Verhindert horizontales Scrollen */
+@media (max-width: 1024px) {
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    .compact-header,
+    .sticky-footer-new,
+    .recommendations-modal {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .container {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Header kompakter für Tablets (iPad Pro) */
+    .compact-header {
+        padding: 12px 15px;
+    }
+
+    .header-row {
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    /* Reisetipps-Button kompakter */
+    .travel-tips-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    .travel-tips-btn .travel-tips-text {
+        display: inline; /* Text bleibt sichtbar */
+    }
+
+    /* Controls etwas kompakter */
+    .controls-compact select {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+}
+
 /* Holiday tooltip styles - ENHANCED VERSION */
 .day[data-holiday] {
     position: relative;
@@ -1589,7 +1652,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     z-index: 10000;
     display: flex;
@@ -2050,7 +2113,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     z-index: 100;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -2663,7 +2726,7 @@ a.logo-compact:visited {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     /* === FOOTER HERO IMAGE === */
     background:
@@ -2911,6 +2974,14 @@ a.logo-compact:visited {
     margin-bottom: 12px;
 }
 
+.about-section h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
 .about-section p {
     font-size: 15px;
     line-height: 1.7;
@@ -2992,8 +3063,8 @@ a.logo-compact:visited {
     }
 }
 
-/* 5. RESPONSIVE ANPASSUNGEN FÜR KOMPAKTES LAYOUT */
-@media (max-width: 768px) {
+/* 5. RESPONSIVE ANPASSUNGEN FÜR KOMPAKTES LAYOUT - Tablets */
+@media (max-width: 900px) {
     .header-row {
         flex-wrap: wrap;
         gap: 12px;
@@ -5628,9 +5699,9 @@ a.logo-compact:visited {
     }
 
     .day {
-        min-height: 48px;
-        font-size: 15px;
-        padding: 3px;
+        min-height: 38px; /* Kleiner für 6 Wochen-Reihen */
+        font-size: 14px;
+        padding: 2px;
         border-radius: 6px;
         -webkit-tap-highlight-color: transparent;
     }
@@ -5647,10 +5718,11 @@ a.logo-compact:visited {
         line-height: 1.1;
     }
 
-    /* Month-View volle Breite */
+    /* Month-View volle Breite auf Mobile */
     .month-view {
         border-radius: 0 !important;
         margin: 0 !important;
+        border: none !important; /* Entfernt die sichtbare Strichlinie */
     }
 
     /* Sticky Footer - KOMPAKT einzeilig */
@@ -5757,31 +5829,23 @@ a.logo-compact:visited {
         display: inline !important;
     }
 
-    /* Footer Links kompakter */
+    /* Footer Links auf Mobile - kompakter anzeigen */
     .footer-links {
-        flex-direction: row;
+        display: flex !important;
         flex-wrap: wrap;
-        gap: 6px;
-        text-align: center;
-        padding: 10px 8px;
-        margin-bottom: 70px; /* Weniger Platz für kompakten Footer */
         justify-content: center;
+        gap: 8px;
+        font-size: 10px;
+        padding: 10px 5px;
+        margin-bottom: 70px;
+    }
+
+    .footer-links a {
+        font-size: 10px;
     }
 
     .footer-links .divider {
         display: none;
-    }
-
-    .footer-links a {
-        padding: 6px 8px;
-        min-height: auto;
-        font-size: 12px;
-    }
-
-    .footer-links .social-links {
-        width: 100%;
-        margin-top: 6px;
-        padding-top: 8px;
     }
 
     /* ========================================
@@ -6213,10 +6277,10 @@ a.logo-compact:visited {
         font-size: 14px;
     }
 
-    /* Tage größer für 375px */
+    /* Tage kompakt für 375px */
     .day {
-        min-height: 42px;
-        font-size: 14px;
+        min-height: 34px; /* Kleiner für 6 Wochen-Reihen */
+        font-size: 13px;
     }
 
     .days-grid {
@@ -6333,8 +6397,9 @@ a.logo-compact:visited {
         padding: 3px 2px !important;
     }
 
+    /* Footer Links auf sehr kleinen Geräten (iPhone SE) verstecken */
     .footer-links {
-        margin-bottom: 60px;
+        display: none !important;
     }
 
     /* Footer - Stats bleiben gut lesbar */
@@ -6360,9 +6425,5 @@ a.logo-compact:visited {
         font-size: 13px;
         height: 36px;
         min-height: 36px;
-    }
-
-    .footer-links {
-        margin-bottom: 80px;
     }
 }
