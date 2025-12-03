@@ -40,6 +40,13 @@
 
                 <div class="header-spacer"></div>
 
+                <!-- MODULE 12: Theme Toggle -->
+                <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Theme wechseln">
+                    <span class="theme-icon sun">☀️</span>
+                    <span class="theme-icon moon">🌙</span>
+                    <span class="toggle-slider"></span>
+                </button>
+
                 <button id="share-header-btn" class="share-header-btn" onclick="openShareModal()" title="Urlaubsplanung teilen">
                     <span class="share-icon">🔗</span>
                 </button>
@@ -79,6 +86,8 @@
             <a href="datenschutz.html">Datenschutz</a>
             <span class="divider">|</span>
             <a href="kontakt.html">Kontakt</a>
+            <span class="divider">|</span>
+            <a href="reisetipps.html">Reisetipps</a>
 
             <!-- Social Media Links -->
             <div class="social-links">
@@ -225,6 +234,96 @@
             </div>
             <div class="workweek-actions">
                 <button id="confirm-workweek" class="confirm-workweek-btn">✓ Übernehmen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 11: ONBOARDING TUTORIAL -->
+    <div id="onboarding-overlay" class="onboarding-overlay hidden">
+        <div class="onboarding-backdrop"></div>
+        <div class="onboarding-card">
+            <button class="onboarding-close" onclick="skipOnboarding()" title="Tutorial überspringen">✕</button>
+
+            <div class="onboarding-progress">
+                <div class="progress-dots">
+                    <span class="progress-dot active" data-step="0"></span>
+                    <span class="progress-dot" data-step="1"></span>
+                    <span class="progress-dot" data-step="2"></span>
+                    <span class="progress-dot" data-step="3"></span>
+                    <span class="progress-dot" data-step="4"></span>
+                    <span class="progress-dot" data-step="5"></span>
+                </div>
+            </div>
+
+            <div class="onboarding-content">
+                <!-- Step 0: Willkommen -->
+                <div class="onboarding-step active" data-step="0">
+                    <div class="step-icon">🌴</div>
+                    <h2>Willkommen bei HolidayBoost!</h2>
+                    <p>Hol das Maximum aus deinen Urlaubstagen heraus! Wir zeigen dir, wie du mit cleveren Brückentagen mehr freie Zeit bekommst.</p>
+                </div>
+
+                <!-- Step 1: Bundesland mit Dropdown -->
+                <div class="onboarding-step" data-step="1">
+                    <div class="step-icon">📍</div>
+                    <h2>In welchem Bundesland arbeitest du?</h2>
+                    <p>Jedes Bundesland hat unterschiedliche Feiertage – Bayern hat z.B. mehr als Berlin. Wähle deins für passende Brückentage:</p>
+                    <div class="onboarding-select-wrapper">
+                        <select id="onboarding-state-select" class="onboarding-select">
+                            <option value="">Bundesland wählen...</option>
+                            <option value="BW">Baden-Württemberg</option>
+                            <option value="BY">Bayern</option>
+                            <option value="BE">Berlin</option>
+                            <option value="BB">Brandenburg</option>
+                            <option value="HB">Bremen</option>
+                            <option value="HH">Hamburg</option>
+                            <option value="HE">Hessen</option>
+                            <option value="MV">Mecklenburg-Vorpommern</option>
+                            <option value="NI">Niedersachsen</option>
+                            <option value="NW">Nordrhein-Westfalen</option>
+                            <option value="RP">Rheinland-Pfalz</option>
+                            <option value="SL">Saarland</option>
+                            <option value="SN">Sachsen</option>
+                            <option value="ST">Sachsen-Anhalt</option>
+                            <option value="SH">Schleswig-Holstein</option>
+                            <option value="TH">Thüringen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 2: Arbeitswoche -->
+                <div class="onboarding-step" data-step="2">
+                    <div class="step-icon">⚙️</div>
+                    <h2>Deine Arbeitswoche anpassen</h2>
+                    <p>Nicht jeder arbeitet Montag bis Freitag! Über das Zahnrad-Symbol ⚙️ oben kannst du einstellen, welche Tage du regulär frei hast – egal ob klassisches Wochenende oder z.B. Montag und Mittwoch.</p>
+                </div>
+
+                <!-- Step 3: Kalender -->
+                <div class="onboarding-step" data-step="3">
+                    <div class="step-icon">📅</div>
+                    <h2>Markiere deine Urlaubstage</h2>
+                    <p>Klicke einfach auf die Tage im Kalender, an denen du Urlaub nehmen möchtest. Feiertage und deine freien Tage werden automatisch berücksichtigt!</p>
+                </div>
+
+                <!-- Step 4: Empfehlungen & Statistiken -->
+                <div class="onboarding-step" data-step="4">
+                    <div class="step-icon">💡</div>
+                    <h2>Smarte Empfehlungen nutzen</h2>
+                    <p>Unten siehst du deine Statistiken: <strong>Urlaubstage</strong> (die du einsetzt), <strong>Freie Tage</strong> (die du bekommst) und die <strong>Effizienz</strong> (je höher, desto besser!).</p>
+                    <p class="step-hint">💡 Tipp: Klicke auf "Freie Tage" für eine Übersicht aller Urlaubsperioden!</p>
+                </div>
+
+                <!-- Step 5: Fertig -->
+                <div class="onboarding-step" data-step="5">
+                    <div class="step-icon">🚀</div>
+                    <h2>Bereit für mehr Urlaub!</h2>
+                    <p>Klicke auf <strong>„Empfehlungen"</strong> um die besten Brückentag-Kombinationen zu entdecken. So holst du aus wenigen Urlaubstagen das Maximum heraus!</p>
+                </div>
+            </div>
+
+            <div class="onboarding-actions">
+                <button class="onboarding-btn secondary" id="onboarding-skip" onclick="skipOnboarding()">Überspringen</button>
+                <button class="onboarding-btn primary" id="onboarding-next" onclick="nextOnboardingStep()">Weiter</button>
             </div>
         </div>
     </div>

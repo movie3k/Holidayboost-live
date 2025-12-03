@@ -832,8 +832,8 @@ function createMonthView(year, monthIndex) {
 
     for (let i = startDay - 1; i >= 0; i--) {
         const dayDiv = document.createElement('div');
-        dayDiv.className = 'day other-month';
-        dayDiv.textContent = daysInPrevMonth - i;
+        dayDiv.className = 'day empty-cell';
+        // Keine Zahl anzeigen - nur leerer Platzhalter für Grid-Layout
         daysDiv.appendChild(dayDiv);
     }
 
@@ -884,8 +884,8 @@ function createMonthView(year, monthIndex) {
 
     for (let day = 1; day <= remainingCells && remainingCells < 14; day++) {
         const dayDiv = document.createElement('div');
-        dayDiv.className = 'day other-month';
-        dayDiv.textContent = day;
+        dayDiv.className = 'day empty-cell';
+        // Keine Zahl anzeigen - nur leerer Platzhalter für Grid-Layout
         daysDiv.appendChild(dayDiv);
     }
 
@@ -4092,3 +4092,255 @@ function closeSchoolHolidaysHint() {
     hint.classList.remove('visible');
     setTimeout(() => hint.classList.add('hidden'), 400);
 }
+// ═══════════════════════════════════════════════════════════════════════════════
+// MODULE 11: ONBOARDING TUTORIAL (Einführung für neue Benutzer)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// 11.1. Onboarding State
+const OnboardingState = {
+    currentStep: 0,
+    totalSteps: 6,
+    isActive: false
+};
+
+// 11.2. Onboarding starten (beim ersten Besuch)
+function initOnboarding() {
+    // Prüfe ob Onboarding bereits abgeschlossen wurde
+    const onboardingCompleted = localStorage.getItem('holidayboost_onboarding_completed');
+    if (onboardingCompleted) return;
+
+    // Kleine Verzögerung, damit die Seite erst lädt
+    setTimeout(() => {
+        showOnboarding();
+    }, 500);
+}
+
+// 11.3. Onboarding anzeigen
+function showOnboarding() {
+    const overlay = document.getElementById('onboarding-overlay');
+    if (!overlay) return;
+
+    OnboardingState.isActive = true;
+    OnboardingState.currentStep = 0;
+
+    overlay.classList.remove('hidden');
+    setTimeout(() => overlay.classList.add('visible'), 10);
+
+    updateOnboardingStep();
+}
+
+// 11.4. Onboarding schließen/überspringen
+function skipOnboarding() {
+    const overlay = document.getElementById('onboarding-overlay');
+    if (!overlay) return;
+
+    OnboardingState.isActive = false;
+
+    overlay.classList.remove('visible');
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+    }, 300);
+
+    // Speichere dass Onboarding abgeschlossen wurde
+    localStorage.setItem('holidayboost_onboarding_completed', '1');
+}
+
+// 11.5. Nächster Schritt
+function nextOnboardingStep() {
+    OnboardingState.currentStep++;
+
+    if (OnboardingState.currentStep >= OnboardingState.totalSteps) {
+        // Onboarding abgeschlossen
+        skipOnboarding();
+        return;
+    }
+
+    updateOnboardingStep();
+}
+
+// 11.6. Vorheriger Schritt
+function prevOnboardingStep() {
+    if (OnboardingState.currentStep > 0) {
+        OnboardingState.currentStep--;
+        updateOnboardingStep();
+    }
+}
+
+// 11.7. Schritt aktualisieren
+function updateOnboardingStep() {
+    const steps = document.querySelectorAll('.onboarding-step');
+    const dots = document.querySelectorAll('.progress-dot');
+    const nextBtn = document.getElementById('onboarding-next');
+    const skipBtn = document.getElementById('onboarding-skip');
+
+    // Alle Steps ausblenden
+    steps.forEach((step, index) => {
+        step.classList.remove('active');
+        if (index === OnboardingState.currentStep) {
+            step.classList.add('active');
+        }
+    });
+
+    // Progress Dots aktualisieren
+    dots.forEach((dot, index) => {
+        dot.classList.remove('active', 'completed');
+        if (index === OnboardingState.currentStep) {
+            dot.classList.add('active');
+        } else if (index < OnboardingState.currentStep) {
+            dot.classList.add('completed');
+        }
+    });
+
+    // Button-Text anpassen
+    if (OnboardingState.currentStep === OnboardingState.totalSteps - 1) {
+        nextBtn.textContent = 'Starten';
+        skipBtn.style.display = 'none';
+    } else {
+        nextBtn.textContent = 'Weiter';
+        skipBtn.style.display = 'block';
+    }
+}
+
+// 11.8. Onboarding manuell zurücksetzen (für Debug/Test)
+function resetOnboarding() {
+    localStorage.removeItem('holidayboost_onboarding_completed');
+    console.log('Onboarding zurückgesetzt. Seite neu laden für Tutorial.');
+}
+
+// 11.9. Tastatur-Navigation für Onboarding
+document.addEventListener('keydown', function(e) {
+    if (!OnboardingState.isActive) return;
+
+    if (e.key === 'Escape') {
+        skipOnboarding();
+    } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        nextOnboardingStep();
+    } else if (e.key === 'ArrowLeft') {
+        prevOnboardingStep();
+    }
+});
+
+// 11.10. Bundesland-Auswahl im Onboarding synchronisieren
+function initOnboardingStateSelect() {
+    const onboardingSelect = document.getElementById('onboarding-state-select');
+    const mainSelect = document.getElementById('state-select');
+
+    if (!onboardingSelect || !mainSelect) return;
+
+    // Aktuellen Wert übernehmen
+    onboardingSelect.value = mainSelect.value;
+
+    // Bei Änderung im Onboarding: Hauptauswahl aktualisieren
+    onboardingSelect.addEventListener('change', function() {
+        if (this.value) {
+            mainSelect.value = this.value;
+            // Event auslösen damit die App reagiert
+            mainSelect.dispatchEvent(new Event('change'));
+        }
+    });
+}
+
+// 11.11. Initialisierung beim Seitenladen
+document.addEventListener('DOMContentLoaded', function() {
+    // Warte bis andere Module geladen sind
+    setTimeout(() => {
+        initOnboarding();
+        initOnboardingStateSelect();
+    }, 1000);
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MODULE 12: THEME TOGGLE (Light/Dark Mode)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// 12.1. Theme State
+const ThemeState = {
+    current: 'dark', // 'dark' oder 'light'
+    storageKey: 'holidayboost_theme'
+};
+
+// 12.2. Theme initialisieren
+function initTheme() {
+    // Prüfe gespeicherte Präferenz
+    const savedTheme = localStorage.getItem(ThemeState.storageKey);
+    
+    if (savedTheme) {
+        ThemeState.current = savedTheme;
+    } else {
+        // Prüfe System-Präferenz
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        ThemeState.current = prefersDark ? 'dark' : 'dark'; // Standard: Dark
+    }
+    
+    applyTheme(ThemeState.current);
+    updateToggleButton();
+}
+
+// 12.3. Theme anwenden
+function applyTheme(theme) {
+    const html = document.documentElement;
+    
+    if (theme === 'light') {
+        html.setAttribute('data-theme', 'light');
+    } else {
+        html.removeAttribute('data-theme');
+    }
+    
+    ThemeState.current = theme;
+}
+
+// 12.4. Theme umschalten
+function toggleTheme() {
+    const newTheme = ThemeState.current === 'dark' ? 'light' : 'dark';
+    
+    applyTheme(newTheme);
+    updateToggleButton();
+    
+    // Speichern
+    localStorage.setItem(ThemeState.storageKey, newTheme);
+    
+    // Kleine Animation für den Toggle
+    const toggle = document.getElementById('theme-toggle');
+    if (toggle) {
+        toggle.classList.add('switching');
+        setTimeout(() => toggle.classList.remove('switching'), 300);
+    }
+}
+
+// 12.5. Toggle-Button aktualisieren
+function updateToggleButton() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    
+    if (ThemeState.current === 'light') {
+        toggle.classList.add('light-mode');
+        toggle.title = 'Dark Mode aktivieren';
+    } else {
+        toggle.classList.remove('light-mode');
+        toggle.title = 'Light Mode aktivieren';
+    }
+}
+
+// 12.6. System-Präferenz Listener
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Nur anwenden wenn keine manuelle Präferenz gespeichert
+    if (!localStorage.getItem(ThemeState.storageKey)) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        applyTheme(newTheme);
+        updateToggleButton();
+    }
+});
+
+// 12.7. Theme beim Seitenladen initialisieren (früh, um Flackern zu vermeiden)
+(function() {
+    // Sofort ausführen, nicht auf DOMContentLoaded warten
+    const savedTheme = localStorage.getItem('holidayboost_theme');
+    if (savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+})();
+
+// Nach DOM geladen: Toggle-Button aktualisieren
+document.addEventListener('DOMContentLoaded', function() {
+    initTheme();
+});

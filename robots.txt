@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://holidayboost.de/sitemap.xml
