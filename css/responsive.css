@@ -2,6 +2,15 @@
    HolidayBoost Responsive Styles - All Media Queries
    ═══════════════════════════════════════════════════════════════════════════════ */
 
+/* Desktop: Header-Button verstecken, Footer-Button zeigen */
+.share-header-btn {
+    display: none;
+}
+
+.share-footer-btn {
+    display: flex;
+}
+
 /* Responsive Design - Calendar Grid */
 @media (max-width: 1400px) {
     .calendar-grid {
@@ -477,6 +486,15 @@
     /* ═══════════════════════════════════════════════════════════════════════════
        MOBILE HEADER FIX - Strukturiertes Layout für Smartphones
        ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* Mobile: Header-Button zeigen, Footer-Button verstecken */
+    .share-header-btn {
+        display: flex !important;
+    }
+
+    .share-footer-btn {
+        display: none !important;
+    }
 
     .compact-header {
         /* Header-Bild bis zum Rand - NOCH KOMPAKTER */
