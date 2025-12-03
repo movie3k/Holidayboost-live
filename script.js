@@ -400,10 +400,12 @@ function checkIfDayIsAlwaysFree(date) {
 function updateSummary() {
     const selectedDatesArray = Array.from(State.selectedDates).sort();
 
-    // Benötigte Urlaubstage = nur Arbeitstage zählen (ohne freie Tage wie Wochenenden)
+    // Benötigte Urlaubstage = nur ECHTE Arbeitstage zählen
+    // (ohne Wochenenden UND ohne Feiertage - denn diese sind sowieso frei!)
     State.vacationDays = selectedDatesArray.filter(dateStr => {
         const date = new Date(dateStr);
-        return !isRegularFreeDay(date);
+        // Prüfe ob es ein freier Tag ist (Wochenende ODER Feiertag)
+        return !checkIfDayIsAlwaysFree(date);
     }).length;
 
     // Effektive freie Tage berechnen
@@ -525,8 +527,12 @@ function calculateEffectiveFreeDays(selectedDates) {
     let totalEffectiveDays = 0;
     let currentBlock = [];
 
-    // Sortiere Daten
-    const sortedDates = selectedDates.map(d => new Date(d)).sort((a, b) => a - b);
+    // Sortiere Daten und normalisiere auf Mittag um DST-Probleme zu vermeiden
+    const sortedDates = selectedDates.map(d => {
+        const date = new Date(d);
+        date.setHours(12, 0, 0, 0);
+        return date;
+    }).sort((a, b) => a - b);
 
     for (let i = 0; i < sortedDates.length; i++) {
         const currentDate = sortedDates[i];
@@ -535,8 +541,6 @@ function calculateEffectiveFreeDays(selectedDates) {
             currentBlock = [currentDate];
         } else {
             const lastDate = currentBlock[currentBlock.length - 1];
-            const nextDay = new Date(lastDate);
-            nextDay.setDate(nextDay.getDate() + 1);
 
             // Prüfe ob Tage zusammenhängend sind (direkt aufeinander folgen oder durch freie Tage verbunden)
             if (isConnectedByFreeDays(lastDate, currentDate)) {
@@ -559,10 +563,15 @@ function calculateEffectiveFreeDays(selectedDates) {
 
 // Prüft ob zwei Daten durch freie Tage verbunden sind
 function isConnectedByFreeDays(startDate, endDate) {
+    // Normalisiere auf Mittag um DST-Probleme zu vermeiden
     let current = new Date(startDate);
+    current.setHours(12, 0, 0, 0);
     current.setDate(current.getDate() + 1);
 
-    while (current < endDate) {
+    const end = new Date(endDate);
+    end.setHours(12, 0, 0, 0);
+
+    while (current < end) {
         if (!checkIfDayIsAlwaysFree(current)) {
             return false; // Es gibt einen Werktag dazwischen
         }
@@ -576,8 +585,11 @@ function isConnectedByFreeDays(startDate, endDate) {
 function calculateBlockLength(block) {
     if (block.length === 0) return 0;
 
+    // WICHTIG: Setze Uhrzeit auf Mittag um DST-Probleme zu vermeiden
     const startDate = new Date(block[0]);
+    startDate.setHours(12, 0, 0, 0);
     const endDate = new Date(block[block.length - 1]);
+    endDate.setHours(12, 0, 0, 0);
 
     // Erweitere Block rückwärts um vorhergehende freie Tage
     let extendedStart = new Date(startDate);
@@ -595,9 +607,14 @@ function calculateBlockLength(block) {
     }
     extendedEnd.setDate(extendedEnd.getDate() - 1); // Einen Tag rückwärts, da letzter kein freier Tag war
 
+    // WICHTIG: Normalisiere auf Mittag NACH der Erweiterung um DST-Probleme zu vermeiden
+    // (März 28 kann CET sein, April 12 kann CEST sein - 1 Stunde Unterschied!)
+    extendedStart.setHours(12, 0, 0, 0);
+    extendedEnd.setHours(12, 0, 0, 0);
+
     // Berechne Anzahl Tage zwischen erweiterten Grenzen (inklusive)
     const timeDiff = extendedEnd.getTime() - extendedStart.getTime();
-    return Math.floor(timeDiff / (1000 * 3600 * 24)) + 1;
+    return Math.round(timeDiff / (1000 * 3600 * 24)) + 1;
 }
 
 // 2.5. updateUI - Zentrale UI-Update Funktion
@@ -1453,6 +1470,36 @@ function findBridgeOpportunity(holidayDate, year, stateId, cityId, direction) {
 }
 
 /**
+ * Findet Brückentage VOR einem Feiertag
+ * z.B. für Karfreitag (3. April): findet April 1-2 als Brückentage
+ * Diese verbinden den Feiertag mit der vorherigen Arbeitswoche
+ *
+ * WICHTIG: Gibt bis zu 4 Arbeitstage zurück (Mo-Do vor einem Fr-Feiertag)
+ * um maximale Effizienz bei erweiterten Perioden zu ermöglichen
+ */
+function findBridgeDaysBeforeHoliday(holidayDate, year, stateId, cityId) {
+    const bridgeDays = [];
+    let currentDate = new Date(holidayDate);
+    currentDate.setDate(currentDate.getDate() - 1); // Tag vor dem Feiertag
+
+    // Sammle Arbeitstage rückwärts (max 4 für erweiterte Perioden)
+    let safetyCounter = 0;
+    while (bridgeDays.length < 4 && safetyCounter < 10) {
+        if (isFreeDayInContext(currentDate, year, stateId, cityId)) {
+            // Freier Tag (Wochenende/Feiertag) - stoppen
+            break;
+        }
+        // Arbeitstag - potenzieller Brückentag
+        bridgeDays.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() - 1);
+        safetyCounter++;
+    }
+
+    // Chronologisch sortieren (ältestes Datum zuerst)
+    return bridgeDays.sort((a, b) => a - b);
+}
+
+/**
  * Zählt die Kalendertage zwischen zwei Daten (inklusive beide Enden)
  * Robuste Methode die DST-Probleme vermeidet
  */
@@ -1714,7 +1761,8 @@ function generateExtendedPeriods(bridgeOpportunities, holidays, year, stateId, c
             currentGroup.push(holiday);
         } else {
             const lastInGroup = currentGroup[currentGroup.length - 1];
-            const daysBetween = Math.floor((holiday.date - lastInGroup.date) / (1000 * 60 * 60 * 24));
+            // DST-sicher: Math.round statt Math.floor für 1-Stunden-Unterschied
+            const daysBetween = Math.round((holiday.date - lastInGroup.date) / (1000 * 60 * 60 * 24));
 
             // Innerhalb von 7 Tagen = gleiche Gruppe (z.B. Karfreitag + Ostermontag)
             if (daysBetween <= 7) {
@@ -1737,16 +1785,23 @@ function generateExtendedPeriods(bridgeOpportunities, holidays, year, stateId, c
         if (minDays >= CATEGORY_16_MIN) {
             // ===== KATEGORIE 16+ TAGE (MEGA-URLAUB) =====
             // Strategie: Erweitere jede Feiertags-Gruppe großzügig auf 16-30 Tage
-            // FIX: Berechne zuerst Urlaubstage, dann erweitere vom ersten/letzten Urlaubstag
+            // VERBESSERUNG: Erweitere sowohl RÜCKWÄRTS als auch VORWÄRTS für beste Effizienz
 
             // 1. Temporäre Periode basierend auf Feiertagen
             let tempStart = new Date(firstHoliday.date);
             let tempEnd = new Date(lastHoliday.date);
 
-            // 2. Berechne notwendige Urlaubstage zwischen Feiertagen
+            // 2. WICHTIG: Prüfe auf Brückentag-Möglichkeit VOR dem ersten Feiertag
+            const bridgeBeforeFirst = findBridgeDaysBeforeHoliday(firstHoliday.date, year, stateId, cityId);
+            if (bridgeBeforeFirst.length > 0) {
+                const earliestBridge = new Date(Math.min(...bridgeBeforeFirst.map(d => d.getTime())));
+                tempStart = earliestBridge;
+            }
+
+            // 3. Berechne notwendige Urlaubstage (jetzt inkl. Brückentage VOR Feiertag)
             let vacationDays = calculateVacationDaysInPeriod(tempStart, tempEnd, year, stateId, cityId);
 
-            // 3. Wenn keine Urlaubstage gefunden, erweitere um eine Woche
+            // 4. Wenn keine Urlaubstage gefunden, erweitere um eine Woche
             let safetyCounter = 0;
             while (vacationDays.length === 0 && safetyCounter < 4) {
                 tempEnd.setDate(tempEnd.getDate() + 7);
@@ -1756,12 +1811,12 @@ function generateExtendedPeriods(bridgeOpportunities, holidays, year, stateId, c
 
             if (vacationDays.length === 0) continue; // Keine Urlaubstage gefunden
 
-            // 4. Sortiere Urlaubstage und finde ersten/letzten
+            // 5. Sortiere Urlaubstage und finde ersten/letzten
             const sortedVacationDates = [...vacationDays].sort();
             const firstVacationDay = new Date(sortedVacationDates[0]);
             const lastVacationDay = new Date(sortedVacationDates[sortedVacationDates.length - 1]);
 
-            // 5. KORREKT: Erweitere vom ersten/letzten URLAUBSTAG (wie Footer)
+            // 6. KORREKT: Erweitere vom ersten/letzten URLAUBSTAG (wie Footer)
             let periodStart = extendPeriodBackward(firstVacationDay, year, stateId, cityId);
             let periodEnd = extendPeriodForward(lastVacationDay, year, stateId, cityId);
 
@@ -1833,16 +1888,25 @@ function generateExtendedPeriods(bridgeOpportunities, holidays, year, stateId, c
         } else {
             // ===== KATEGORIE 9-15 TAGE =====
             // Ziel: 9-15 freie Tage
-            // FIX: Berechne zuerst Urlaubstage, dann erweitere vom ersten/letzten Urlaubstag
+            // VERBESSERUNG: Erweitere sowohl RÜCKWÄRTS als auch VORWÄRTS für beste Effizienz
 
             // 1. Temporäre Periode basierend auf Feiertagen
             let tempStart = new Date(firstHoliday.date);
             let tempEnd = new Date(lastHoliday.date);
 
-            // 2. Berechne notwendige Urlaubstage zwischen Feiertagen
+            // 2. WICHTIG: Prüfe auf Brückentag-Möglichkeit VOR dem ersten Feiertag
+            // (z.B. April 1-2 vor Karfreitag für Ostern)
+            const bridgeBeforeFirst = findBridgeDaysBeforeHoliday(firstHoliday.date, year, stateId, cityId);
+            if (bridgeBeforeFirst.length > 0) {
+                // Erweitere tempStart um die Brückentage vor dem Feiertag
+                const earliestBridge = new Date(Math.min(...bridgeBeforeFirst.map(d => d.getTime())));
+                tempStart = earliestBridge;
+            }
+
+            // 3. Berechne notwendige Urlaubstage (jetzt inkl. Brückentage VOR Feiertag)
             let vacationDays = calculateVacationDaysInPeriod(tempStart, tempEnd, year, stateId, cityId);
 
-            // 3. Wenn keine Urlaubstage gefunden, erweitere um eine Woche
+            // 4. Wenn keine Urlaubstage gefunden, erweitere nach hinten
             let safetyCounter = 0;
             while (vacationDays.length === 0 && safetyCounter < 4) {
                 tempEnd.setDate(tempEnd.getDate() + 7);
@@ -1852,12 +1916,12 @@ function generateExtendedPeriods(bridgeOpportunities, holidays, year, stateId, c
 
             if (vacationDays.length === 0) continue; // Keine Urlaubstage gefunden
 
-            // 4. Sortiere Urlaubstage und finde ersten/letzten
+            // 5. Sortiere Urlaubstage und finde ersten/letzten
             const sortedVacationDates = [...vacationDays].sort();
             const firstVacationDay = new Date(sortedVacationDates[0]);
             const lastVacationDay = new Date(sortedVacationDates[sortedVacationDates.length - 1]);
 
-            // 5. KORREKT: Erweitere vom ersten/letzten URLAUBSTAG (wie Footer)
+            // 6. KORREKT: Erweitere vom ersten/letzten URLAUBSTAG (wie Footer)
             let periodStart = extendPeriodBackward(firstVacationDay, year, stateId, cityId);
             let periodEnd = extendPeriodForward(lastVacationDay, year, stateId, cityId);
 
@@ -2237,6 +2301,8 @@ function openRecommendationsModal() {
 function closeRecommendationsModal() {
     const modal = document.getElementById('recommendations-modal');
     modal.classList.add('hidden');
+    // Footer-Preview zurücksetzen wenn Modal ohne Speichern geschlossen wird
+    resetMainFooterPreview();
 }
 
 function renderModalRecommendationCards() {
@@ -2483,11 +2549,14 @@ function updateSelectionSummary() {
         }
     }
 
-    // Update display
+    // Update Modal display
     if (totalVacationDaysEl) totalVacationDaysEl.textContent = totalVacationDays;
     if (totalFreeDaysEl) totalFreeDaysEl.textContent = totalFreeDays;
     if (totalEfficiencyEl) totalEfficiencyEl.textContent =
         totalVacationDays > 0 ? (totalFreeDays / totalVacationDays).toFixed(1) + 'x' : '0.0x';
+
+    // PREVIEW: Aktualisiere auch den Haupt-Footer mit der Auswahl
+    updateMainFooterPreview(allSelectedDates, totalVacationDays, totalFreeDays);
 
     // Enable/disable apply button
     if (applyButton) {
@@ -2503,6 +2572,37 @@ function updateSelectionSummary() {
             clearButton.classList.remove('active');
         }
     }
+}
+
+// PREVIEW: Aktualisiert den Haupt-Footer während Empfehlungen ausgewählt werden
+function updateMainFooterPreview(selectedDatesSet, totalVacationDays, totalFreeDays) {
+    const vacationDaysEl = document.getElementById('vacation-days');
+    const effectiveDaysEl = document.getElementById('effective-days');
+    const efficiencyEl = document.getElementById('efficiency-display');
+    const footerEl = document.querySelector('.sticky-footer');
+
+    if (selectedDatesSet.size > 0) {
+        // Zeige Preview der Auswahl
+        if (vacationDaysEl) vacationDaysEl.textContent = totalVacationDays;
+        if (effectiveDaysEl) effectiveDaysEl.textContent = totalFreeDays;
+        if (efficiencyEl) {
+            const eff = totalVacationDays > 0 ? (totalFreeDays / totalVacationDays).toFixed(1) : '0.0';
+            efficiencyEl.textContent = eff + 'x';
+        }
+        // Footer visuell als Preview markieren
+        if (footerEl) footerEl.classList.add('preview-mode');
+    } else {
+        // Zurück zur normalen Anzeige
+        updateSummary();
+        if (footerEl) footerEl.classList.remove('preview-mode');
+    }
+}
+
+// Setzt Footer zurück wenn Modal geschlossen wird ohne zu speichern
+function resetMainFooterPreview() {
+    const footerEl = document.querySelector('.sticky-footer');
+    if (footerEl) footerEl.classList.remove('preview-mode');
+    updateSummary();
 }
 
 function applySelectedRecommendations() {
@@ -2667,6 +2767,10 @@ function getVacationPeriods() {
         }
         extendedEnd.setDate(extendedEnd.getDate() - 1);
 
+        // WICHTIG: Normalisiere auf Mittag um DST-Probleme zu vermeiden
+        extendedStart.setHours(12, 0, 0, 0);
+        extendedEnd.setHours(12, 0, 0, 0);
+
         const timeDiff = extendedEnd.getTime() - extendedStart.getTime();
         const totalDays = Math.round(timeDiff / (1000 * 60 * 60 * 24)) + 1;
 
@@ -2756,49 +2860,301 @@ function decompressDate(short) {
     return `20${short.slice(0,2)}-${short.slice(2,4)}-${short.slice(4,6)}`;
 }
 
-// 9.1.3. Komprimierte Daten kodieren (Version 2)
+// 9.1.3. Date-Range Kompression für V3 (VIEL kürzere URLs!)
+// Gruppiert aufeinanderfolgende Tage zu Ranges: [3,4,5,7,8] → "3-5,7-8"
+function compressDatesToRanges(sortedIsoDates) {
+    if (sortedIsoDates.length === 0) return '';
+
+    const ranges = [];
+    let rangeStart = sortedIsoDates[0];
+    let rangeEnd = sortedIsoDates[0];
+
+    for (let i = 1; i < sortedIsoDates.length; i++) {
+        const currentDate = new Date(sortedIsoDates[i]);
+        const prevDate = new Date(rangeEnd);
+
+        // Prüfe ob aufeinanderfolgend (1 Tag Differenz)
+        const diffDays = Math.round((currentDate - prevDate) / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) {
+            // Erweitere Range
+            rangeEnd = sortedIsoDates[i];
+        } else {
+            // Speichere bisherige Range und starte neue
+            if (rangeStart === rangeEnd) {
+                ranges.push(compressDate(rangeStart));
+            } else {
+                ranges.push(compressDate(rangeStart) + '-' + compressDate(rangeEnd));
+            }
+            rangeStart = sortedIsoDates[i];
+            rangeEnd = sortedIsoDates[i];
+        }
+    }
+
+    // Letzte Range speichern
+    if (rangeStart === rangeEnd) {
+        ranges.push(compressDate(rangeStart));
+    } else {
+        ranges.push(compressDate(rangeStart) + '-' + compressDate(rangeEnd));
+    }
+
+    return ranges.join(',');
+}
+
+// Dekomprimiert Ranges zurück zu einzelnen Daten
+function decompressRangesToDates(rangeStr) {
+    if (!rangeStr) return [];
+
+    const dates = [];
+    const parts = rangeStr.split(',');
+
+    for (const part of parts) {
+        if (part.includes('-')) {
+            // Range: "250403-250407"
+            const [startStr, endStr] = part.split('-');
+            const startDate = new Date(decompressDate(startStr));
+            const endDate = new Date(decompressDate(endStr));
+
+            // Alle Tage in der Range hinzufügen
+            const current = new Date(startDate);
+            while (current <= endDate) {
+                dates.push(current.toISOString().split('T')[0]);
+                current.setDate(current.getDate() + 1);
+            }
+        } else {
+            // Einzelnes Datum: "250414"
+            dates.push(decompressDate(part));
+        }
+    }
+
+    return dates;
+}
+
+// 9.1.4. Komprimierte Daten kodieren V2 (Legacy - für Rückwärtskompatibilität)
 function encodeSelectionV2() {
     const dates = Array.from(State.selectedDates).sort().map(compressDate);
-    // Sichere Konvertierung der freeDays (kann Set oder Array sein)
     let freeDaysArray;
     if (State.freeDays instanceof Set) {
         freeDaysArray = Array.from(State.freeDays).sort();
     } else if (Array.isArray(State.freeDays)) {
         freeDaysArray = State.freeDays;
     } else {
-        freeDaysArray = [0, 6]; // Default
+        freeDaysArray = [0, 6];
     }
     const data = {
-        v: 2, // Version für Rückwärtskompatibilität
+        v: 2,
         y: State.selectedYear,
         s: State.selectedStateId,
         c: State.selectedCityId || '',
-        d: dates.join(','), // Komma-separiert statt Array
-        f: freeDaysArray.join('') // [0,6] → "06"
+        d: dates.join(','),
+        f: freeDaysArray.join('')
     };
-
     const jsonStr = JSON.stringify(data);
     return base64UrlEncode(encodeURIComponent(jsonStr));
 }
 
-// 9.1.4. Dekodieren (unterstützt V1 und V2)
+// 9.1.5. Komprimierte Daten kodieren V3 (mit Date-Ranges - Legacy)
+function encodeSelectionV3() {
+    const sortedDates = Array.from(State.selectedDates).sort();
+    let freeDaysArray;
+    if (State.freeDays instanceof Set) {
+        freeDaysArray = Array.from(State.freeDays).sort();
+    } else if (Array.isArray(State.freeDays)) {
+        freeDaysArray = State.freeDays;
+    } else {
+        freeDaysArray = [0, 6];
+    }
+    const data = {
+        v: 3,
+        y: State.selectedYear,
+        s: State.selectedStateId,
+        c: State.selectedCityId || '',
+        d: compressDatesToRanges(sortedDates),
+        f: freeDaysArray.join('')
+    };
+    const jsonStr = JSON.stringify(data);
+    return base64UrlEncode(encodeURIComponent(jsonStr));
+}
+
+// 9.1.6. Komprimierte Daten kodieren V4 (Pipe-Format - Legacy)
+function encodeSelectionV4() {
+    const sortedDates = Array.from(State.selectedDates).sort();
+    let freeDaysArray;
+    if (State.freeDays instanceof Set) {
+        freeDaysArray = Array.from(State.freeDays).sort();
+    } else if (Array.isArray(State.freeDays)) {
+        freeDaysArray = State.freeDays;
+    } else {
+        freeDaysArray = [0, 6];
+    }
+    const year2 = String(State.selectedYear).slice(2);
+    const parts = ['4', year2, State.selectedStateId, State.selectedCityId || '',
+                   compressDatesToRanges(sortedDates), freeDaysArray.join('')];
+    return base64UrlEncode(parts.join('|'));
+}
+
+// Bundesland-Mapping für V5 (kürzer)
+const STATE_TO_NUM = {BW:0,BY:1,BE:2,BB:3,HB:4,HH:5,HE:6,MV:7,NI:8,NW:9,RP:'a',SL:'b',SN:'c',ST:'d',SH:'e',TH:'f'};
+const NUM_TO_STATE = {0:'BW',1:'BY',2:'BE',3:'BB',4:'HB',5:'HH',6:'HE',7:'MV',8:'NI',9:'NW',a:'RP',b:'SL',c:'SN',d:'ST',e:'SH',f:'TH'};
+
+// Komprimiere Ranges ohne Jahr-Präfix (nur MMTT)
+function compressRangesShort(sortedIsoDates, baseYear) {
+    if (sortedIsoDates.length === 0) return '';
+    const ranges = [];
+    let rangeStart = sortedIsoDates[0];
+    let rangeEnd = sortedIsoDates[0];
+
+    for (let i = 1; i < sortedIsoDates.length; i++) {
+        const currentDate = new Date(sortedIsoDates[i]);
+        const prevDate = new Date(rangeEnd);
+        const diffDays = Math.round((currentDate - prevDate) / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+            rangeEnd = sortedIsoDates[i];
+        } else {
+            ranges.push(formatRangeShort(rangeStart, rangeEnd, baseYear));
+            rangeStart = sortedIsoDates[i];
+            rangeEnd = sortedIsoDates[i];
+        }
+    }
+    ranges.push(formatRangeShort(rangeStart, rangeEnd, baseYear));
+    return ranges.join(',');
+}
+
+// Format: MMTT oder MMTT-MMTT, mit Jahr-Präfix wenn nötig
+function formatRangeShort(start, end, baseYear) {
+    const startShort = formatDateShort(start, baseYear);
+    if (start === end) return startShort;
+    const endShort = formatDateShort(end, baseYear);
+    return startShort + '-' + endShort;
+}
+
+function formatDateShort(isoDate, baseYear) {
+    const year = parseInt(isoDate.slice(0, 4));
+    const mmtt = isoDate.slice(5, 7) + isoDate.slice(8, 10); // "04-03" → "0403"
+    // Wenn anderes Jahr, Präfix hinzufügen: "27:0102"
+    if (year !== baseYear) {
+        return (year % 100) + ':' + mmtt;
+    }
+    return mmtt;
+}
+
+// Dekomprimiere kurze Ranges zurück zu ISO-Daten
+function decompressRangesShort(rangeStr, baseYear) {
+    if (!rangeStr) return [];
+    const dates = [];
+    const parts = rangeStr.split(',');
+
+    for (const part of parts) {
+        if (part.includes('-')) {
+            const [startStr, endStr] = part.split('-');
+            const startDateStr = parseShortDate(startStr, baseYear);
+            const endDateStr = parseShortDate(endStr, baseYear);
+            const current = new Date(startDateStr);
+            const end = new Date(endDateStr); // FIX: Auch zu Date konvertieren!
+            current.setHours(12, 0, 0, 0); // DST-Fix
+            end.setHours(12, 0, 0, 0);
+            while (current <= end) {
+                dates.push(current.toISOString().split('T')[0]);
+                current.setDate(current.getDate() + 1);
+            }
+        } else {
+            dates.push(parseShortDate(part, baseYear));
+        }
+    }
+    return dates;
+}
+
+function parseShortDate(shortDate, baseYear) {
+    let year = baseYear;
+    let mmtt = shortDate;
+    // Check für Jahr-Präfix: "27:0102"
+    if (shortDate.includes(':')) {
+        const [y, d] = shortDate.split(':');
+        year = 2000 + parseInt(y);
+        mmtt = d;
+    }
+    const month = mmtt.slice(0, 2);
+    const day = mmtt.slice(2, 4);
+    return `${year}-${month}-${day}`;
+}
+
+// 9.1.7. Komprimierte Daten kodieren V5 (ULTRA-KURZ!)
+// Format: "5|JJ|S|RANGES" - Jahr in Daten weggelassen, State als 1 Zeichen, FreeDays nur wenn nicht Standard
+// Beispiel: "5|26|a|0209-0213,0515" statt "4|26|RP||260209-260213,260515|06"
+function encodeSelectionV5() {
+    const sortedDates = Array.from(State.selectedDates).sort();
+    const year = State.selectedYear;
+    const year2 = String(year).slice(2);
+
+    // Bundesland als 1 Zeichen (hex: 0-f)
+    const stateNum = STATE_TO_NUM[State.selectedStateId] ?? State.selectedStateId;
+
+    // FreeDays nur wenn nicht Standard (06)
+    let freeDaysArray;
+    if (State.freeDays instanceof Set) {
+        freeDaysArray = Array.from(State.freeDays).sort();
+    } else if (Array.isArray(State.freeDays)) {
+        freeDaysArray = State.freeDays;
+    } else {
+        freeDaysArray = [0, 6];
+    }
+    const isDefaultFreeDays = freeDaysArray.length === 2 && freeDaysArray[0] === 0 && freeDaysArray[1] === 6;
+
+    // Kompakte Ranges ohne Jahr
+    const ranges = compressRangesShort(sortedDates, year);
+
+    // Format: 5|JJ|S|C|RANGES|F (F nur wenn nicht default)
+    let result = `5|${year2}|${stateNum}|${State.selectedCityId || ''}|${ranges}`;
+    if (!isDefaultFreeDays) {
+        result += '|' + freeDaysArray.join('');
+    }
+
+    return base64UrlEncode(result);
+}
+
+// 9.1.8. Dekodieren (unterstützt V1, V2, V3, V4 und V5)
 function decodeSelection(encoded) {
     try {
-        // V2 Format (URL-safe Base64)
-        const decoded = decodeURIComponent(base64UrlDecode(encoded));
-        const data = JSON.parse(decoded);
+        const decoded = base64UrlDecode(encoded);
+
+        // V5: Ultra-Kurz-Format (startet mit "5|")
+        if (decoded.startsWith('5|')) {
+            const parts = decoded.split('|');
+            // Format: 5|JJ|S|CITY|RANGES|F (F optional)
+            const year = parseInt('20' + parts[1]);
+            const stateNum = parts[2];
+            const state = NUM_TO_STATE[stateNum] || stateNum; // Hex zurück zu State-Code
+            const city = parts[3] || '';
+            const dates = decompressRangesShort(parts[4], year);
+            const freeDays = parts[5] ? parts[5].split('').map(Number) : [0, 6];
+            return { y: year, s: state, c: city, d: dates, f: freeDays };
+        }
+
+        // V4: Pipe-Format (startet mit "4|")
+        if (decoded.startsWith('4|')) {
+            const parts = decoded.split('|');
+            const year = parseInt('20' + parts[1]);
+            const state = parts[2];
+            const city = parts[3] || '';
+            const dates = decompressRangesToDates(parts[4]);
+            const freeDays = parts[5] ? parts[5].split('').map(Number) : [0, 6];
+            return { y: year, s: state, c: city, d: dates, f: freeDays };
+        }
+
+        // V2/V3: JSON-Format
+        const jsonDecoded = decodeURIComponent(decoded);
+        const data = JSON.parse(jsonDecoded);
+
+        if (data.v === 3) {
+            const dates = decompressRangesToDates(data.d);
+            const freeDays = data.f ? data.f.split('').map(Number) : [0, 6];
+            return { y: data.y, s: data.s, c: data.c || '', d: dates, f: freeDays };
+        }
 
         if (data.v === 2) {
-            // V2: Dekomprimiere Daten mit Sicherheitschecks
             const dates = data.d ? data.d.split(',').map(decompressDate) : [];
             const freeDays = data.f ? data.f.split('').map(Number) : [0, 6];
-            return {
-                y: data.y,
-                s: data.s,
-                c: data.c || '',
-                d: dates,
-                f: freeDays
-            };
+            return { y: data.y, s: data.s, c: data.c || '', d: dates, f: freeDays };
         }
 
         // V1: Direkt verwenden
@@ -2815,14 +3171,14 @@ function decodeSelection(encoded) {
     }
 }
 
-// 9.2. Auswahl in URL-Parameter kodieren (verwendet jetzt V2 Format)
+// 9.2. Auswahl in URL-Parameter kodieren (verwendet jetzt V5 - ULTRA-KURZ!)
 function encodeSelectionToURL() {
-    const encoded = encodeSelectionV2();
+    const encoded = encodeSelectionV5(); // V5 Ultra-Kurz-Format!
     const baseURL = window.location.origin + window.location.pathname;
-    return `${baseURL}?s=${encoded}`; // Kurzer Parameter-Name für kürzere URLs
+    return `${baseURL}?s=${encoded}`;
 }
 
-// 9.3. URL-Parameter beim Laden auswerten (unterstützt V1 und V2 Format)
+// 9.3. URL-Parameter beim Laden auswerten (unterstützt V1-V5 Format)
 function loadFromSharedURL() {
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -3141,20 +3497,20 @@ function showShareNotification(message) {
     }, 2500);
 }
 
-// 9.15. Teilen-Button zum Footer hinzufügen
+// 9.15. Teilen-Button zum Header hinzufügen (Mobile: oben rechts neben Reisetipps)
 function initShareModule() {
-    // Button neben dem Empfehlungen-Button hinzufügen
-    const recommendationsBtn = document.getElementById('open-recommendations-modal');
-    if (recommendationsBtn && !document.getElementById('share-btn')) {
+    // Button nach dem Reisetipps-Button im Header einfügen
+    const travelTipsBtn = document.getElementById('travel-tips-btn');
+    if (travelTipsBtn && !document.getElementById('share-header-btn')) {
         const shareBtn = document.createElement('button');
-        shareBtn.id = 'share-btn';
-        shareBtn.className = 'share-footer-btn';
-        shareBtn.innerHTML = '<span class="share-btn-icon">🔗</span><span class="share-btn-text">Teilen</span>';
+        shareBtn.id = 'share-header-btn';
+        shareBtn.className = 'share-header-btn';
+        shareBtn.innerHTML = '🔗';
         shareBtn.onclick = openShareModal;
-        shareBtn.title = 'Auswahl teilen oder exportieren';
+        shareBtn.title = 'Urlaubsplanung teilen';
 
-        // Nach dem Empfehlungen-Button einfügen
-        recommendationsBtn.parentNode.insertBefore(shareBtn, recommendationsBtn.nextSibling);
+        // Nach dem Reisetipps-Button einfügen
+        travelTipsBtn.parentNode.insertBefore(shareBtn, travelTipsBtn.nextSibling);
     }
 
     // Prüfe auf geteilten Link beim Laden

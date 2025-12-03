@@ -1,0 +1,866 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Responsive Styles - All Media Queries
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Responsive Design - Calendar Grid */
+@media (max-width: 1400px) {
+    .calendar-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1300px;
+        gap: 28px;
+        padding: 35px;
+    }
+
+    .month-view:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 1100px) {
+    .calendar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
+        gap: 24px;
+        padding: 20px;
+    }
+
+    .month-view:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+/* Tablet & Mobile - Verhindert horizontales Scrollen */
+@media (max-width: 1024px) {
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    .compact-header,
+    .sticky-footer-new,
+    .recommendations-modal {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .container {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Header kompakter für Tablets */
+    .compact-header {
+        padding: 12px 15px;
+    }
+
+    .header-row {
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    .travel-tips-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    .travel-tips-btn .travel-tips-text {
+        display: inline;
+    }
+
+    .controls-compact select {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+}
+
+/* 5. RESPONSIVE ANPASSUNGEN - Tablets */
+@media (max-width: 900px) {
+    .header-row {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo-compact {
+        order: 1;
+    }
+
+    .admin-link {
+        order: 2;
+    }
+
+    .controls-compact {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+    }
+
+    .controls-compact select {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .legend-compact {
+        gap: 12px;
+        padding: 8px 12px;
+    }
+
+    .legend-compact .legend-item {
+        font-size: 10px;
+    }
+
+    .legend-compact .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .sticky-footer-new {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px 15px;
+    }
+
+    .footer-stats {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .stat-box {
+        padding: 6px 12px;
+        min-width: 70px;
+    }
+
+    .stat-number {
+        font-size: 20px;
+    }
+
+    .stat-label {
+        font-size: 9px;
+    }
+
+    .recommendations-btn {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .calendar-main {
+        padding: 10px;
+        padding-bottom: 150px;
+    }
+
+    .month-view {
+        border-radius: 16px;
+    }
+
+    .month-header {
+        padding: 16px;
+    }
+}
+
+/* Mobile Header */
+@media (max-width: 768px) {
+    .new-header {
+        padding: 30px 20px;
+        border-radius: 0 0 24px 24px;
+    }
+
+    .header-top {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .logo-section {
+        gap: 15px;
+    }
+
+    .logo {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+
+    .brand-text h1 {
+        font-size: 24px;
+    }
+
+    .brand-text p {
+        font-size: 14px;
+    }
+
+    .calendar-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .hero-section {
+        margin: 30px auto;
+        padding: 30px 15px;
+        border-radius: 20px;
+    }
+
+    .hero-section h2 {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .hero-section p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .calendar-controls {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+
+    .calendar-controls h3 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .controls-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .section-divider {
+        height: 40px;
+    }
+
+    /* Travel Tips Responsive */
+    .travel-tips-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .travel-tips-btn .travel-tips-text {
+        display: none;
+    }
+
+    .travel-tips-icon {
+        font-size: 20px;
+    }
+
+    .travel-destinations {
+        grid-template-columns: 1fr;
+        max-height: 35vh;
+    }
+
+    .affiliate-links {
+        flex-direction: column;
+    }
+
+    .affiliate-link {
+        justify-content: center;
+    }
+
+    .travel-tips-page {
+        padding: 90px 15px 30px;
+    }
+
+    .travel-tips-page .page-header h1 {
+        font-size: 24px;
+    }
+
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .month-filter {
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .month-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .affiliate-buttons {
+        flex-direction: column;
+    }
+
+    .affiliate-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .period-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .period-header h4 {
+        font-size: 14px;
+    }
+
+    /* Subpages Responsive */
+    .about-content {
+        padding: 20px 15px;
+    }
+
+    .about-article {
+        padding: 25px 20px;
+    }
+
+    .about-article h1 {
+        font-size: 24px;
+    }
+
+    .about-section h2 {
+        font-size: 18px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .contact-title {
+        font-size: 26px;
+    }
+
+    .contact-branding {
+        margin-top: 20px;
+    }
+
+    /* Modals Responsive */
+    .recommendation-cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendations-cards-section {
+        padding: 30px 15px;
+    }
+}
+
+@media (max-width: 650px) {
+    .calendar-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        gap: 20px;
+        padding: 25px;
+    }
+
+    .month-view:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .day {
+        font-size: 14px;
+        min-height: 36px;
+        aspect-ratio: auto;
+    }
+
+    .day[data-holiday]:after {
+        font-size: 11px;
+        padding: 8px 12px;
+        min-width: 100px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 600px) {
+    .summary {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .container {
+        padding: 15px;
+        padding-bottom: 140px;
+    }
+
+    .new-header {
+        padding: 25px 15px;
+        margin-bottom: 0;
+    }
+
+    .header-top {
+        margin-bottom: 20px;
+    }
+
+    .logo-section {
+        gap: 12px;
+    }
+
+    .brand-text h1 {
+        font-size: 22px;
+    }
+
+    .hero-section {
+        margin: 20px auto;
+        padding: 25px 15px;
+    }
+
+    .hero-section h2 {
+        font-size: 24px;
+    }
+
+    .hero-section p {
+        font-size: 14px;
+    }
+
+    .calendar-controls {
+        padding: 20px 15px;
+    }
+
+    .calendar-controls h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .dropdown-group {
+        align-items: stretch;
+    }
+
+    .app-header {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .app-header h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .day {
+        font-size: 12px;
+    }
+
+    .sticky-footer {
+        padding: 20px 15px;
+    }
+
+    .value {
+        font-size: 24px;
+    }
+
+    .recommendations-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .recommendation-card {
+        padding: 20px;
+    }
+
+    .section-divider {
+        height: 30px;
+    }
+
+    .nav-popup-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .nav-popup-month {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* ═══════════════════════════════════════════════════════════════════════════
+       MOBILE HEADER FIX - Strukturiertes Layout für Smartphones
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    .compact-header {
+        /* Header-Bild bis zum Rand - NOCH KOMPAKTER */
+        padding: 4px 12px 6px 12px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        box-sizing: border-box;
+    }
+
+    .header-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 0 10px;
+        position: relative;
+    }
+
+    /* Reisetipps LINKS, Teilen RECHTS oben */
+    .travel-tips-btn,
+    .share-header-btn {
+        position: absolute;
+        top: 0;
+        z-index: 10;
+    }
+
+    /* Reisetipps LINKS oben */
+    .travel-tips-btn {
+        left: 10px;
+        right: auto;
+        padding: 6px 10px;
+        font-size: 14px;
+        order: unset;
+    }
+
+    .travel-tips-btn .travel-tips-text {
+        display: none;
+    }
+
+    /* Teilen RECHTS oben - LILA */
+    .share-header-btn {
+        right: 10px;
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        border: none;
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .share-header-btn:hover {
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        transform: scale(1.05);
+    }
+
+    /* Logo zentriert + GRÖSSER */
+    .logo-compact {
+        order: 1;
+        justify-content: center;
+        flex: none;
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .logo-img {
+        height: 50px;
+    }
+
+    .logo-text {
+        font-size: 22px;
+    }
+
+    /* Controls in einer Reihe, zentriert */
+    .controls-compact {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .controls-compact select {
+        font-size: 12px;
+        padding: 8px 10px;
+        min-width: 70px;
+        flex: 1;
+        max-width: 120px;
+    }
+
+    /* Buttons kleiner */
+    .btn-clear,
+    .btn-settings {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    /* Ferien-Button kompakter */
+    .btn-school-holidays-pill {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 11px;
+    }
+
+    /* Legende - GROSS UND SICHTBAR */
+    .legend-compact {
+        margin-top: 6px;
+        padding: 10px 16px;
+        gap: 14px;
+        background: rgba(10, 22, 40, 0.85) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .legend-compact .legend-item {
+        font-size: 12px !important;
+        color: #ffffff !important;
+        font-weight: 500;
+        gap: 6px;
+    }
+
+    .legend-compact .dot {
+        width: 14px !important;
+        height: 14px !important;
+        border-radius: 4px;
+    }
+
+    /* Workweek Popup Mobile */
+    .workweek-popup-content {
+        padding: 20px;
+    }
+
+    .workweek-days {
+        gap: 6px;
+    }
+
+    .day-label {
+        width: 38px;
+        height: 38px;
+        font-size: 11px;
+    }
+
+    .preset-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    /* Booking Buttons Mobile */
+    .booking-buttons {
+        flex-direction: column;
+    }
+
+    .booking-btn {
+        justify-content: center;
+        padding: 10px 14px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 11: ONBOARDING - Responsive
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+    .onboarding-card {
+        padding: 30px 24px;
+        margin: 16px;
+        border-radius: 20px;
+    }
+
+    .step-icon {
+        font-size: 52px;
+    }
+
+    .onboarding-step h2 {
+        font-size: 1.35rem;
+    }
+
+    .onboarding-step p {
+        font-size: 0.95rem;
+    }
+
+    .onboarding-actions {
+        flex-direction: column-reverse;
+    }
+
+    .onboarding-btn {
+        width: 100%;
+        padding: 16px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 12: THEME TOGGLE - Responsive
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .theme-toggle {
+        width: 52px;
+        height: 28px;
+        margin-right: 6px;
+    }
+
+    .theme-icon {
+        font-size: 12px;
+    }
+
+    .toggle-slider {
+        width: 20px;
+        height: 20px;
+    }
+
+    .theme-toggle.light-mode .toggle-slider {
+        right: calc(100% - 24px);
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-toggle {
+        width: 44px;
+        height: 26px;
+        padding: 0 4px;
+    }
+
+    .theme-icon {
+        font-size: 11px;
+    }
+
+    .toggle-slider {
+        width: 18px;
+        height: 18px;
+    }
+
+    .theme-toggle.light-mode .toggle-slider {
+        right: calc(100% - 22px);
+    }
+
+    /* Subpage Reisetipps Button Mobile */
+    .subpage-reisetipps-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .subpage-reisetipps-btn span:last-child {
+        display: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   EXTRA SMALL MOBILE - iPhone SE, iPhone 12 mini etc. (375px und kleiner)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 390px) {
+    .compact-header {
+        /* Header NOCH KOMPAKTER */
+        padding: 3px 8px 5px 8px;
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    .header-row {
+        gap: 5px;
+        padding: 0 8px;
+    }
+
+    /* Logo GRÖSSER auf kleinen Geräten */
+    .logo-img {
+        height: 42px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    /* Reisetipps LINKS */
+    .travel-tips-btn {
+        left: 8px;
+        padding: 5px 8px;
+    }
+
+    /* Teilen RECHTS - LILA */
+    .share-header-btn {
+        right: 8px;
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .controls-compact {
+        gap: 4px;
+    }
+
+    .controls-compact select {
+        font-size: 11px;
+        padding: 6px 8px;
+        min-width: 60px;
+        max-width: 100px;
+    }
+
+    .btn-clear,
+    .btn-settings {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .btn-school-holidays-pill {
+        height: 26px;
+        padding: 0 8px;
+        font-size: 10px;
+    }
+
+    .btn-school-holidays-pill .school-text {
+        display: none;
+    }
+
+    /* Footer kompakter */
+    .sticky-footer-new {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .footer-stats {
+        gap: 8px;
+    }
+
+    .stat-box {
+        padding: 4px 8px;
+        min-width: 55px;
+    }
+
+    .stat-number {
+        font-size: 16px;
+    }
+
+    .stat-label {
+        font-size: 8px;
+    }
+
+    .recommendations-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    /* Kalender kompakter */
+    .calendar-grid {
+        padding: 10px;
+        gap: 12px;
+    }
+
+    .month-header {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .day {
+        font-size: 11px;
+        min-height: 32px;
+    }
+
+    .weekday {
+        font-size: 10px;
+        padding: 8px 4px;
+    }
+
+    /* Legende noch kompakter */
+    .legend-compact {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+
+    .legend-compact .legend-item {
+        font-size: 8px;
+        gap: 3px;
+    }
+
+    .legend-compact .dot {
+        width: 6px;
+        height: 6px;
+    }
+}

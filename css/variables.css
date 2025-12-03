@@ -1,0 +1,46 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost CSS Variables - Design System
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* HolidayBoost.de Design Variables - Nachtblau Theme mit Logo-Farben */
+:root {
+    /* Main brand colors - abgeleitet vom Logo (Türkis + Orange) */
+    --brand-primary: #26d0ce;      /* Türkis vom Logo */
+    --brand-secondary: #1da8a6;    /* Dunkleres Türkis */
+    --brand-accent: #e8a54b;       /* Orange vom Logo */
+    --brand-accent-light: #f0b865;
+
+    /* Background colors - Sattes Nachtblau Theme */
+    --bg-primary: #0a1628;         /* Tiefes Nachtblau */
+    --bg-secondary: #0f1d32;       /* Haupthintergrund - sattes Nachtblau */
+    --bg-tertiary: #162544;        /* Helleres Nachtblau für Elemente */
+    --bg-header-footer: rgba(10, 22, 40, 0.95); /* Header/Footer Hintergrund */
+
+    /* Calendar colors - Night Blue Theme */
+    --calendar-bg: #0f1d32;
+    --calendar-border: #1a3050;
+    --calendar-day-bg: #162544;
+    --calendar-day-border: #234060;
+    --month-header-start: #1a3050;  /* Dunkles Nachtblau */
+    --month-header-end: #234060;    /* Helleres Nachtblau */
+
+    /* Holiday type colors - Differentiated by scope */
+    --holiday-bundesfeiertag: #ef4444;  /* Rot für Bundesfeiertage */
+    --holiday-landesfeiertag: #e8a54b;  /* Orange (Logo) für Landesfeiertage */
+    --holiday-stadtfeiertag: #a855f7;   /* Lila für Stadtfeiertage */
+    --weekend: #3d5a80;
+    --selected: #26d0ce;                /* Türkis (Logo) für Auswahl */
+    --ausgewaehlt: #26d0ce;
+
+    /* Text colors - Night Optimized */
+    --text-primary: #f0f4f8;
+    --text-secondary: #a0aec0;
+    --text-light: #718096;
+    --text-white: #ffffff;
+
+    /* Effects - Enhanced for Dark Mode */
+    --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 30px rgba(38, 208, 206, 0.15);
+    --border-glass: 1px solid rgba(255, 255, 255, 0.08);
+}

@@ -1,0 +1,548 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Calendar Styles - MODULE 4
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Calendar Legend */
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: none;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid var(--calendar-border);
+}
+
+/* Calendar grid styles - LARGER & USER-FRIENDLY */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    transform: translate3d(0,0,0);
+    will-change: transform;
+    gap: 16px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    overflow: visible;
+}
+
+/* Ensure months flow horizontally across rows */
+.month-view:nth-child(1) { grid-column: 1; grid-row: 1; } /* Januar */
+.month-view:nth-child(2) { grid-column: 2; grid-row: 1; } /* Februar */
+.month-view:nth-child(3) { grid-column: 3; grid-row: 1; } /* März */
+.month-view:nth-child(4) { grid-column: 4; grid-row: 1; } /* April */
+.month-view:nth-child(5) { grid-column: 1; grid-row: 2; } /* Mai */
+.month-view:nth-child(6) { grid-column: 2; grid-row: 2; } /* Juni */
+.month-view:nth-child(7) { grid-column: 3; grid-row: 2; } /* Juli */
+.month-view:nth-child(8) { grid-column: 4; grid-row: 2; } /* August */
+.month-view:nth-child(9) { grid-column: 1; grid-row: 3; } /* September */
+.month-view:nth-child(10) { grid-column: 2; grid-row: 3; } /* Oktober */
+.month-view:nth-child(11) { grid-column: 3; grid-row: 3; } /* November */
+.month-view:nth-child(12) { grid-column: 4; grid-row: 3; } /* Dezember */
+
+/* Month view styles - WIDER CONTAINERS */
+.month-view {
+    background: var(--calendar-bg);
+    border: none;
+    border-radius: 16px;
+    overflow: visible;
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.2s ease;
+    backdrop-filter: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+    padding: 0;
+}
+
+.month-view::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+                rgba(26, 41, 128, 0.1) 0%,
+                rgba(38, 208, 206, 0.05) 100%);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.month-view:hover {
+    box-shadow: var(--shadow-glow),
+                var(--shadow-premium),
+                0 25px 80px rgba(0,0,0,0.5);
+}
+
+.month-view:hover::before {
+    opacity: 1;
+}
+
+.month-header {
+    background: linear-gradient(135deg,
+                var(--month-header-start) 0%,
+                var(--month-header-end) 100%);
+    color: var(--text-white);
+    padding: 18px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.month-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+                transparent,
+                var(--accent-purple),
+                transparent);
+    opacity: 0.8;
+}
+
+/* Year Navigation Arrows (Prev/Next Month) */
+.year-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    z-index: 10;
+}
+
+.year-nav:hover {
+    background: var(--accent-purple);
+    border-color: var(--accent-purple);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.4);
+}
+
+.year-nav.prev {
+    left: 10px;
+}
+
+.year-nav.next {
+    right: 10px;
+}
+
+.year-nav.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+.year-nav.active:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Extra Month Styling */
+.extra-month {
+    opacity: 0.85;
+    border: none;
+    border-radius: 8px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.extra-month .month-header {
+    position: relative;
+}
+
+.extra-month .month-header::after {
+    content: 'Zusatzmonat';
+    font-size: 10px;
+    font-weight: 500;
+    color: #ffffff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.extra-month-prev .month-header::after {
+    content: 'Vorjahr';
+}
+
+.extra-month-next .month-header::after {
+    content: 'Folgejahr';
+}
+
+/* Weekdays */
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--calendar-border);
+}
+
+.weekday {
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Days Grid */
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 3px;
+    padding: 6px;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid var(--calendar-day-border);
+    background: var(--calendar-day-bg);
+    color: var(--text-primary);
+    transition: transform 0.2s ease;
+    min-height: 44px;
+    padding: 4px;
+    position: relative;
+    border-radius: 6px;
+}
+
+.day:hover {
+    background: var(--bg-tertiary);
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    z-index: 100;
+}
+
+.day.other-month {
+    color: var(--text-light);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+.day.other-month.selected {
+    background: var(--selected);
+    color: var(--text-white);
+    opacity: 0.6;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+}
+
+.day.other-month:hover {
+    transform: scale(1.02);
+    background: var(--bg-tertiary);
+    border-color: rgba(255, 255, 255, 0.2);
+    opacity: 0.6;
+}
+
+/* Empty cells */
+.day.empty-cell {
+    background: transparent;
+    border: none;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Weekend styling */
+.day.weekend {
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--weekend);
+    border: 1px dashed rgba(100, 116, 139, 0.4);
+}
+
+/* Base holiday styling */
+.day.holiday {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+/* Specific holiday type colors */
+.day.holiday-bundesfeiertag {
+    background: var(--holiday-bundesfeiertag);
+}
+
+.day.holiday-bundesfeiertag:hover {
+    background: var(--holiday-bundesfeiertag);
+    filter: brightness(1.15);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.day.holiday-landesfeiertag {
+    background: var(--holiday-landesfeiertag);
+}
+
+.day.holiday-landesfeiertag:hover {
+    background: var(--holiday-landesfeiertag);
+    filter: brightness(1.15);
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+}
+
+.day.holiday-stadtfeiertag {
+    background: var(--holiday-stadtfeiertag);
+}
+
+.day.holiday-stadtfeiertag:hover {
+    background: var(--holiday-stadtfeiertag);
+    filter: brightness(1.15);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+}
+
+.day.holiday::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 4px;
+    height: 4px;
+    background: #ff5252;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 82, 82, 0.6);
+}
+
+/* Selected day */
+.day.selected {
+    background: var(--selected);
+    color: var(--text-white);
+    font-weight: 600;
+    box-shadow: 0 0 0 2px var(--selected),
+                0 0 15px rgba(139, 92, 246, 0.3),
+                0 0 30px rgba(56, 189, 248, 0.2);
+}
+
+.day.holiday.selected {
+    background: linear-gradient(135deg,
+                var(--accent-purple) 0%,
+                #ff5252 50%,
+                var(--accent-blue) 100%);
+    box-shadow: 0 0 30px rgba(255, 82, 82, 0.4),
+                0 0 25px rgba(38, 208, 206, 0.4);
+}
+
+/* School Holidays Styling - Modern Bottom Line + Glow */
+.day.school-holiday {
+    border-bottom: 2px solid #22c55e;
+    box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.15),
+                inset 0 -4px 8px rgba(34, 197, 94, 0.1);
+}
+
+.day.school-holiday:not(.holiday):not(.selected):not(.weekend) {
+    background: rgba(34, 197, 94, 0.08);
+}
+
+.day.school-holiday.holiday {
+    border-bottom: 2px solid #22c55e;
+    box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.2),
+                inset 0 -4px 8px rgba(34, 197, 94, 0.15);
+}
+
+.day.school-holiday.selected {
+    border-bottom: 2px solid #4ade80;
+    box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.25),
+                0 0 0 2px var(--selected);
+}
+
+.day.school-holiday.weekend {
+    border-bottom: 2px solid #22c55e;
+}
+
+/* School holiday tooltip */
+.day.school-holiday:not(.holiday)[data-school-holiday]:after {
+    content: attr(data-school-holiday);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(34, 197, 94, 0.95);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    margin-bottom: 10px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.day.school-holiday:not(.holiday)[data-school-holiday]:hover:after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px);
+}
+
+/* Combined school holiday + regular holiday tooltip */
+.day.holiday.school-holiday[data-holiday][data-school-holiday]:after {
+    content: attr(data-holiday) " | " attr(data-school-holiday) !important;
+}
+
+/* Holiday tooltip */
+.day[data-holiday]:after {
+    content: attr(data-holiday);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    color: var(--text-primary);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.day[data-holiday]:hover:after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px);
+}
+
+/* Holiday tooltip styles - ENHANCED VERSION */
+.day[data-holiday] {
+    position: relative;
+    cursor: help;
+    z-index: 10;
+}
+
+.day[data-holiday]:hover {
+    z-index: 1000;
+    position: relative;
+}
+
+/* Kompakte Legende */
+.legend-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 4px 0;
+}
+
+.legend-compact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 24px;
+    background: rgba(10, 22, 40, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.legend-compact .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.legend-compact .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.legend-compact .dot.selected {
+    background: var(--ausgewaehlt);
+}
+
+.legend-compact .dot.bundesfeiertag {
+    background: var(--holiday-bundesfeiertag);
+}
+
+.legend-compact .dot.landesfeiertag {
+    background: var(--holiday-landesfeiertag);
+}
+
+.legend-compact .dot.stadtfeiertag {
+    background: var(--holiday-stadtfeiertag);
+}
+
+.legend-compact .dot.weekend {
+    background: rgba(100, 116, 139, 0.5);
+    border: 1px dashed rgba(100, 116, 139, 0.8);
+}
+
+.legend-compact .dot.schulferien {
+    background: rgba(34, 197, 94, 0.15);
+    border-bottom: 2px solid #22c55e;
+    box-shadow: inset 0 0 6px rgba(34, 197, 94, 0.2);
+}
+
+/* Calendar Main Area */
+.calendar-main {
+    padding: 0 20px 100px 20px;
+}
+
+/* Month Card (for alternative styling) */
+.month-card {
+    background: var(--calendar-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+}

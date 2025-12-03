@@ -1,0 +1,832 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Components - Buttons, Cards, Utilities
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Base Button Styles */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: none;
+    position: relative;
+    overflow: visible;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,
+                var(--accent-purple) 0%,
+                var(--accent-blue) 100%);
+    color: var(--text-primary);
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(38, 208, 206, 0.4);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+                var(--accent-blue) 0%,
+                var(--accent-purple) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-glow),
+                0 15px 40px rgba(38, 208, 206, 0.6);
+}
+
+/* Clean Section Dividers */
+.section-divider {
+    height: 1px;
+    margin: 40px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+}
+
+/* Clean Professional Header - No Container Boxes */
+.new-header {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    position: relative;
+    overflow: visible;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0 20px;
+    margin: 0;
+    background: transparent;
+    border: none;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    transition: none;
+}
+
+.brand-text h1 {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-shadow: none;
+    position: relative;
+}
+
+.brand-text p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin: 2px 0 0 0;
+    font-weight: 400;
+    text-shadow: none;
+}
+
+.calendar-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    backdrop-filter: none;
+    box-shadow: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.calendar-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: none;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+    position: relative;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-section h2 {
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    text-shadow: none;
+    position: relative;
+}
+
+.hero-section p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: 400;
+    text-shadow: none;
+}
+
+/* Calendar Controls */
+.calendar-controls {
+    text-align: center;
+    background: transparent;
+    padding: 40px 30px;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.calendar-controls h3 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    text-shadow: none;
+    position: relative;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.controls-row select {
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: none;
+    color: #ffffff;
+    min-width: 180px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.controls-row select option {
+    background: #1e293b;
+    color: #ffffff;
+    border: none;
+}
+
+.controls-row select:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.controls-row select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dropdown-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dropdown-group label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.dropdown-group select {
+    padding: 12px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    font-size: 14px;
+    min-width: 160px;
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.dropdown-group select option {
+    background: var(--primary-deep);
+    color: var(--text-primary);
+    border: none;
+    padding: 10px;
+}
+
+.dropdown-group select:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 30px rgba(38, 208, 206, 0.4),
+                0 4px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Recommendations Section */
+.recommendations-section {
+    margin-bottom: 25px;
+}
+
+.recommendations-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.recommendations-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+}
+
+.recommendations-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* App Header */
+.app-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    opacity: 0.6;
+}
+
+.app-header::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple), var(--accent-blue));
+    border-radius: 26px;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+.app-header h1 {
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff, var(--accent-purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    position: relative;
+}
+
+.app-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 1px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-deep);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+}
+
+/* Loading animations and premium effects */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(38, 208, 206, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(38, 208, 206, 0.6);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Performance optimized animations */
+* {
+    will-change: auto;
+}
+
+.calendar-day:hover,
+.btn:hover,
+.dropdown select:hover {
+    will-change: transform;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 11: ONBOARDING TUTORIAL
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.onboarding-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.onboarding-overlay.hidden {
+    display: none;
+}
+
+.onboarding-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.onboarding-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.onboarding-card {
+    position: relative;
+    background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: cardSlideIn 0.4s ease-out;
+}
+
+@keyframes cardSlideIn {
+    from {
+        transform: translateY(30px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.onboarding-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-light);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Progress Dots */
+.onboarding-progress {
+    margin-bottom: 30px;
+}
+
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+    background: var(--primary);
+    transform: scale(1.3);
+    box-shadow: 0 0 15px var(--primary);
+}
+
+.progress-dot.completed {
+    background: var(--success);
+}
+
+/* Step Content */
+.onboarding-content {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-step {
+    display: none;
+    animation: stepFadeIn 0.4s ease;
+}
+
+.onboarding-step.active {
+    display: block;
+}
+
+@keyframes stepFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.step-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    animation: iconBounce 0.6s ease;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.onboarding-step h2 {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+.onboarding-step p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+/* Action Buttons */
+.onboarding-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.onboarding-btn {
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.onboarding-btn.primary {
+    background: linear-gradient(135deg, var(--primary), #ff6b35);
+    color: white;
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+}
+
+.onboarding-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 107, 53, 0.5);
+}
+
+.onboarding-btn.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.onboarding-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* Onboarding Select Dropdown */
+.onboarding-select-wrapper {
+    margin-top: 20px;
+}
+
+.onboarding-select {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+.onboarding-select:hover {
+    border-color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.onboarding-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+}
+
+.onboarding-select option {
+    background: var(--bg-primary);
+    color: white;
+    padding: 10px;
+}
+
+/* Tipp-Hinweis im Onboarding */
+.step-hint {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(255, 107, 53, 0.15);
+    border-radius: 10px;
+    border-left: 3px solid var(--primary);
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 12: THEME TOGGLE BUTTON
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.theme-toggle {
+    position: relative;
+    width: 60px;
+    height: 32px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    margin-right: 8px;
+}
+
+.theme-toggle:hover {
+    border-color: var(--brand-primary);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(38, 208, 206, 0.3);
+}
+
+.theme-toggle:active {
+    transform: scale(0.98);
+}
+
+.theme-icon {
+    font-size: 14px;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.theme-icon.sun {
+    opacity: 0.4;
+}
+
+.theme-icon.moon {
+    opacity: 1;
+}
+
+.toggle-slider {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    border-radius: 50%;
+    right: 4px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+/* Light Mode State */
+.theme-toggle.light-mode {
+    background: linear-gradient(135deg, #87CEEB 0%, #98D8E8 100%);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle.light-mode .theme-icon.sun {
+    opacity: 1;
+}
+
+.theme-toggle.light-mode .theme-icon.moon {
+    opacity: 0.4;
+}
+
+.theme-toggle.light-mode .toggle-slider {
+    right: calc(100% - 28px);
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    box-shadow: 0 2px 8px rgba(255, 165, 0, 0.5);
+}
+
+/* Animation beim Umschalten */
+.theme-toggle.switching {
+    animation: togglePulse 0.3s ease;
+}
+
+@keyframes togglePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Subpage Reisetipps Button */
+.subpage-reisetipps-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.15), rgba(38, 208, 206, 0.25));
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    border-radius: 20px;
+    color: var(--brand-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: all 0.2s ease;
+}
+
+.subpage-reisetipps-btn:hover {
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.25), rgba(38, 208, 206, 0.35));
+    border-color: var(--brand-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.2);
+}

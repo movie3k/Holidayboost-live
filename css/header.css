@@ -1,0 +1,403 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Header Styles - Compact Header & Controls
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Header Fade-In Animation */
+@keyframes headerFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 1. KOMPAKTER HEADER - Volle Breite am oberen Rand */
+.compact-header {
+    /* === HEADER HERO IMAGE === */
+    animation: headerFadeIn 0.3s ease-out forwards;
+    background-color: #1a2a3a; /* Fallback während Bild lädt */
+    background-image:
+        linear-gradient(
+            135deg,
+            rgba(10, 22, 40, 0.7) 0%,
+            rgba(20, 40, 70, 0.6) 50%,
+            rgba(10, 22, 40, 0.7) 100%
+        ),
+        url('../urlaub2.jpg');
+    background-position: center 35%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* === END HERO IMAGE === */
+    padding: 16px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Linke Seite */
+.logo-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    text-decoration: none;
+    order: 1;
+}
+
+/* Mitte - Dropdowns zentriert */
+.controls-compact {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 2;
+    justify-content: center;
+}
+
+/* Rechte Seite - Reisetipps Button */
+.header-row .travel-tips-btn {
+    order: 3;
+}
+
+.header-spacer {
+    flex: 1;
+    order: 4;
+}
+
+/* Logo als Link - kein Unterstrich */
+a.logo-compact,
+a.logo-compact:hover,
+a.logo-compact:visited {
+    text-decoration: none;
+}
+
+/* Zurück-Navigation für Unterseiten - Modern Minimal */
+.back-nav {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.back-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 0;
+    background: transparent;
+    transition: all 0.25s ease;
+}
+
+.back-nav-link:hover {
+    color: #26d0ce;
+    text-decoration: none;
+}
+
+.back-nav-link:hover .arrow {
+    transform: translateX(-4px);
+}
+
+.back-nav-link .arrow {
+    font-size: 16px;
+    transition: transform 0.25s ease;
+    opacity: 0.7;
+}
+
+.back-nav-link:hover .arrow {
+    opacity: 1;
+}
+
+.logo-img {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.text-holiday {
+    color: #f19c37;
+}
+
+.text-boost {
+    color: #2bc3b4;
+}
+
+/* Controls Compact Dropdowns */
+.controls-compact select {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--bg-tertiary);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Dropdown-Optionen Styling */
+.controls-compact select option {
+    background: var(--bg-primary);
+    color: #ffffff;
+    padding: 10px;
+}
+
+.controls-compact select:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--brand-primary);
+}
+
+.controls-compact select:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.2);
+}
+
+/* Clear Button */
+.btn-clear {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-clear:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #f87171;
+}
+
+/* Settings Button */
+.btn-settings {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(38, 208, 206, 0.1);
+    color: var(--brand-primary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-settings:hover {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: var(--brand-primary);
+}
+
+.settings-icon {
+    font-size: 18px;
+}
+
+/* School Holidays Pill Button - Modern Design */
+.btn-school-holidays-pill {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(30, 41, 59, 0.6);
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-school-holidays-pill:hover {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+    transform: translateY(-1px);
+}
+
+.btn-school-holidays-pill.active {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(22, 163, 74, 0.3) 100%);
+    border-color: #22c55e;
+    color: #4ade80;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3),
+                0 0 40px rgba(34, 197, 94, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-school-holidays-pill.loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.btn-school-holidays-pill.loading .school-icon {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.95); }
+}
+
+.btn-school-holidays-pill .school-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.btn-school-holidays-pill .school-text {
+    font-family: inherit;
+    letter-spacing: 0.02em;
+}
+
+/* School Holidays Hint Toast */
+.school-holidays-hint {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.95) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3),
+                0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.school-holidays-hint.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.school-holidays-hint .hint-icon {
+    font-size: 18px;
+}
+
+.school-holidays-hint .hint-text {
+    flex: 1;
+}
+
+.school-holidays-hint .hint-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.school-holidays-hint .hint-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Main Title (H1 für SEO) */
+.main-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 8px 0 0 0;
+    padding: 0;
+    letter-spacing: -0.02em;
+}
+
+/* Travel Tips Button im Header */
+.travel-tips-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.travel-tips-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.4);
+}
+
+/* Share Header Button */
+.share-header-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-header-btn:hover {
+    background: rgba(38, 208, 206, 0.15);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}

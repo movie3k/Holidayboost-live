@@ -1,0 +1,393 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Subpages - MODULE 7 (About, Impressum, Datenschutz, Kontakt)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* 7.1. ABOUT CONTENT */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.about-article {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-article h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 7.2. ABOUT SECTIONS */
+.about-section {
+    margin-bottom: 30px;
+}
+
+.about-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 12px;
+}
+
+.about-section h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.about-section p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.about-section strong {
+    color: var(--text-primary);
+}
+
+/* 7.3. FEATURE LIST */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.feature-list li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.feature-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary);
+    font-weight: bold;
+}
+
+.feature-list li strong {
+    color: var(--text-primary);
+}
+
+/* 7.4. BACK LINK */
+.back-link {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-back {
+    display: inline-block;
+    color: var(--brand-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: 1px solid var(--brand-primary);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+    background: var(--brand-primary);
+    color: var(--bg-primary);
+}
+
+/* 7.5. KONTAKT PAGE */
+.contact-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.contact-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+/* Linke Spalte: Kontaktinfos */
+.contact-info h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 15px;
+}
+
+.contact-intro {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.contact-email-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.contact-email-box .email-icon {
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+.contact-email-box a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.contact-email-box a:hover {
+    color: var(--brand-primary);
+}
+
+.contact-topics {
+    margin-bottom: 30px;
+}
+
+.contact-topics h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.contact-topics ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-topics li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.contact-topics li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary);
+}
+
+.contact-branding {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.contact-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.contact-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-brand-text .brand-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.contact-brand-text .brand-tagline {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Rechte Spalte: Kontaktformular */
+.contact-form-container h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 20px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.contact-form label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: var(--text-light);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.1);
+}
+
+.contact-form select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 35px;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(229, 62, 62, 0.4);
+}
+
+.contact-submit-btn .btn-icon {
+    font-size: 16px;
+}
+
+.form-hint {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+/* Formular Statusmeldungen */
+.form-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: opacity 0.3s ease;
+}
+
+.form-message-success {
+    background: linear-gradient(135deg, rgba(72, 187, 120, 0.15), rgba(56, 161, 105, 0.1));
+    border: 1px solid rgba(72, 187, 120, 0.4);
+    color: #276749;
+}
+
+.form-message-error {
+    background: linear-gradient(135deg, rgba(245, 101, 101, 0.15), rgba(229, 62, 62, 0.1));
+    border: 1px solid rgba(245, 101, 101, 0.4);
+    color: #c53030;
+}
+
+.form-message .message-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.form-message-success .message-icon {
+    color: #48bb78;
+}
+
+.form-message-error .message-icon {
+    color: #f56565;
+}
+
+.contact-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Zurück Button */
+.contact-back-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(38, 208, 206, 0.4);
+}

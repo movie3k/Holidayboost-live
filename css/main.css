@@ -1,0 +1,50 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost.de - Main CSS Import File
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   This file imports all modular CSS files in the correct order.
+   The original styles.css is kept as a backup in the root directory.
+
+   Structure:
+   1. Variables (CSS Custom Properties, Colors, Themes)
+   2. Base (Reset, Body, Container)
+   3. Components (Buttons, Cards, Utilities)
+   4. Layout Components
+      - Header (Compact Header, Controls, Theme Toggle)
+      - Calendar (Grid, Days, Months, Holidays)
+      - Footer (Sticky Footer, Stats, Links)
+   5. Features
+      - Modals (Recommendations, Workweek Config)
+      - Reisetipps (Travel Tips Page)
+      - Subpages (About, Impressum, Datenschutz, Kontakt)
+   6. Themes
+      - Light Mode (All Light Mode Overrides)
+   7. Layout
+      - Responsive (All Media Queries)
+
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* 1. Foundation - Variables & Base */
+@import 'variables.css';
+@import 'base.css';
+
+/* 2. Components - Reusable Elements */
+@import 'components.css';
+
+/* 3. Layout Components */
+@import 'header.css';
+@import 'calendar.css';
+@import 'footer.css';
+
+/* 4. Features - Modals & Popups */
+@import 'modals.css';
+
+/* 5. Page-Specific Styles */
+@import 'reisetipps.css';
+@import 'subpages.css';
+
+/* 6. Themes - Light Mode Overrides */
+@import 'light-mode.css';
+
+/* 7. Responsive - Media Queries (must be last) */
+@import 'responsive.css';

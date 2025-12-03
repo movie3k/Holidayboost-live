@@ -1,0 +1,923 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Modals - MODULE 6 & 9
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* MODULE 6: URLAUBSEMPFEHLUNGS-KARTEN */
+
+/* Trigger Section */
+.recommendations-trigger-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.recommendations-trigger-section h2 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.recommendations-trigger-section p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.open-recommendations-btn {
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 20px rgba(38, 208, 206, 0.3);
+}
+
+.open-recommendations-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(38, 208, 206, 0.5);
+}
+
+/* Modal Styles */
+.recommendations-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.recommendations-modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: none;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 1400px;
+    width: 100%;
+    max-height: 90vh;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 30px 40px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.modal-header h2 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.modal-header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin: 0;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-filters {
+    padding: 20px 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.selection-summary {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.summary-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.summary-stats .stat {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.summary-stats strong {
+    color: #26d0ce;
+    font-weight: 600;
+}
+
+.clear-selection-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.clear-selection-btn.active {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+}
+
+.clear-selection-btn.active:hover {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: #ef4444;
+}
+
+.clear-selection-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.apply-selection-btn {
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.apply-selection-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+}
+
+.apply-selection-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.4);
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px 40px 50px;
+}
+
+.modal-recommendation-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.recommendations-filters {
+    margin-bottom: 30px;
+}
+
+.recommendations-filters select {
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 14px;
+    min-width: 250px;
+    transition: all 0.2s ease;
+}
+
+.recommendations-filters select:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.recommendations-filters select option {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.recommendation-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.recommendation-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: left;
+    transition: transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.recommendation-card.selected {
+    background: rgba(38, 208, 206, 0.1);
+    border-color: #26d0ce;
+    box-shadow: 0 0 0 2px rgba(38, 208, 206, 0.3);
+}
+
+.recommendation-card.conflicted {
+    background: rgba(244, 67, 54, 0.1);
+    border-color: #f44336;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.recommendation-card.conflicted::after {
+    content: '⚠️ Konflikt';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #f44336;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.recommendation-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--holiday-bundesfeiertag), var(--holiday-landesfeiertag));
+}
+
+.recommendation-card.efficiency-high::before {
+    background: linear-gradient(90deg, #26d0ce, #00bcd4);
+}
+
+.recommendation-card.efficiency-mega::before {
+    background: linear-gradient(90deg, #9c27b0, #e91e63);
+}
+
+.recommendation-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.efficiency-badge {
+    background: rgba(38, 208, 206, 0.2);
+    color: #26d0ce;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.efficiency-badge.high {
+    background: rgba(38, 208, 206, 0.2);
+    color: #26d0ce;
+}
+
+.efficiency-badge.medium {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ff9800;
+}
+
+.efficiency-badge.mega {
+    background: rgba(156, 39, 176, 0.2);
+    color: #9c27b0;
+}
+
+.card-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 300;
+    color: #26d0ce;
+    margin-bottom: 4px;
+}
+
+.card-period {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+.card-holidays {
+    margin-bottom: 20px;
+}
+
+.card-holidays h4 {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+}
+
+.holiday-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.holiday-tag {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.add-to-calendar-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-to-calendar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.4);
+}
+
+.preview-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preview-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.selection-indicator {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #26d0ce;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 9: ARBEITSWOCHE-KONFIGURATION
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Workweek Popup */
+.workweek-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.workweek-popup.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.workweek-popup-content {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.workweek-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.workweek-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.close-popup-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-popup-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+.workweek-description {
+    margin: 0 0 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Day Checkboxes */
+.workweek-days {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.day-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.day-checkbox input {
+    display: none;
+}
+
+.day-label {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.day-checkbox input:checked + .day-label {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.day-checkbox:hover .day-label {
+    border-color: var(--brand-primary);
+}
+
+/* Presets */
+.workweek-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.presets-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.preset-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+    background: rgba(38, 208, 206, 0.15);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.preset-btn.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #0d1117;
+}
+
+/* Info Box */
+.workweek-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(232, 165, 75, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid var(--brand-accent);
+}
+
+.workweek-info .info-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.workweek-info span:last-child {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Confirm Button */
+.workweek-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.confirm-workweek-btn {
+    background: linear-gradient(135deg, #26d0ce 0%, #00bcd4 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.confirm-workweek-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 9: TEILEN-MODAL
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.share-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.share-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.share-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.share-modal.visible .share-modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.share-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.share-modal-header h2 {
+    color: var(--text-primary);
+    font-size: 20px;
+    margin: 0;
+}
+
+.share-close-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-close-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.share-modal-body {
+    padding: 25px;
+}
+
+.share-info {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.share-info strong {
+    color: var(--brand-primary);
+}
+
+.share-link-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.share-link-container input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: monospace;
+}
+
+.btn-copy {
+    background: var(--brand-primary);
+    border: none;
+    color: var(--bg-primary);
+    width: 50px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-copy:hover {
+    background: var(--brand-secondary);
+    transform: scale(1.05);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    flex: 1;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 15px 10px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+}
+
+.share-btn.whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+}
+
+.share-btn.native {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+.share-icon {
+    font-size: 24px;
+}
+
+.share-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 25px 0;
+}
+
+.share-modal-body h3 {
+    color: var(--text-primary);
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.export-info {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.btn-ical {
+    width: 100%;
+    background: linear-gradient(135deg, var(--brand-accent), #d97706);
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-ical:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 165, 75, 0.4);
+}
+
+/* Benachrichtigung */
+.share-notification {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    z-index: 10001;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.share-notification.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Share Modal Responsive */
+@media (max-width: 600px) {
+    .share-footer-btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .share-btn-text {
+        display: none;
+    }
+
+    .share-modal-content {
+        max-height: 85vh;
+        margin: 10px;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
+    .share-btn {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .share-icon {
+        font-size: 20px;
+    }
+}

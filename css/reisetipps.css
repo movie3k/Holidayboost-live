@@ -1,0 +1,1040 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Reisetipps - MODULE 8 (Travel Tips)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* 8.1. REISETIPPS BUTTON IM HEADER */
+.travel-tips-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.travel-tips-btn.hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    display: flex !important;
+}
+
+.travel-tips-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.4);
+}
+
+.travel-tips-btn.pulse {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(38, 208, 206, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(38, 208, 206, 0.8), 0 0 30px rgba(232, 165, 75, 0.6);
+    }
+}
+
+.travel-tips-icon {
+    font-size: 18px;
+}
+
+.travel-tips-text {
+    white-space: nowrap;
+}
+
+.travel-tips-btn:not(.hidden) {
+    display: flex !important;
+}
+
+/* 8.2. REISETIPPS MODAL */
+.travel-tips-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.travel-tips-modal.hidden {
+    display: none;
+}
+
+.travel-tips-modal .modal-content {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* 8.3. TRAVEL INFO BOX */
+.travel-tips-info {
+    padding: 15px 25px;
+    background: var(--bg-tertiary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.travel-info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.travel-info-box .info-icon {
+    font-size: 18px;
+}
+
+#insurance-hint {
+    background: rgba(232, 165, 75, 0.15);
+    border: 1px solid rgba(232, 165, 75, 0.3);
+    color: var(--brand-accent);
+}
+
+/* 8.4. TRAVEL DESTINATIONS */
+.travel-destinations {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
+.destination-card {
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.destination-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--brand-primary);
+    box-shadow: 0 8px 25px rgba(38, 208, 206, 0.2);
+}
+
+.destination-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.destination-emoji {
+    font-size: 32px;
+}
+
+.destination-info h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.destination-info .country {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.destination-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.meta-tag.climate-warm {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}
+
+.meta-tag.climate-mild {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+}
+
+.meta-tag.climate-kalt {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+.meta-tag.climate-tropisch {
+    background: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
+}
+
+.destination-tip {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(232, 165, 75, 0.1);
+    border-left: 3px solid var(--brand-accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--brand-accent);
+}
+
+/* 8.5. AFFILIATE SECTION */
+.affiliate-section {
+    padding: 20px 25px;
+    background: var(--bg-tertiary);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.affiliate-section h3 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.affiliate-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.affiliate-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.affiliate-link:hover {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    transform: translateY(-2px);
+}
+
+.affiliate-link .icon {
+    font-size: 18px;
+}
+
+/* 8.6. TRAVEL TIPS FOOTER */
+.travel-tips-footer {
+    padding: 15px 25px;
+    background: var(--bg-primary);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+}
+
+.all-tips-link {
+    color: var(--brand-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.all-tips-link:hover {
+    color: var(--brand-accent);
+}
+
+/* 8.7. REISETIPPS SEITE */
+.travel-tips-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px 40px;
+}
+
+.travel-tips-page .page-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.travel-tips-page .page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.travel-tips-page .page-header p {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+/* Personalisierte Empfehlungen */
+.personalized-section {
+    margin-bottom: 40px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.08), rgba(232, 165, 75, 0.05));
+    border-radius: 16px;
+    border: 1px solid rgba(38, 208, 206, 0.2);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.insurance-hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 15px 20px;
+    background: rgba(232, 165, 75, 0.15);
+    border-radius: 10px;
+    border-left: 4px solid var(--brand-accent);
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.insurance-hint .hint-icon {
+    font-size: 24px;
+}
+
+.no-destinations {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+}
+
+.no-destinations p {
+    margin: 5px 0;
+}
+
+/* Monats-Filter */
+.month-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+}
+
+.month-btn {
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #94a3b8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.month-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.month-btn.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+}
+
+/* Filter-Leiste */
+.filter-bar {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filter-group {
+    margin-bottom: 16px;
+}
+
+.filter-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+/* Gemeinsame Filter-Button Styles */
+.climate-filter,
+.region-filter,
+.duration-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.climate-btn,
+.region-btn,
+.duration-btn {
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #94a3b8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.climate-btn:hover,
+.region-btn:hover,
+.duration-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.climate-btn.active,
+.region-btn.active,
+.duration-btn.active,
+.price-btn.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+}
+
+/* Preis-Filter */
+.price-filter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.price-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.price-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+/* Aktive Filter Tags */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.active-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(38, 208, 206, 0.15);
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--brand-primary);
+}
+
+.remove-filter {
+    background: none;
+    border: none;
+    color: var(--brand-primary);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.7;
+}
+
+.remove-filter:hover {
+    opacity: 1;
+}
+
+.clear-all-filters {
+    padding: 6px 12px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    color: #ef4444;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clear-all-filters:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+/* Affiliate Hero Section */
+.affiliate-hero {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(38, 208, 206, 0.2);
+    overflow: hidden;
+}
+
+.affiliate-hero-glow {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(38, 208, 206, 0.3) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.affiliate-hero-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.affiliate-hero-text {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.affiliate-hero-badge {
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.affiliate-hero-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.affiliate-hero-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.affiliate-hero-buttons .affiliate-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.affiliate-hero-buttons .affiliate-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Browse Header */
+.browse-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.browse-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0;
+}
+
+.browse-count {
+    font-size: 12px;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+/* Filter Modern Container */
+.filter-modern {
+    overflow: visible;
+    padding: 5px 0;
+}
+
+/* Monats-Pills Scroll */
+.filter-months-scroll {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 12px 5px;
+    margin: -12px -5px 8px -5px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.filter-months-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.month-pill {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.month-pill:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.month-pill.active {
+    background: linear-gradient(135deg, var(--brand-primary), #1a9997);
+    border-color: transparent;
+    color: #fff;
+}
+
+/* Filter Dropdowns */
+.filter-selects {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    padding: 8px 32px 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.filter-select:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+}
+
+.filter-select option {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+/* Destinations Grid */
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.destination-card-large {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.destination-card-large:hover {
+    transform: translateY(-5px);
+    border-color: var(--brand-primary);
+    box-shadow: 0 10px 30px rgba(38, 208, 206, 0.2);
+}
+
+.destination-card-large .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.destination-card-large .card-emoji {
+    font-size: 42px;
+    flex-shrink: 0;
+}
+
+.destination-card-large .card-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.destination-card-large .card-title h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination-card-large .card-country {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* Preis-Indikator */
+.destination-card-large .card-price {
+    flex-shrink: 0;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.destination-card-large .card-price.price-1 {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.destination-card-large .card-price.price-2 {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.destination-card-large .card-price.price-3 {
+    background: rgba(249, 115, 22, 0.15);
+    color: #fb923c;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.destination-card-large .card-description {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.destination-card-large .card-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.destination-card-large .card-months {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.destination-card-large .months-label {
+    color: #64748b;
+}
+
+.destination-card-large .months-value {
+    color: var(--brand-primary);
+    font-weight: 500;
+}
+
+/* Period Sections */
+.period-section {
+    margin-bottom: 30px;
+}
+
+.period-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(38, 208, 206, 0.1);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--brand-primary);
+}
+
+.period-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.period-days {
+    font-size: 14px;
+    color: var(--brand-primary);
+    font-weight: 500;
+    padding: 4px 10px;
+    background: rgba(38, 208, 206, 0.15);
+    border-radius: 12px;
+}
+
+.period-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    margin: 30px 0;
+}
+
+/* Booking Buttons */
+.booking-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+}
+
+.booking-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.booking-btn.flight-btn {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #ffffff;
+}
+
+.booking-btn.flight-btn:hover {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+
+.booking-btn.hotel-btn {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #ffffff;
+}
+
+.booking-btn.hotel-btn:hover {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.booking-btn.activity-btn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #ffffff;
+}
+
+.booking-btn.activity-btn:hover {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* Affiliate CTA Section */
+.affiliate-cta {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-primary));
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.affiliate-cta h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.affiliate-cta p {
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.affiliate-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.affiliate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.affiliate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.affiliate-btn.flights:hover {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.affiliate-btn.hotels:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.affiliate-btn.activities:hover {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+.affiliate-btn.insurance:hover {
+    background: var(--brand-accent);
+    border-color: var(--brand-accent);
+}
+
+/* No Results */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.no-results p {
+    margin: 5px 0;
+    color: #94a3b8;
+}
+
+.btn-clear-filters {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: var(--brand-primary);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-clear-filters:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.4);
+}
+
+/* Results Count */
+.results-count {
+    text-align: center;
+    padding: 12px;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.results-count span {
+    color: var(--brand-primary);
+    font-weight: 600;
+}

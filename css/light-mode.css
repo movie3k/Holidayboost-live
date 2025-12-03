@@ -1,0 +1,773 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 12: LIGHT MODE THEME
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] {
+    /* Background colors - Clean Light Theme */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-header-footer: rgba(255, 255, 255, 0.95);
+
+    /* Calendar colors - Light Theme */
+    --calendar-bg: #ffffff;
+    --calendar-border: #e2e8f0;
+    --calendar-day-bg: #f8fafc;
+    --calendar-day-border: #e2e8f0;
+    --month-header-start: #f1f5f9;
+    --month-header-end: #e2e8f0;
+
+    /* Text colors - Light Optimized */
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-light: #64748b;
+    --text-white: #ffffff;
+
+    /* Weekend anpassen für Light Mode */
+    --weekend: #64748b;
+
+    /* Effects - Light Mode */
+    --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 30px rgba(38, 208, 206, 0.1);
+    --border-glass: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Light Mode spezifische Anpassungen */
+[data-theme="light"] .compact-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .month-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .month-header {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #1e293b;
+}
+
+/* Light Mode: Jahr-Navigation Pfeile (Prev/Next Month) */
+[data-theme="light"] .year-nav {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .year-nav:hover {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(38, 208, 206, 0.3);
+}
+
+[data-theme="light"] .day {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+[data-theme="light"] .day:hover {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+}
+
+/* Light Mode: Feiertage behalten Farbe bei Hover */
+[data-theme="light"] .day.holiday-bundesfeiertag:hover {
+    background: var(--holiday-bundesfeiertag) !important;
+    filter: brightness(1.1);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
+}
+
+[data-theme="light"] .day.holiday-landesfeiertag:hover {
+    background: var(--holiday-landesfeiertag) !important;
+    filter: brightness(1.1);
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.35);
+}
+
+[data-theme="light"] .day.holiday-stadtfeiertag:hover {
+    background: var(--holiday-stadtfeiertag) !important;
+    filter: brightness(1.1);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.35);
+}
+
+[data-theme="light"] .day.weekend {
+    background: rgba(100, 116, 139, 0.1);
+    color: #64748b;
+}
+
+/* Light Mode: Ausgewählte Tage - Deutlich sichtbar! */
+[data-theme="light"] .day.selected {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 2px #8b5cf6,
+                0 4px 12px rgba(139, 92, 246, 0.4),
+                0 0 20px rgba(99, 102, 241, 0.3) !important;
+}
+
+[data-theme="light"] .day.selected:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%) !important;
+    box-shadow: 0 0 0 2px #6d28d9,
+                0 6px 16px rgba(139, 92, 246, 0.5),
+                0 0 25px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Light Mode: Wochenende + Ausgewählt */
+[data-theme="light"] .day.weekend.selected {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+    color: #ffffff !important;
+}
+
+/* Light Mode: Other-Month + Ausgewählt */
+[data-theme="light"] .day.other-month.selected {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+    color: #ffffff !important;
+    opacity: 0.7;
+    border: 2px dashed rgba(139, 92, 246, 0.6) !important;
+}
+
+/* Light Mode: Feiertag + Ausgewählt */
+[data-theme="light"] .day.holiday.selected {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ef4444 50%, #6366f1 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 2px #8b5cf6,
+                0 4px 15px rgba(239, 68, 68, 0.4),
+                0 0 20px rgba(139, 92, 246, 0.3) !important;
+}
+
+[data-theme="light"] .day.holiday {
+    color: #ffffff;
+}
+
+/* Light Mode: Feiertage haben Vorrang vor Wochenenden */
+[data-theme="light"] .day.holiday-bundesfeiertag,
+[data-theme="light"] .day.weekend.holiday-bundesfeiertag {
+    background: var(--holiday-bundesfeiertag) !important;
+    color: #ffffff !important;
+}
+
+[data-theme="light"] .day.holiday-landesfeiertag,
+[data-theme="light"] .day.weekend.holiday-landesfeiertag {
+    background: var(--holiday-landesfeiertag) !important;
+    color: #ffffff !important;
+}
+
+[data-theme="light"] .day.holiday-stadtfeiertag,
+[data-theme="light"] .day.weekend.holiday-stadtfeiertag {
+    background: var(--holiday-stadtfeiertag) !important;
+    color: #ffffff !important;
+}
+
+/* Light Mode: Schulferien - Grüner Unterstrich */
+[data-theme="light"] .day.school-holiday {
+    border-bottom: 2px solid #22c55e !important;
+    box-shadow: inset 0 -4px 8px rgba(34, 197, 94, 0.12);
+}
+
+[data-theme="light"] .day.school-holiday:not(.holiday):not(.selected):not(.weekend) {
+    background: rgba(34, 197, 94, 0.1);
+}
+
+[data-theme="light"] .day.school-holiday.weekend {
+    border-bottom: 2px solid #22c55e !important;
+}
+
+[data-theme="light"] .day.school-holiday.holiday {
+    border-bottom: 2px solid #22c55e !important;
+}
+
+[data-theme="light"] .day.school-holiday.selected {
+    border-bottom: 2px solid #4ade80 !important;
+}
+
+[data-theme="light"] .legend-compact {
+    background: rgba(241, 245, 249, 0.9);
+    border: 1px solid #e2e8f0;
+}
+
+/* Light Mode: Legende "Ausgewählt" - Gleiche Farbe wie .day.selected */
+[data-theme="light"] .legend-compact .dot.selected {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+}
+
+[data-theme="light"] .recommendations-btn {
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.3);
+}
+
+[data-theme="light"] .recommendations-modal .modal-content {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .modal-header {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #1e293b;
+    border-bottom-color: #e2e8f0;
+}
+
+[data-theme="light"] .modal-header h2 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .modal-header p {
+    color: #64748b;
+}
+
+[data-theme="light"] .recommendation-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .recommendation-card:hover {
+    background: #f8fafc;
+    border-color: var(--brand-primary);
+    box-shadow: 0 8px 24px rgba(38, 208, 206, 0.15);
+}
+
+/* Empfehlungen Card - Texte im Light Mode */
+[data-theme="light"] .card-title {
+    color: #1e293b;
+}
+
+[data-theme="light"] .card-period {
+    color: #475569;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .card-holidays h4 {
+    color: #475569;
+}
+
+[data-theme="light"] .stat-value {
+    color: var(--brand-secondary);
+}
+
+[data-theme="light"] .stat-label {
+    color: #64748b;
+}
+
+[data-theme="light"] .efficiency-badge {
+    background: rgba(38, 208, 206, 0.15);
+    color: #0d9488;
+}
+
+[data-theme="light"] .efficiency-badge.high {
+    background: rgba(38, 208, 206, 0.15);
+    color: #0d9488;
+}
+
+[data-theme="light"] .efficiency-badge.medium {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+}
+
+[data-theme="light"] .efficiency-badge.mega {
+    background: rgba(139, 92, 246, 0.15);
+    color: #7c3aed;
+}
+
+[data-theme="light"] .preview-btn {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .preview-btn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+[data-theme="light"] .modal-close {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+[data-theme="light"] .modal-close:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+/* Header Controls im Light Mode */
+[data-theme="light"] .controls-compact select,
+[data-theme="light"] .controls-compact select option,
+[data-theme="light"] #year-select,
+[data-theme="light"] #state-select,
+[data-theme="light"] #city-select {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .controls-compact select:hover,
+[data-theme="light"] #year-select:hover,
+[data-theme="light"] #state-select:hover,
+[data-theme="light"] #city-select:hover {
+    background: #f1f5f9 !important;
+    border-color: #94a3b8 !important;
+}
+
+[data-theme="light"] .btn-settings,
+[data-theme="light"] .btn-school-holidays-pill {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .btn-settings:hover {
+    background: #f1f5f9 !important;
+    border-color: #94a3b8 !important;
+}
+
+/* Ferien-Button HOVER - Leichter grüner Glow im Light Mode */
+[data-theme="light"] .btn-school-holidays-pill:hover {
+    background: rgba(34, 197, 94, 0.08) !important;
+    border-color: rgba(34, 197, 94, 0.4) !important;
+    color: #16a34a !important;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2),
+                0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ferien-Button AKTIV - Grüner Glow im Light Mode (reduziert) */
+[data-theme="light"] .btn-school-holidays-pill.active {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(22, 163, 74, 0.15) 100%) !important;
+    border-color: #22c55e !important;
+    color: #15803d !important;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.25),
+                0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .btn-school-holidays-pill.active:hover {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.2) 100%) !important;
+    border-color: #16a34a !important;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.3),
+                0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* X-Button (Auswahl löschen) - Leicht rot im Light Mode */
+[data-theme="light"] .btn-clear {
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    color: #dc2626 !important;
+    box-shadow: 0 1px 3px rgba(220, 38, 38, 0.1);
+}
+
+[data-theme="light"] .btn-clear:hover {
+    background: #fee2e2 !important;
+    border-color: #f87171 !important;
+    color: #b91c1c !important;
+}
+
+[data-theme="light"] .share-header-btn {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .share-header-btn:hover {
+    background: #f1f5f9 !important;
+    border-color: var(--brand-primary) !important;
+}
+
+[data-theme="light"] .workweek-popup-content {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .onboarding-card {
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+}
+
+[data-theme="light"] .onboarding-step h2 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .onboarding-step p {
+    color: #475569;
+}
+
+[data-theme="light"] .onboarding-select {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+[data-theme="light"] .footer-links a {
+    color: #475569;
+}
+
+[data-theme="light"] .footer-links a:hover {
+    color: var(--brand-primary);
+}
+
+[data-theme="light"] .main-title {
+    color: #1e293b;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LIGHT MODE - REISETIPPS PAGE
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] .travel-tips-page .page-header h1 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .travel-tips-page .page-header p {
+    color: #64748b;
+}
+
+[data-theme="light"] .browse-title {
+    color: #1e293b;
+}
+
+[data-theme="light"] .browse-count {
+    color: #64748b;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .month-pill {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+}
+
+[data-theme="light"] .month-pill:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+[data-theme="light"] .month-pill.active {
+    background: linear-gradient(135deg, var(--brand-primary), #1a9997);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+[data-theme="light"] .month-btn,
+[data-theme="light"] .climate-btn,
+[data-theme="light"] .region-btn,
+[data-theme="light"] .duration-btn,
+[data-theme="light"] .price-btn {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+}
+
+[data-theme="light"] .month-btn:hover,
+[data-theme="light"] .climate-btn:hover,
+[data-theme="light"] .region-btn:hover,
+[data-theme="light"] .duration-btn:hover,
+[data-theme="light"] .price-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+[data-theme="light"] .filter-select {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+[data-theme="light"] .filter-select:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+[data-theme="light"] .filter-select:focus {
+    border-color: var(--brand-primary);
+}
+
+[data-theme="light"] .filter-select option {
+    background: #ffffff;
+    color: #1e293b;
+}
+
+[data-theme="light"] .filter-bar {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .filter-label {
+    color: #64748b;
+}
+
+[data-theme="light"] .active-filters {
+    border-top-color: #e2e8f0;
+}
+
+[data-theme="light"] .destination-card-large {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .destination-card-large:hover {
+    border-color: var(--brand-primary);
+    box-shadow: 0 10px 30px rgba(38, 208, 206, 0.15);
+}
+
+[data-theme="light"] .destination-card-large .card-title h3 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .destination-card-large .card-country {
+    color: #64748b;
+}
+
+[data-theme="light"] .destination-card-large .card-description {
+    color: #475569;
+}
+
+[data-theme="light"] .destination-card-large .card-months {
+    border-top-color: #e2e8f0;
+}
+
+[data-theme="light"] .destination-card-large .months-label {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .booking-buttons {
+    border-top-color: #e2e8f0;
+}
+
+[data-theme="light"] .booking-btn {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .destination-card-large .card-price.price-1 {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+[data-theme="light"] .destination-card-large .card-price.price-2 {
+    background: rgba(234, 179, 8, 0.1);
+    color: #ca8a04;
+    border-color: rgba(234, 179, 8, 0.3);
+}
+
+[data-theme="light"] .destination-card-large .card-price.price-3 {
+    background: rgba(249, 115, 22, 0.1);
+    color: #ea580c;
+    border-color: rgba(249, 115, 22, 0.3);
+}
+
+[data-theme="light"] .personalized-section {
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.05), rgba(232, 165, 75, 0.03));
+    border-color: rgba(38, 208, 206, 0.15);
+}
+
+[data-theme="light"] .section-title {
+    color: #1e293b;
+    border-bottom-color: #e2e8f0;
+}
+
+[data-theme="light"] .period-header {
+    background: rgba(38, 208, 206, 0.08);
+}
+
+[data-theme="light"] .period-divider {
+    background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+}
+
+[data-theme="light"] .affiliate-hero {
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border-color: rgba(38, 208, 206, 0.15);
+}
+
+[data-theme="light"] .affiliate-hero-title {
+    color: #1e293b;
+}
+
+[data-theme="light"] .affiliate-hero-buttons .affiliate-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1e293b;
+}
+
+[data-theme="light"] .affiliate-hero-buttons .affiliate-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .affiliate-cta {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-color: #e2e8f0;
+}
+
+[data-theme="light"] .affiliate-cta h2 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .affiliate-cta p {
+    color: #64748b;
+}
+
+[data-theme="light"] .affiliate-btn {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+
+[data-theme="light"] .no-results {
+    background: #f8fafc;
+    border: 1px dashed #e2e8f0;
+}
+
+[data-theme="light"] .no-results p {
+    color: #64748b;
+}
+
+[data-theme="light"] .insurance-hint {
+    background: rgba(232, 165, 75, 0.1);
+}
+
+[data-theme="light"] .no-destinations {
+    color: #64748b;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LIGHT MODE - SUBPAGES (About, Kontakt, etc.)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] .about-content,
+[data-theme="light"] .contact-page,
+[data-theme="light"] .travel-tips-page {
+    color: #1e293b;
+}
+
+[data-theme="light"] .about-article {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .about-section h2,
+[data-theme="light"] .about-article h1 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .about-section p,
+[data-theme="light"] .about-section li {
+    color: #475569;
+}
+
+/* Dark Mode: Kein Kasten um back-nav-link */
+:root .back-nav-link,
+html:not([data-theme="light"]) .back-nav-link {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+[data-theme="light"] .back-nav-link {
+    color: #475569;
+    background: rgba(241, 245, 249, 0.8) !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+[data-theme="light"] .back-nav-link:hover {
+    color: var(--brand-primary);
+    background: #ffffff !important;
+    border-color: var(--brand-primary) !important;
+}
+
+[data-theme="light"] .contact-form {
+    background: #ffffff !important;
+    border: none !important;
+}
+
+[data-theme="light"] .contact-form input,
+[data-theme="light"] .contact-form textarea,
+[data-theme="light"] .contact-form select {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .contact-form input::placeholder,
+[data-theme="light"] .contact-form textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+[data-theme="light"] .contact-form input:focus,
+[data-theme="light"] .contact-form textarea:focus,
+[data-theme="light"] .contact-form select:focus {
+    border-color: var(--brand-primary) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.15) !important;
+}
+
+[data-theme="light"] .contact-form select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231e293b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 14px center !important;
+    background-size: 12px !important;
+}
+
+[data-theme="light"] .contact-form label {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .contact-title,
+[data-theme="light"] .contact-form-container h2 {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .contact-intro,
+[data-theme="light"] .contact-topics li {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .destination-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .destination-card:hover {
+    border-color: var(--brand-primary);
+}
+
+[data-theme="light"] .page-header h1 {
+    color: #1e293b;
+}
+
+[data-theme="light"] .month-filter-btn {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+}
+
+[data-theme="light"] .month-filter-btn:hover,
+[data-theme="light"] .month-filter-btn.active {
+    background: var(--brand-primary);
+    color: white;
+    border-color: var(--brand-primary);
+}
+
+/* Light Mode - Subpage Reisetipps Button */
+[data-theme="light"] .subpage-reisetipps-btn {
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.1), rgba(38, 208, 206, 0.2));
+    border-color: rgba(38, 208, 206, 0.4);
+    color: var(--brand-secondary);
+}
+
+[data-theme="light"] .subpage-reisetipps-btn:hover {
+    background: linear-gradient(135deg, rgba(38, 208, 206, 0.2), rgba(38, 208, 206, 0.3));
+    color: var(--brand-primary);
+}

@@ -1,0 +1,459 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HolidayBoost Footer Styles - Sticky Footer & Stats
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Neuer Sticky Footer - Gleiches Design wie Header */
+.sticky-footer-new {
+    animation: headerFadeIn 0.3s ease-out forwards;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    /* === FOOTER HERO IMAGE === */
+    background:
+        linear-gradient(
+            135deg,
+            rgba(10, 22, 40, 0.7) 0%,
+            rgba(20, 40, 70, 0.6) 50%,
+            rgba(10, 22, 40, 0.7) 100%
+        ),
+        url('../urlaub2.jpg') center 45% / cover no-repeat,
+        #1a2a3a !important; /* Fallback-Farbe */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* === END HERO IMAGE === */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 20px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    z-index: 99999;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.footer-stats {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    min-width: 90px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stat-box.highlight {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: rgba(38, 208, 206, 0.4);
+    box-shadow: 0 4px 15px rgba(38, 208, 206, 0.2);
+}
+
+.stat-box.highlight .stat-number {
+    color: #26d0ce;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #f1f5f9;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+/* Modern Tooltip */
+.has-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.has-tooltip .tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #f1f5f9;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: nowrap;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.has-tooltip .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: #0f172a;
+}
+
+.has-tooltip:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Perioden-Tooltip (mehrzeilig) */
+.tooltip-periods {
+    white-space: normal;
+    min-width: 180px;
+    max-width: 280px;
+    text-align: left;
+}
+
+.tooltip-periods .period-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-periods .period-item:last-child {
+    border-bottom: none;
+}
+
+.tooltip-periods .period-date {
+    color: #26d0ce;
+    font-weight: 500;
+}
+
+.tooltip-periods .period-days {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.tooltip-periods .no-periods {
+    color: #94a3b8;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Recommendations Button */
+.recommendations-btn {
+    background: linear-gradient(135deg, #1a5a58 0%, #147a78 100%);
+    color: white;
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.recommendations-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38, 208, 206, 0.25);
+    background: linear-gradient(135deg, #1d6664 0%, #1a8a88 100%);
+    border-color: rgba(38, 208, 206, 0.5);
+}
+
+.recommendations-btn:active {
+    transform: translateY(0);
+}
+
+/* Footer-Links (vor dem Sticky Footer) */
+.footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    margin-top: 0;
+    margin-bottom: 75px; /* Platz für sticky-footer */
+    border-top: none;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--brand-primary);
+}
+
+.footer-links .divider {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Premium Sticky footer (Alternative) */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: none;
+    color: var(--text-primary);
+    padding: 25px 20px;
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+    z-index: 1000;
+    border-top: 1px solid var(--glass-border);
+}
+
+.sticky-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+                transparent,
+                var(--accent-purple),
+                transparent);
+    opacity: 0.6;
+}
+
+.summary {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label {
+    font-weight: 500;
+}
+
+.value {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--accent-purple);
+    text-shadow: 0 0 20px rgba(38, 208, 206, 0.6);
+    position: relative;
+}
+
+.value::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 9: TEILEN-BUTTON IM FOOTER
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.share-footer-btn {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    margin-left: 10px;
+}
+
+.share-footer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.share-footer-btn:active {
+    transform: translateY(0);
+}
+
+.share-btn-icon {
+    font-size: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODULE 10: SOCIAL MEDIA LINKS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-light);
+    position: relative;
+    transition: color 0.4s ease, transform 0.3s ease;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.social-link svg {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease, filter 0.4s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.social-link:hover::before {
+    opacity: 1;
+}
+
+.social-link:hover svg {
+    transform: scale(1.05);
+}
+
+/* Plattform-spezifische Styles */
+
+/* Instagram */
+.social-instagram::before {
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
+}
+
+.social-instagram:hover {
+    color: #fff;
+}
+
+/* TikTok */
+.social-tiktok::before {
+    background: #000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5),
+                -2px 0 10px rgba(37, 244, 238, 0.3),
+                2px 0 10px rgba(254, 44, 85, 0.3);
+}
+
+.social-tiktok:hover {
+    color: #fff;
+}
+
+/* Pinterest */
+.social-pinterest::before {
+    background: #e60023;
+    box-shadow: 0 4px 15px rgba(230, 0, 35, 0.4);
+}
+
+.social-pinterest:hover {
+    color: #fff;
+}
+
+/* YouTube */
+.social-youtube::before {
+    background: #ff0000;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+}
+
+.social-youtube:hover {
+    color: #fff;
+}
+
+/* Social Links Responsive */
+@media (max-width: 768px) {
+    .social-links {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        padding-left: 0;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 10px;
+    }
+
+    .social-link {
+        width: 42px;
+        height: 42px;
+    }
+
+    .social-link svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Preview Mode - Zeigt an wenn Empfehlungen vorausgewählt werden
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.sticky-footer.preview-mode {
+    border-top: 2px solid var(--brand-primary);
+    box-shadow: 0 -8px 32px rgba(38, 208, 206, 0.3);
+}
+
+.sticky-footer.preview-mode .stat-box {
+    background: rgba(38, 208, 206, 0.15);
+    border-color: var(--brand-primary);
+}
+
+.sticky-footer.preview-mode .stat-value {
+    color: var(--brand-primary);
+}

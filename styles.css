@@ -3105,6 +3105,20 @@ a.logo-compact:visited {
     }
 }
 
+/* 1.5. MAIN TITLE (H1 für SEO) */
+.main-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 8px 0 0 0;
+    padding: 0;
+    letter-spacing: -0.02em;
+}
+
+[data-theme="light"] .main-title {
+    color: #1e293b;
+}
 
 /* 2. KOMPAKTE LEGENDE */
 .legend-wrapper {
