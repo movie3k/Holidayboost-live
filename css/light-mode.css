@@ -297,6 +297,199 @@
     color: #ef4444;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════
+   EMPFEHLUNGEN MODAL - LIGHT MODE KOMPLETT
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Modal Backdrop im Light Mode */
+[data-theme="light"] .recommendations-modal .modal-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Content Container */
+[data-theme="light"] .recommendations-modal .modal-content {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal Header */
+[data-theme="light"] .recommendations-modal .modal-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .recommendations-modal .modal-header h2 {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .recommendations-modal .modal-header p {
+    color: #64748b !important;
+}
+
+/* Schließen-Button */
+[data-theme="light"] .recommendations-modal .close-modal-btn {
+    background: #ef4444 !important;
+    color: white !important;
+}
+
+/* Filter Dropdowns */
+[data-theme="light"] .recommendations-modal .modal-filters,
+[data-theme="light"] .recommendations-modal .recommendations-filters {
+    background: #f1f5f9 !important;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .recommendations-modal select,
+[data-theme="light"] .recommendations-modal #modal-category-filter,
+[data-theme="light"] .recommendations-modal #modal-sort-filter {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+}
+
+[data-theme="light"] .recommendations-modal select:focus,
+[data-theme="light"] .recommendations-modal #modal-category-filter:focus,
+[data-theme="light"] .recommendations-modal #modal-sort-filter:focus {
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 0 0 2px rgba(38, 208, 206, 0.15) !important;
+}
+
+/* Selection Summary */
+[data-theme="light"] .recommendations-modal .selection-summary {
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .recommendations-modal .summary-stats .stat {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .recommendations-modal .summary-stats .stat strong {
+    color: var(--brand-secondary) !important;
+}
+
+/* Buttons in Summary */
+[data-theme="light"] .recommendations-modal .clear-selection-btn,
+[data-theme="light"] .recommendations-modal #modal-clear-selection {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #475569 !important;
+}
+
+[data-theme="light"] .recommendations-modal .clear-selection-btn.active,
+[data-theme="light"] .recommendations-modal #modal-clear-selection.active {
+    background: #ef4444 !important;
+    border: none !important;
+    color: white !important;
+}
+
+[data-theme="light"] .recommendations-modal .apply-selection-btn,
+[data-theme="light"] .recommendations-modal #apply-selection {
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary)) !important;
+    color: white !important;
+}
+
+/* Modal Body */
+[data-theme="light"] .recommendations-modal .modal-body {
+    background: #ffffff;
+}
+
+/* Recommendation Cards im Modal */
+[data-theme="light"] .recommendations-modal .recommendation-card {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="light"] .recommendations-modal .recommendation-card:hover,
+[data-theme="light"] .recommendations-modal .recommendation-card.selected {
+    background: #ffffff !important;
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.15);
+}
+
+/* Card Header */
+[data-theme="light"] .recommendations-modal .rec-header h3,
+[data-theme="light"] .recommendations-modal .recommendation-card h3 {
+    color: #1e293b !important;
+}
+
+/* Card Stats */
+[data-theme="light"] .recommendations-modal .rec-stats .stat-value,
+[data-theme="light"] .recommendations-modal .recommendation-card .stat-value {
+    color: var(--brand-secondary) !important;
+}
+
+[data-theme="light"] .recommendations-modal .rec-stats .stat-label,
+[data-theme="light"] .recommendations-modal .recommendation-card .stat-label {
+    color: #64748b !important;
+}
+
+/* Card Period/Date Range */
+[data-theme="light"] .recommendations-modal .card-period,
+[data-theme="light"] .recommendations-modal .rec-period {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0;
+}
+
+/* Card Holidays Section */
+[data-theme="light"] .recommendations-modal .card-holidays h4,
+[data-theme="light"] .recommendations-modal .rec-holidays-label {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .recommendations-modal .holiday-tag {
+    background: rgba(38, 208, 206, 0.1) !important;
+    color: #0d9488 !important;
+    border: 1px solid rgba(38, 208, 206, 0.3);
+}
+
+/* Footer Perioden-Popup Light Mode */
+[data-theme="light"] .footer-periods-popup {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .periods-popup-header {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .period-item {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="light"] .period-item:active {
+    background: rgba(38, 208, 206, 0.1);
+}
+
+[data-theme="light"] .period-item-name {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .period-item-dates {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .period-item-days {
+    color: #0d9488 !important;
+}
+
+[data-theme="light"] .periods-empty {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .stat-box.stat-clickable.has-periods {
+    background: rgba(38, 208, 206, 0.1) !important;
+    border: 1px solid rgba(38, 208, 206, 0.3) !important;
+}
+
 /* Header Controls im Light Mode */
 [data-theme="light"] .controls-compact select,
 [data-theme="light"] .controls-compact select option,
@@ -413,6 +606,56 @@
 
 [data-theme="light"] .main-title {
     color: #1e293b;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LIGHT MODE - MOBILE ANPASSUNGEN
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Light Mode: Legende-Popup "Ausgewählt" - Lila Farbe */
+[data-theme="light"] .legend-popup-items .dot.selected {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+}
+
+/* Light Mode: Monatsname im Header - Schwarzer Text für bessere Lesbarkeit */
+[data-theme="light"] .month-header span {
+    color: #1e293b !important;
+}
+
+/* Light Mode Mobile: Monatsname (überschreibt responsive.css !important) */
+[data-theme="light"] .month-view .month-header span {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .mobile-nav-arrow {
+    background: rgba(30, 41, 59, 0.1);
+    border: 1px solid rgba(30, 41, 59, 0.2);
+    color: #1e293b;
+}
+
+[data-theme="light"] .mobile-nav-arrow:hover:not(:disabled) {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: #8b5cf6;
+    color: #8b5cf6;
+}
+
+/* Light Mode: Teilen-Button - Lila Farbe */
+[data-theme="light"] .share-header-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+[data-theme="light"] .share-header-btn:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%) !important;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+[data-theme="light"] .share-header-btn svg,
+[data-theme="light"] .share-header-btn .share-icon {
+    color: #ffffff !important;
+    fill: #ffffff !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

@@ -47,10 +47,20 @@ const MobileView = {
             this.createNavigation();
         }
 
-        // Aktuellen Monat anzeigen (aktueller Monat oder erster Monat mit Auswahl)
-        const currentMonth = new Date().getMonth();
-        this.showMonth(currentMonth);
-        this.setupSwipeGestures();
+        // Warten bis Kalender existiert (Timing-Fix)
+        const waitForCalendar = () => {
+            const months = document.querySelectorAll('.month-view');
+            if (months.length > 0) {
+                // Aktuellen Monat anzeigen
+                const currentMonth = new Date().getMonth();
+                this.showMonth(currentMonth);
+                this.setupSwipeGestures();
+            } else {
+                // Kalender noch nicht gerendert - erneut versuchen
+                setTimeout(waitForCalendar, 100);
+            }
+        };
+        waitForCalendar();
     },
 
     // Mobile-Ansicht deaktivieren
@@ -99,18 +109,34 @@ const MobileView = {
             header.style.cssText = ''; // Flex-Layout zurücksetzen
         });
 
-        // Desktop-Buttons im aktiven Header verstecken
+        // Desktop-Buttons im aktiven Header ENTFERNEN (nicht nur verstecken!)
         monthHeader.querySelectorAll('.year-nav:not(.mobile-nav-arrow)').forEach(el => {
-            el.style.display = 'none';
+            el.remove();
         });
 
         const isExtraMonthPrev = activeMonth.classList.contains('extra-month-prev');
         const isExtraMonthNext = activeMonth.classList.contains('extra-month-next');
         const year = this.getCurrentYear();
 
-        // Monatstitel finden
-        const monthTitle = monthHeader.querySelector('span');
-        if (!monthTitle) return;
+        // Monatstitel finden - ROBUST: auch wenn kein span existiert
+        let monthTitle = monthHeader.querySelector('span');
+        if (!monthTitle) {
+            // Kein span gefunden - Text aus Header extrahieren und in span einpacken
+            // Erst alle bestehenden Buttons/Elemente entfernen um nur den Text zu bekommen
+            const existingButtons = monthHeader.querySelectorAll('button, .year-nav');
+            existingButtons.forEach(btn => btn.remove());
+
+            const textContent = monthHeader.textContent.trim();
+            if (textContent) {
+                monthTitle = document.createElement('span');
+                monthTitle.textContent = textContent;
+                monthHeader.innerHTML = '';
+                monthHeader.appendChild(monthTitle);
+            } else {
+                console.warn('MobileView: Kein Monatstitel gefunden');
+                return;
+            }
+        }
 
         // GENAU ZWEI neue Buttons erstellen
         const prevArrow = document.createElement('button');
@@ -436,3 +462,39 @@ window.MobileView = MobileView;
         setupMobileTooltip();
     }
 })();
+
+// ========================================
+// HEADER HEIGHT SYNC - Dynamische Header-Höhe
+// Misst die echte Header-Höhe und setzt CSS-Variable
+// Funktioniert auf ALLEN Smartphone-Größen
+// ========================================
+const HeaderHeightSync = {
+    init() {
+        this.update();
+        window.addEventListener('resize', () => this.update());
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => this.update(), 150);
+        });
+    },
+
+    update() {
+        // Nur auf Mobile ausführen
+        if (window.innerWidth > 430) return;
+
+        const header = document.querySelector('.compact-header');
+        if (!header) return;
+
+        const height = header.offsetHeight + 10; // +10px Sicherheitsabstand
+        document.documentElement.style.setProperty('--header-height', height + 'px');
+    }
+};
+
+// Auto-Init
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => HeaderHeightSync.init());
+} else {
+    HeaderHeightSync.init();
+}
+
+// Global verfügbar machen
+window.HeaderHeightSync = HeaderHeightSync;

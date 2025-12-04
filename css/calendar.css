@@ -472,11 +472,18 @@
     position: relative;
 }
 
-/* Kompakte Legende */
+/* Kompakte Legende - Sticky unter Header */
 .legend-wrapper {
     display: flex;
     justify-content: center;
-    padding: 10px 0 4px 0;
+    padding: 10px 15px;
+    position: sticky;
+    top: 70px; /* Direkt unter dem fixed Header (Desktop) */
+    z-index: 90; /* Unter Header (100), über Kalender */
+    background: var(--bg-secondary);
+    margin: 0 -20px; /* Volle Breite */
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .legend-compact {

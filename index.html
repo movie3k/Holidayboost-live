@@ -9,7 +9,7 @@
     <link rel="preload" href="urlaub2.jpg" as="image">
     <link rel="icon" type="image/png" href="logo.png">
 </head>
-<body>
+<body class="calendar-page">
     <div class="container">
         <!-- KOMPAKTER HEADER -->
         <header class="compact-header">
@@ -57,9 +57,9 @@
         </div>
 
         <!-- H1 für SEO -->
-        <h1 class="main-title">Dein eigener Urlaubsplaner</h1>
+        <h1 class="main-title">Dein smarter Urlaubsplaner</h1>
 
-        <!-- KOMPAKTE LEGENDE -->
+        <!-- KOMPAKTE LEGENDE (Desktop) -->
         <div class="legend-wrapper">
             <div class="legend-compact">
                 <div class="legend-item"><span class="dot selected"></span>Ausgewählt</div>
@@ -68,6 +68,27 @@
                 <div class="legend-item"><span class="dot stadtfeiertag"></span>Stadtfeiertag</div>
                 <div class="legend-item"><span class="dot weekend"></span><span id="legend-freedays-text">Wochenende</span></div>
                 <div class="legend-item legend-school-holidays hidden"><span class="dot schulferien"></span>Schulferien</div>
+            </div>
+        </div>
+
+        <!-- MOBILE LEGENDE: Info-Icon + Popup -->
+        <button id="legend-info-btn" class="legend-info-btn" onclick="toggleLegendPopup()" title="Legende anzeigen">
+            ℹ️
+        </button>
+        <div id="legend-popup" class="legend-popup hidden">
+            <div class="legend-popup-content">
+                <div class="legend-popup-header">
+                    <span>Legende</span>
+                    <button class="legend-popup-close" onclick="toggleLegendPopup()">✕</button>
+                </div>
+                <div class="legend-popup-items">
+                    <div class="legend-item"><span class="dot selected"></span>Ausgewählt</div>
+                    <div class="legend-item"><span class="dot bundesfeiertag"></span>Bundesfeiertag</div>
+                    <div class="legend-item"><span class="dot landesfeiertag"></span>Landesfeiertag</div>
+                    <div class="legend-item"><span class="dot stadtfeiertag"></span>Stadtfeiertag</div>
+                    <div class="legend-item"><span class="dot weekend"></span>Wochenende</div>
+                    <div class="legend-item legend-school-holidays-popup hidden"><span class="dot schulferien"></span>Schulferien</div>
+                </div>
             </div>
         </div>
 
@@ -113,10 +134,16 @@
                 <span class="stat-number" id="vacation-days">0</span>
                 <span class="stat-label">Urlaubstage</span>
             </div>
-            <div class="stat-box highlight has-tooltip">
+            <div class="stat-box highlight stat-clickable" id="footer-free-days-stat">
                 <span class="stat-number" id="effective-days">0</span>
                 <span class="stat-label">Freie Tage</span>
-                <div class="tooltip tooltip-periods" id="periods-tooltip">Noch keine Urlaubstage ausgewählt</div>
+                <!-- Perioden-Popup -->
+                <div class="footer-periods-popup hidden" id="footer-periods-popup">
+                    <div class="periods-popup-header">Ausgewählte Perioden</div>
+                    <div class="periods-list" id="footer-periods-list">
+                        <!-- Dynamisch gefüllt -->
+                    </div>
+                </div>
             </div>
             <div class="stat-box has-tooltip">
                 <span class="stat-number" id="efficiency-display">0.0x</span>
@@ -166,7 +193,7 @@
                             <strong id="total-free-days">0</strong> freie Tage
                         </span>
                         <span class="stat">
-                            <strong id="total-efficiency">0.0x</strong>
+                            <strong id="total-efficiency">0.0x</strong> Effizienz
                         </span>
                     </div>
                     <button id="modal-clear-selection" class="clear-selection-btn">

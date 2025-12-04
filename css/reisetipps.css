@@ -1038,3 +1038,115 @@
     color: var(--brand-primary);
     font-weight: 600;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   REISETIPPS - MOBILE RESPONSIVE (430px und kleiner)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 430px) {
+    /* Reisetipps Page - SCROLLBAR erlauben */
+    .travel-tips-page {
+        padding: 10px 15px 30px;
+        overflow-y: auto !important;
+    }
+
+    /* Header kleiner */
+    .travel-tips-page .page-header h1 {
+        font-size: 20px;
+    }
+
+    .travel-tips-page .page-header p {
+        font-size: 13px;
+    }
+
+    /* Back Navigation */
+    .back-nav {
+        padding: 10px 15px;
+    }
+
+    .back-nav-link {
+        font-size: 14px;
+    }
+
+    /* Affiliate Hero Section */
+    .affiliate-hero {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .affiliate-hero-title {
+        font-size: 18px;
+    }
+
+    .affiliate-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .affiliate-link {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+
+    /* Month Sections */
+    .month-section {
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+
+    .month-section-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    /* Destination Cards */
+    .destinations-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .destination-card {
+        padding: 12px;
+    }
+
+    .destination-icon {
+        font-size: 32px;
+    }
+
+    .destination-name {
+        font-size: 16px;
+    }
+
+    .destination-country {
+        font-size: 12px;
+    }
+
+    .destination-highlights {
+        font-size: 12px;
+    }
+
+    .destination-meta {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .destination-meta span {
+        font-size: 11px;
+    }
+
+    /* Filters */
+    .filters-section {
+        padding: 12px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group select {
+        width: 100%;
+    }
+}

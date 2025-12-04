@@ -429,6 +429,9 @@ function updateSummary() {
     // Perioden-Tooltip aktualisieren
     updatePeriodsTooltip();
 
+    // Footer Perioden-Indicator aktualisieren (zeigt ob Perioden ausgewählt sind)
+    updateFooterPeriodsIndicator();
+
     // Auswahl in localStorage speichern (für Navigation zwischen Seiten)
     saveSelectionToStorage();
 }
@@ -2296,11 +2299,13 @@ function openRecommendationsModal() {
     // Show modal
     console.log('👁️ Modal wird angezeigt');
     modal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
 }
 
 function closeRecommendationsModal() {
     const modal = document.getElementById('recommendations-modal');
     modal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
     // Footer-Preview zurücksetzen wenn Modal ohne Speichern geschlossen wird
     resetMainFooterPreview();
 }
@@ -2572,6 +2577,7 @@ function updateSelectionSummary() {
             clearButton.classList.remove('active');
         }
     }
+
 }
 
 // PREVIEW: Aktualisiert den Haupt-Footer während Empfehlungen ausgewählt werden
@@ -2692,6 +2698,9 @@ function initRecommendationsModule() {
 
     // Initial render
     renderRecommendationCards();
+
+    // Footer Perioden-Popup initialisieren
+    initFooterPeriodsPopup();
 }
 
 // Clear all selected recommendations in the modal
@@ -2700,6 +2709,120 @@ function clearSelectedRecommendations() {
     ModalState.conflictedRecommendations.clear();
     renderModalRecommendationCards();
     updateSelectionSummary();
+}
+
+// 6.8. Footer Perioden-Popup für "freie Tage" Anzeige
+function initFooterPeriodsPopup() {
+    const freeDaysStat = document.getElementById('footer-free-days-stat');
+    const popup = document.getElementById('footer-periods-popup');
+
+    if (!freeDaysStat || !popup) return;
+
+    // Toggle Popup bei Tap auf "freie Tage"
+    freeDaysStat.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        // Nur anzeigen wenn Urlaubstage ausgewählt sind
+        if (State.selectedDates.size === 0) {
+            return;
+        }
+
+        // Popup toggle
+        const isHidden = popup.classList.contains('hidden');
+        if (isHidden) {
+            updateFooterPeriodsPopup();
+            popup.classList.remove('hidden');
+        } else {
+            popup.classList.add('hidden');
+        }
+    });
+
+    // Popup schließen bei Klick außerhalb
+    document.addEventListener('click', (e) => {
+        if (!freeDaysStat.contains(e.target)) {
+            popup.classList.add('hidden');
+        }
+    });
+}
+
+// Footer-Popup mit ausgewählten Perioden füllen
+function updateFooterPeriodsPopup() {
+    const periodsList = document.getElementById('footer-periods-list');
+    if (!periodsList) return;
+
+    periodsList.innerHTML = '';
+
+    // Perioden aus State.selectedDates berechnen
+    const periods = getVacationPeriods();
+
+    if (periods.length === 0) {
+        periodsList.innerHTML = '<div class="periods-empty">Keine Urlaubstage ausgewählt</div>';
+        return;
+    }
+
+    // Alle Perioden anzeigen
+    periods.forEach((period, index) => {
+        const periodItem = document.createElement('div');
+        periodItem.className = 'period-item';
+
+        // Datum formatieren
+        const startDate = new Date(period.start);
+        const endDate = new Date(period.end);
+        const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}.`;
+
+        // Monatsnamen für den Titel
+        const monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                           'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        const monthName = monthNames[startDate.getMonth()];
+
+        periodItem.innerHTML = `
+            <div class="period-item-info">
+                <span class="period-item-name">Urlaub ${index + 1} (${monthName})</span>
+                <span class="period-item-dates">${formatDate(startDate)} - ${formatDate(endDate)}</span>
+                <span class="period-item-days">${period.totalDays} freie Tage</span>
+            </div>
+            <span class="period-item-arrow">→</span>
+        `;
+
+        // Bei Tap: Popup schließen und zum Monat navigieren
+        periodItem.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateToMonthInCalendar(startDate.getMonth());
+            document.getElementById('footer-periods-popup').classList.add('hidden');
+        });
+
+        periodsList.appendChild(periodItem);
+    });
+}
+
+// Zum entsprechenden Monat im Kalender navigieren
+function navigateToMonthInCalendar(targetMonth) {
+    // Prüfen ob Mobile-Ansicht aktiv
+    if (typeof MobileView !== 'undefined' && MobileView.isActive) {
+        // Mobile: Zum Monat navigieren
+        MobileView.showMonth(targetMonth);
+    } else {
+        // Desktop: Zum Monat scrollen
+        const monthElements = document.querySelectorAll('.month-view');
+        if (monthElements[targetMonth]) {
+            monthElements[targetMonth].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }
+}
+
+// Update Footer "freie Tage" Styling wenn Auswahl vorhanden
+function updateFooterPeriodsIndicator() {
+    const freeDaysStat = document.getElementById('footer-free-days-stat');
+    if (!freeDaysStat) return;
+
+    if (State.selectedDates.size > 0) {
+        freeDaysStat.classList.add('has-periods');
+    } else {
+        freeDaysStat.classList.remove('has-periods');
+    }
 }
 
 // MODULE 8: REISETIPPS (Travel Tips Module)
@@ -4699,4 +4822,43 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 // Nach DOM geladen: Toggle-Button aktualisieren
 document.addEventListener('DOMContentLoaded', function() {
     initTheme();
+});
+
+// ════════════════════════════════════════════════════════════════════════════════
+// 13. MOBILE LEGEND POPUP
+// ════════════════════════════════════════════════════════════════════════════════
+
+// 13.1. Toggle Legend Popup (Mobile)
+function toggleLegendPopup() {
+    const popup = document.getElementById('legend-popup');
+    if (!popup) return;
+
+    if (popup.classList.contains('visible')) {
+        popup.classList.remove('visible');
+        document.body.style.overflow = '';
+    } else {
+        popup.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// 13.2. Popup schließen bei Klick auf Overlay (außerhalb Content)
+document.addEventListener('click', function(e) {
+    const popup = document.getElementById('legend-popup');
+    if (!popup) return;
+
+    // Nur wenn auf das Overlay (nicht auf Content) geklickt wird
+    if (e.target === popup) {
+        toggleLegendPopup();
+    }
+});
+
+// 13.3. Popup schließen mit Escape-Taste
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const popup = document.getElementById('legend-popup');
+        if (popup && popup.classList.contains('visible')) {
+            toggleLegendPopup();
+        }
+    }
 });
