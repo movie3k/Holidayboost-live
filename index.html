@@ -281,22 +281,26 @@
                     <span class="progress-dot" data-step="3"></span>
                     <span class="progress-dot" data-step="4"></span>
                     <span class="progress-dot" data-step="5"></span>
+                    <span class="progress-dot" data-step="6"></span>
                 </div>
             </div>
 
             <div class="onboarding-content">
-                <!-- Step 0: Willkommen -->
+                <!-- Step 0: Willkommen mit Logo -->
                 <div class="onboarding-step active" data-step="0">
-                    <div class="step-icon">🌴</div>
-                    <h2>Willkommen bei HolidayBoost!</h2>
-                    <p>Hol das Maximum aus deinen Urlaubstagen heraus! Wir zeigen dir, wie du mit cleveren Brückentagen mehr freie Zeit bekommst.</p>
+                    <div class="onboarding-logo">
+                        <img src="logo.png" alt="HolidayBoost Logo" class="logo-image">
+                        <span class="logo-text">HolidayBoost.de</span>
+                    </div>
+                    <h2>Dein smarter Urlaubsplaner</h2>
+                    <p>Plane deinen Urlaub clever und hole das Maximum aus deinen freien Tagen heraus! In wenigen Schritten zeigen wir dir, wie es funktioniert.</p>
                 </div>
 
-                <!-- Step 1: Bundesland mit Dropdown -->
+                <!-- Step 1: Bundesland wählen -->
                 <div class="onboarding-step" data-step="1">
                     <div class="step-icon">📍</div>
-                    <h2>In welchem Bundesland arbeitest du?</h2>
-                    <p>Jedes Bundesland hat unterschiedliche Feiertage – Bayern hat z.B. mehr als Berlin. Wähle deins für passende Brückentage:</p>
+                    <h2>Dein Bundesland</h2>
+                    <p>Jedes Bundesland hat unterschiedliche Feiertage. Wähle deins für passende Empfehlungen:</p>
                     <div class="onboarding-select-wrapper">
                         <select id="onboarding-state-select" class="onboarding-select">
                             <option value="">Bundesland wählen...</option>
@@ -320,37 +324,127 @@
                     </div>
                 </div>
 
-                <!-- Step 2: Arbeitswoche -->
+                <!-- Step 2: Legende / Farbcode -->
                 <div class="onboarding-step" data-step="2">
-                    <div class="step-icon">⚙️</div>
-                    <h2>Deine Arbeitswoche anpassen</h2>
-                    <p>Nicht jeder arbeitet Montag bis Freitag! Über das Zahnrad-Symbol ⚙️ oben kannst du einstellen, welche Tage du regulär frei hast – egal ob klassisches Wochenende oder z.B. Montag und Mittwoch.</p>
+                    <div class="step-icon">🎨</div>
+                    <h2>Die Kalender-Farben</h2>
+                    <p>Jede Farbe hat eine Bedeutung:</p>
+                    <div class="onboarding-legend-grid">
+                        <div class="legend-card">
+                            <div class="legend-color-box bundesfeiertag"></div>
+                            <span class="legend-text">Bundesfeiertag</span>
+                        </div>
+                        <div class="legend-card">
+                            <div class="legend-color-box landesfeiertag"></div>
+                            <span class="legend-text">Landesfeiertag</span>
+                        </div>
+                        <div class="legend-card">
+                            <div class="legend-color-box wochenende"></div>
+                            <span class="legend-text">Wochenende</span>
+                        </div>
+                        <div class="legend-card">
+                            <div class="legend-color-box urlaub"></div>
+                            <span class="legend-text">Dein Urlaub</span>
+                        </div>
+                        <div class="legend-card">
+                            <div class="legend-color-box schulferien"></div>
+                            <span class="legend-text">Schulferien</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Step 3: Kalender -->
+                <!-- Step 3: Header-Controls -->
                 <div class="onboarding-step" data-step="3">
-                    <div class="step-icon">📅</div>
-                    <h2>Markiere deine Urlaubstage</h2>
-                    <p>Klicke einfach auf die Tage im Kalender, an denen du Urlaub nehmen möchtest. Feiertage und deine freien Tage werden automatisch berücksichtigt!</p>
+                    <div class="step-icon">🛠️</div>
+                    <h2>Deine Werkzeuge</h2>
+                    <p>Im Header findest du praktische Funktionen:</p>
+                    <div class="onboarding-tools">
+                        <div class="tool-card">
+                            <div class="tool-icon-box delete">✕</div>
+                            <div class="tool-info">
+                                <span class="tool-name">Löschen</span>
+                                <span class="tool-desc">Alle Urlaubstage entfernen</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-icon-box settings">⚙️</div>
+                            <div class="tool-info">
+                                <span class="tool-name">Arbeitswoche</span>
+                                <span class="tool-desc">Freie Tage anpassen</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-icon-box school">🎓</div>
+                            <div class="tool-info">
+                                <span class="tool-name">Schulferien</span>
+                                <span class="tool-desc">Im Kalender anzeigen</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Step 4: Empfehlungen & Statistiken -->
+                <!-- Step 4: Empfehlungen -->
                 <div class="onboarding-step" data-step="4">
                     <div class="step-icon">💡</div>
-                    <h2>Smarte Empfehlungen nutzen</h2>
-                    <p>Unten siehst du deine Statistiken: <strong>Urlaubstage</strong> (die du einsetzt), <strong>Freie Tage</strong> (die du bekommst) und die <strong>Effizienz</strong> (je höher, desto besser!).</p>
-                    <p class="step-hint">💡 Tipp: Klicke auf "Freie Tage" für eine Übersicht aller Urlaubsperioden!</p>
+                    <h2>Smarte Empfehlungen</h2>
+                    <p>Der <strong>„Empfehlungen"</strong>-Button zeigt dir die cleversten Urlaubsoptionen für dein Bundesland.</p>
+                    <div class="onboarding-tip">
+                        <span class="tip-icon">✨</span>
+                        <span class="tip-text">Sortiere nach Effizienz, um mit wenigen Urlaubstagen maximale Freizeit zu bekommen!</span>
+                    </div>
                 </div>
 
-                <!-- Step 5: Fertig -->
+                <!-- Step 5: Footer-Statistiken -->
                 <div class="onboarding-step" data-step="5">
+                    <div class="step-icon">📊</div>
+                    <h2>Dein Überblick</h2>
+                    <p>Im Footer siehst du immer deine Statistiken:</p>
+                    <div class="onboarding-stats">
+                        <div class="stat-card">
+                            <div class="stat-card-icon">📅</div>
+                            <div class="stat-card-info">
+                                <span class="stat-card-title">Urlaubstage</span>
+                                <span class="stat-card-desc">Tage die du einsetzt</span>
+                            </div>
+                        </div>
+                        <div class="stat-card highlight">
+                            <div class="stat-card-icon">🏖️</div>
+                            <div class="stat-card-info">
+                                <span class="stat-card-title">Freie Tage</span>
+                                <span class="stat-card-desc">Tippe für alle Perioden!</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-icon">⚡</div>
+                            <div class="stat-card-info">
+                                <span class="stat-card-title">Effizienz</span>
+                                <span class="stat-card-desc">Je höher, desto besser</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-icon">📤</div>
+                            <div class="stat-card-info">
+                                <span class="stat-card-title">Teilen</span>
+                                <span class="stat-card-desc">Link zum Weitergeben</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Fertig -->
+                <div class="onboarding-step" data-step="6">
                     <div class="step-icon">🚀</div>
                     <h2>Bereit für mehr Urlaub!</h2>
-                    <p>Klicke auf <strong>„Empfehlungen"</strong> um die besten Brückentag-Kombinationen zu entdecken. So holst du aus wenigen Urlaubstagen das Maximum heraus!</p>
+                    <p>Tippe einfach auf Tage im Kalender, um deinen Urlaub zu planen. Feiertage und freie Tage werden automatisch berücksichtigt!</p>
+                    <div class="onboarding-tip success">
+                        <span class="tip-icon">🌴</span>
+                        <span class="tip-text">Tipp: Mit nur 10 Urlaubstagen kannst du oft über 25 freie Tage bekommen!</span>
+                    </div>
                 </div>
             </div>
 
             <div class="onboarding-actions">
+                <button class="onboarding-btn secondary" id="onboarding-back" onclick="prevOnboardingStep()">Zurück</button>
                 <button class="onboarding-btn secondary" id="onboarding-skip" onclick="skipOnboarding()">Überspringen</button>
                 <button class="onboarding-btn primary" id="onboarding-next" onclick="nextOnboardingStep()">Weiter</button>
             </div>

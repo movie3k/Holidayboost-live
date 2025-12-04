@@ -4578,7 +4578,7 @@ function closeSchoolHolidaysHint() {
 // 11.1. Onboarding State
 const OnboardingState = {
     currentStep: 0,
-    totalSteps: 6,
+    totalSteps: 7,
     isActive: false
 };
 
@@ -4651,6 +4651,7 @@ function updateOnboardingStep() {
     const dots = document.querySelectorAll('.progress-dot');
     const nextBtn = document.getElementById('onboarding-next');
     const skipBtn = document.getElementById('onboarding-skip');
+    const backBtn = document.getElementById('onboarding-back');
 
     // Alle Steps ausblenden
     steps.forEach((step, index) => {
@@ -4670,9 +4671,14 @@ function updateOnboardingStep() {
         }
     });
 
+    // Zurück-Button: Nur ab Step 1 anzeigen
+    if (backBtn) {
+        backBtn.style.display = OnboardingState.currentStep > 0 ? 'block' : 'none';
+    }
+
     // Button-Text anpassen
     if (OnboardingState.currentStep === OnboardingState.totalSteps - 1) {
-        nextBtn.textContent = 'Starten';
+        nextBtn.textContent = 'Los geht\'s!';
         skipBtn.style.display = 'none';
     } else {
         nextBtn.textContent = 'Weiter';

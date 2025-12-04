@@ -20,6 +20,157 @@
     display: none;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════
+   FOOTER PERIODEN-POPUP - Desktop & Tablet (alle Größen)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Clickable Stat im Footer */
+.stat-box.stat-clickable {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.stat-box.stat-clickable:hover {
+    background: rgba(38, 208, 206, 0.15);
+    border-radius: 10px;
+}
+
+.stat-box.stat-clickable.has-periods {
+    background: rgba(38, 208, 206, 0.1);
+    border: 1px solid rgba(38, 208, 206, 0.3);
+    border-radius: 10px;
+}
+
+.stat-box.stat-clickable.has-periods:hover {
+    background: rgba(38, 208, 206, 0.2);
+    border-color: rgba(38, 208, 206, 0.5);
+}
+
+/* Footer Perioden Popup - Modern Tooltip Style */
+.footer-periods-popup {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    z-index: 9999;
+    overflow: hidden;
+    animation: popupFadeIn 0.2s ease;
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.footer-periods-popup.hidden {
+    display: none !important;
+}
+
+/* Popup Pfeil nach unten */
+.footer-periods-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: var(--bg-secondary);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.periods-popup-header {
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.periods-list {
+    max-height: 280px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.period-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.period-item:last-child {
+    border-bottom: none;
+}
+
+.period-item:hover {
+    background: rgba(38, 208, 206, 0.1);
+}
+
+.period-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.period-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.period-item-dates {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.period-item-days {
+    font-size: 11px;
+    color: var(--brand-primary);
+    font-weight: 500;
+}
+
+.period-item-arrow {
+    font-size: 18px;
+    color: var(--brand-primary);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.period-item:hover .period-item-arrow {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.periods-empty {
+    padding: 30px 18px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
 /* Responsive Design - Calendar Grid */
 @media (max-width: 1400px) {
     .calendar-grid {
